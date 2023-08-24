@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BottomTabBar } from "./app/components/BottomTabBar";
 import { PoolMapView } from "./app/views/PoolMapView";
 import { PoolDetailView } from "./app/views/PoolDetailView";
-
+import { HoldingBlock2 } from "./app/components/HoldingBlock";
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -21,9 +21,10 @@ export const WelcomeView = ({ navigation }) => {
         title="Siguiente"
         onPress={() => navigate("Login", navigation)}
       >
-        <Text>Siguiente</Text>
+        <Text className='text-9xl'>Siguiente</Text>
       </TouchableOpacity>
       <Text className="text-3xl underline">We're in welcome view</Text>
+      <HoldingBlock2/>
     </View>
   );
 };
