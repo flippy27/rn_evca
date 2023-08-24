@@ -31,23 +31,20 @@ export const RegisterView = ({ route, navigation }) => {
 
   const handleUserRegister = async () => {
     //TODO: falta ver el tema de validacion y disable de boton
-    if(password != password2){
-      return
+    if (password != password2) {
+      return;
     }
-    console.log('data send',email,password,password2);
-    if (
-      is_valid_email({email}) &&
-      is_valid_password({password})
-    ) {
-      console.log('llegue al registro');
-      
-      const response = await registerUser(COMPANY,email,password);
+    console.log("data send", email, password, password2);
+    if (is_valid_email({ email }) && is_valid_password({ password })) {
+      console.log("llegue al registro");
+
+      const response = await registerUser(COMPANY, email, password);
       console.log("res", response);
 
-      if (response.message != "User Created"){
-        console.log('error creando usuario fix me');
-      }else{
-        navigation.navigate('BottomTabBar')
+      if (response.message == "User Created") {
+        navigation.navigate("Login", { w_email: email });
+      } else {
+        navigation.navigate("App", { screen: "BottomTabBar" });
       }
     }
   };

@@ -60,30 +60,27 @@ export const checkUser = (companyId, email) => {
     });
   });
 };
-export const useLoginUser = (companyId, email, password) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const loginUser = () => {
-      const dataToSend = { companyId, email, password };
-      let formBody = [];
 
-      for (let key in dataToSend) {
-        const encodedKey = encodeURIComponent(key);
-        const encodedValue = encodeURIComponent(dataToSend[key]);
-        formBody.push(encodedKey + '=' + encodedValue);
-      }
-      formBody = formBody.join('&');
+export const loginUser = (companyId, email, password) => {
+  return new Promise((resolve, reject) => {
+    const dataToSend = { companyId, email, password };
+    let formBody = [];
 
-      fetch(`${API_URL}auth/login`, {
-        method: 'POST',
-        body: formBody,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        },
-      })
+    for (let key in dataToSend) {
+      const encodedKey = encodeURIComponent(key);
+      const encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch(`${API_URL}auth/login`, {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -91,61 +88,10 @@ export const useLoginUser = (companyId, email, password) => {
         return response.json();
       })
       .then((responseJson) => {
-        console.log(responseJson); // Log the data here
-        setData(responseJson);
-        setLoading(false);
+        resolve(responseJson);
       })
-    };
-
-    loginUser();
-  }, [companyId, email, password]); // the effect will run every time `company`, `email`, or `password` changes
-
-
-  return { data, loading, error };
-};
-
-export const useRegisterUser = (companyId, email, password) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const registerUser = () => {
-      const dataToSend = { companyId, email, password };
-      let formBody = [];
-
-      for (let key in dataToSend) {
-        const encodedKey = encodeURIComponent(key);
-        const encodedValue = encodeURIComponent(dataToSend[key]);
-        formBody.push(encodedKey + '=' + encodedValue);
-      }
-      formBody = formBody.join('&');
-
-      fetch(`${API_URL}auth/login/register`, {
-        method: 'POST',
-        body: formBody,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        },
-      })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((responseJson) => {
-        setData(responseJson);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
+      .catch((error) => {
+        reject(error);
       });
-    };
-
-    registerUser();
-  }, [companyId, email, password]); 
-
-  return { data, loading, error };
+  });
 };

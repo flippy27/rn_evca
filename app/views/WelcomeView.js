@@ -4,6 +4,7 @@ import { is_valid_email } from "../utils/LoginUtils";
 import { checkUser, useCheckUser } from "../hooks/hooks";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { COMPANY } from "../configs/global";
+import { HoldingBlock } from "../components/HoldingBlock";
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
@@ -15,10 +16,10 @@ export const WelcomeView = ({ navigation }) => {
 
       if (response.code > 399) {
         //email doenst exists, go to register
-        navigation.navigate("Register", {w_email:email});
+        navigation.navigate("Register", { w_email: email });
       } else {
         //email does exist, go to login
-        navigation.navigate("Login");
+        navigation.navigate("Login", { w_email: email });
       }
     }
   };
@@ -26,15 +27,17 @@ export const WelcomeView = ({ navigation }) => {
     setEmail(text);
   };
   return (
-    <View style={{ padding: 50 }}>
-      <CustomTextInput value={email} onChangeText={handleInputChange} />
-      <TouchableOpacity
-        style={{ borderRadius: 50, backgroundColor: "red", height: 60 }}
-        onPress={handleEmailCheck}
-      >
-        <Text>Siguiente</Text>
-      </TouchableOpacity>
-      <Text>We're in welcome view</Text>
+    <View style={{ padding: 20 }}>
+      <HoldingBlock>
+        <CustomTextInput value={email} onChangeText={handleInputChange} />
+        <TouchableOpacity
+          style={{ borderRadius: 50, backgroundColor: "red", height: 60 }}
+          onPress={handleEmailCheck}
+        >
+          <Text>Siguiente</Text>
+        </TouchableOpacity>
+        <Text>We're in welcome view</Text>
+      </HoldingBlock>
     </View>
   );
 };
