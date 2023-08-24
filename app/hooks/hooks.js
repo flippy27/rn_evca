@@ -33,6 +33,30 @@ export const useCheckUser = (companyId, email) => {
 
   return { data, loading, error };
 };
+
+export const checkUser = (companyId, email) => {
+  console.log(companyId,email);
+  return new Promise((resolve, reject) => {
+    fetch(`${API_URL}auth/exists/${companyId}/${email}`, {
+      method: 'GET',
+    })
+    .then((response) => {
+      console.log('response',response.status);
+      if (response.status > 499){
+        throw new Error('Server error');
+      }
+      return response.json();
+      
+     
+    })
+    .then((responseJson) => {
+      resolve(responseJson);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+  });
+};
 export const useLoginUser = (companyId, email, password) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
