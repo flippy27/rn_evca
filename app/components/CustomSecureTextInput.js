@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Platform, TextInput, TouchableOpacity, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { eyeSvg } from "../../assets/img/eye";
-export const CustomSecureTextInput = (props) => {
+export const CustomSecureTextInput = ({ value, onChangeText, ...props }) => {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const EyeIcon = () => {
     return <SvgXml xml={eyeSvg} width="24" height="24" />;
@@ -28,7 +28,9 @@ export const CustomSecureTextInput = (props) => {
             fontSize: Platform.OS === "android" ? 16 : 0,
           }} // You can adjust fontSize as needed
           secureTextEntry={isPasswordSecure}
-          placeholder="Enter password"
+          placeholder=""
+          value={value}
+          onChangeText={onChangeText}
         />
         <TouchableOpacity
           style={{ paddingHorizontal: 10 }}

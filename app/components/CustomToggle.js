@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { Colors } from "../configs/common";
 
-export const CustomButton = () => {
+export const CustomToggle = () => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -24,20 +25,25 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    width: 48, // Assuming 12 units = 48 pixels in RN
-    backgroundColor: "#E5E7EB", // Gray-200
+    width: 40, // Assuming 12 units = 48 pixels in RN
+    height: 24,
+    backgroundColor: "#FFF", // Gray-200
     borderRadius: 9999, // Rounded-full in Tailwind
-    alignItems: "flex-start",
-    padding: 1,
+    
+    borderWidth: 2,
+    borderColor: Colors.COMPANY.PRIMARY,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+
   },
   buttonActive: {
-    backgroundColor: "#D1FAE5", // Green-300
+    backgroundColor: Colors.COMPANY.PRIMARY, // Green-300
   },
   innerCircle: {
     height: 24, // 6 units
     width: 24, // 6 units
     backgroundColor: "white",
-    borderRadius: 9999, // Rounded-full in Tailwind
+    borderRadius: 16, // Rounded-full in Tailwind
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -45,9 +51,11 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
-    elevation: 4,
+    elevation: 5,
+    borderWidth:2,
+    borderColor: Colors.COMPANY.PRIMARY
   },
   innerCircleActive: {
-    transform: [{ translateX: 24 }], // Assuming 6 units = 24 pixels in RN
+    transform: [{ translateX: 14 }], // Assuming 6 units = 24 pixels in RN
   },
 });

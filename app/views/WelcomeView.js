@@ -5,21 +5,20 @@ import { checkUser, useCheckUser } from "../hooks/hooks";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { COMPANY } from "../configs/global";
 export const WelcomeView = ({ navigation }) => {
-  const [email, setEmail] = useState("asd@asd.asd");
+  const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
     console.log("handling email check");
     if (is_valid_email({ email })) {
-      const company = COMPANY;
-      console.log("company", company);
-      const response = await checkUser(company, email);
+      console.log("company", COMPANY);
+      const response = await checkUser(COMPANY, email);
       console.log("le data", response);
 
       if (response.code > 399) {
         //email doenst exists, go to register
-        navigation.navigate('Register')
+        navigation.navigate("Register", {w_email:email});
       } else {
         //email does exist, go to login
-        navigation.navigate('Login')
+        navigation.navigate("Login");
       }
     }
   };
