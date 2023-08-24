@@ -2,6 +2,15 @@
 export const Colors = {
   COMPANY: {
     PRIMARY: "#375484",
+    PRIMARY_DARK: "#1C355E",
+    PRIMARY_DISABLED: "#37548420",
+
+    SECONDARY: "#FFF",
+    SECONDARY_DARK: "#1C355E10",
+    SECONDARY_DISABLED: "#FFF",
+
+    PRIMARY_DISABLED: "#1C355E10"
+
   },
   APP: {
     LIGHT_GRAY: "#F5F5F5",
@@ -15,11 +24,8 @@ export const Colors = {
     UNAVAILABLE: "#FA5852",
   },
 };
-export const texts={
-  COMPANY:{
-    WELCOME:'Hola'
-  }
-
-}
-
-
+export const texts = {
+  COMPANY: {
+    WELCOME: "Hola",
+  },
+};

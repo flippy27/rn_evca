@@ -5,6 +5,7 @@ import { checkUser, useCheckUser } from "../hooks/hooks";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { COMPANY } from "../configs/global";
 import { HoldingBlock } from "../components/HoldingBlock";
+import { CustomButton } from "../components/CustomButton";
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
@@ -26,6 +27,7 @@ export const WelcomeView = ({ navigation }) => {
   const handleInputChange = (text) => {
     setEmail(text);
   };
+  
   return (
     <View style={{ padding: 20 }}>
       <HoldingBlock>
@@ -38,6 +40,10 @@ export const WelcomeView = ({ navigation }) => {
         </TouchableOpacity>
         <Text>We're in welcome view</Text>
       </HoldingBlock>
+      <CustomButton text={"Action"} type={'primary'} padding={10} width={180}/>
+      <CustomButton text={"Action"} type={'secondary'} padding={10} width={180}/>
+      <CustomButton text={"Action"} type={'tertiary'} padding={10} width={180}/>
+      <CustomButton text={"Action"} type={'link'} padding={10} width={180}/>
     </View>
   );
 };

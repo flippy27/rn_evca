@@ -9,6 +9,7 @@ import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 import { useEffect, useState } from "react";
 import { loginUser } from "../hooks/hooks";
 import { COMPANY } from "../configs/global";
+import { CustomButton } from "../components/CustomButton";
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
 
@@ -59,6 +60,7 @@ export const LoginView = ({ route, navigation }) => {
           we're in login view
         </Text>
       </HoldingBlock>
+      <CustomButton>Hola</CustomButton>
     </View>
   );
 };
