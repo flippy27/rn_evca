@@ -1,7 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
-import { CustomTextInput } from './CustomTextInput';
+import { Text, View } from 'react-native';
 import { LogoSVG } from './Logo';
  
 export const TextAndLogo=()=>{
