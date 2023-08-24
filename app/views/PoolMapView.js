@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { Platform, Text, View, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 import * as Location from "expo-location";
 
-import MapView from "react-native-maps";
+import { useNavigation } from "@react-navigation/native";
+import MapView, { Marker } from "react-native-maps";
+import { CustomMarker } from "../components/CustomMarker";
+
+const markersData = [
+  { id: 1, latitude: -33.0271086, longitude: -71.5489086, title: "Marker 1" },
+  { id: 2, latitude: -33.0269086, longitude: -71.5486886, title: "Marker 2" },
+  { id: 3, latitude: -33.0273086, longitude: -71.5485086, title: "Marker 3" },
+  // ... add more markers as needed
+];
+
 export const PoolMapView = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -39,7 +51,24 @@ export const PoolMapView = () => {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
-      />
+        rotateEnabled={false}
+      >
+        {markersData.map((marker) => (
+          <Marker
+            tracksViewChanges={false}
+            key={marker.id}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
+          >
+            <CustomMarker
+              title={marker.title}
+              onPress={() => navigation.navigate("PoolDetail")}
+            />
+          </Marker>
+        ))}
+      </MapView>
     </View>
   );
 };
