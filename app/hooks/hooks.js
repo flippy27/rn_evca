@@ -2,36 +2,39 @@ import { useState, useEffect } from 'react';
 
 const API_URL = 'https://evca.dev.dhemax.link/api/v1/';
 
-export const useCheckUser = (companyId, email) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const registerUser = (companyId, email, password) => {
+  return new Promise((resolve, reject) => {
+    const dataToSend = { companyId, email, password };
+    let formBody = [];
 
-  useEffect(() => {
-    const getDataUsingGet = () => {
-      fetch(`${API_URL}auth/exists/${companyId}/${email}`, {
-        method: 'GET',
+    for (let key in dataToSend) {
+      const encodedKey = encodeURIComponent(key);
+      const encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch(`${API_URL}auth/login/register`, {
+      method: "POST",
+      body: formBody,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+    })
+      .then((response) => {
+        console.log("response", response.status);
+        if (response.status > 499) {
+          throw new Error("Server error");
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((responseJson) => {
-          setData(responseJson);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
-    };
-
-    getDataUsingGet();
-  }, [companyId, email]); // the effect will run every time `company` or `email` changes
-
-  return { data, loading, error };
+      .then((responseJson) => {
+        resolve(responseJson);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
 
 export const checkUser = (companyId, email) => {
