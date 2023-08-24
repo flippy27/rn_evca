@@ -5,6 +5,8 @@ import { checkUser, useCheckUser } from "../hooks/hooks";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { COMPANY } from "../configs/global";
 import { LogoSVG } from "../components/Logo";
+import { DhemaxText } from "../components/DhemaxText";
+import { TextAndLogo } from "../components/TextAndLogo";
 
 
 export const WelcomeView = ({ navigation }) => {

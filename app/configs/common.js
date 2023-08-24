@@ -15,5 +15,11 @@ export const Colors = {
     UNAVAILABLE: "#FA5852",
   },
 };
+export const texts={
+  COMPANY:{
+    WELCOME:'Hola'
+  }
+
+}
 
 
