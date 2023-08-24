@@ -1,58 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useFonts } from "expo-font";
+import { StyleSheet } from "react-native";
 import { BottomTabBar } from "./app/components/BottomTabBar";
-import { PoolMapView } from "./app/views/PoolMapView";
+import { LoginView } from "./app/views/LoginView";
 import { PoolDetailView } from "./app/views/PoolDetailView";
-
+import { PoolMapView } from "./app/views/PoolMapView";
+import { RegisterView } from "./app/views/RegisterView";
+import { WelcomeView } from "./app/views/WelcomeView";
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
-
-const navigate = (path, navigation, data) => {
-  navigation.navigate(path);
-};
-
-export const WelcomeView = ({ navigation }) => {
-  return (
-    <View style={{ padding: 50 }}>
-      <TouchableOpacity
-        style={{ borderRadius: 50, backgroundColor: "red", height: 20 }}
-        title="Siguiente"
-        onPress={() => navigate("Login", navigation)}
-      >
-        <Text>Siguiente</Text>
-      </TouchableOpacity>
-      <Text className="text-3xl underline">We're in welcome view</Text>
-    </View>
-  );
-};
-
-export const RegisterView = () => {
-  return <Text>register</Text>;
-};
-
-export const LoginView = ({ navigation }) => {
-  const handleLogin = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "App" }],
-    });
-  };
-
-  return (
-    <View style={{ padding: 50 }}>
-      <TouchableOpacity
-        style={{ borderRadius: 50, backgroundColor: "blue", height: 20 }}
-        title="Siguiente"
-        onPress={handleLogin}
-      >
-        <Text>Siguiente</Text>
-      </TouchableOpacity>
-      <Text>we're in login view</Text>
-    </View>
-  );
-};
 
 export const MainNavigator = () => (
   <MainStack.Navigator
@@ -91,6 +49,14 @@ export const AppNavigator = () => (
 );
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Semi": require("./assets/fonts/Montserrat-SemiBold.ttf"),
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null; // Return a loading screen or something
+  }
   return (
     <NavigationContainer>
       <MainNavigator />
