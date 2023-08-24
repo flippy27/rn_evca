@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Image} from "react-native";
 import { is_valid_email } from "../utils/LoginUtils";
 import { checkUser, useCheckUser } from "../hooks/hooks";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { COMPANY } from "../configs/global";
+import { LogoSVG } from "../components/Logo";
+
+
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("asd@asd.asd");
   const handleEmailCheck = async () => {
@@ -31,8 +34,7 @@ export const WelcomeView = ({ navigation }) => {
       <CustomTextInput value={email} onChangeText={handleInputChange} />
       <TouchableOpacity
         style={{ borderRadius: 50, backgroundColor: "red", height: 60 }}
-        onPress={handleEmailCheck}
-      >
+        onPress={handleEmailCheck} title='Siguiente'>
         <Text>Siguiente</Text>
       </TouchableOpacity>
       <Text>We're in welcome view</Text>
