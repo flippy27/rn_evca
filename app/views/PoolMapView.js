@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { MapPin } from "../components/MapPin";
+import { Colors } from '../configs/common';
+
 
 import * as Location from "expo-location";
 
@@ -62,10 +65,7 @@ export const PoolMapView = () => {
               longitude: marker.longitude,
             }}
           >
-            <CustomMarker
-              title={marker.title}
-              onPress={() => navigation.navigate("PoolDetail")}
-            />
+             <MapPin example={marker.title} color={Colors.PIN.ALL_AVAILABLE} onPress={()=>{navigation.navigate("PoolDetail")}} />
           </Marker>
         ))}
       </MapView>

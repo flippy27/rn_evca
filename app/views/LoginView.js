@@ -20,7 +20,7 @@ export const LoginView = ({ navigation }) => {
       >
         <Text>Siguiente</Text>
       </TouchableOpacity>
-      <Text style={{ fontFamily: "Monsterrat-Regular" }}>
+      <Text style={{ fontFamily: "Montserrat-Regular" }}>
         we're in login view
       </Text>
     </View>

@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image} from "react-native";
-import { is_valid_email } from "../utils/LoginUtils";
-import { checkUser, useCheckUser } from "../hooks/hooks";
+import { Text, TouchableOpacity, View, } from "react-native";
 import { CustomTextInput } from "../components/CustomTextInput";
+import { MapPin } from "../components/MapPin";
+import { Colors } from "../configs/common";
 import { COMPANY } from "../configs/global";
-import { LogoSVG } from "../components/Logo";
-import { DhemaxText } from "../components/DhemaxText";
-import { TextAndLogo } from "../components/TextAndLogo";
+import { checkUser } from "../hooks/hooks";
+import { is_valid_email } from "../utils/LoginUtils";
 
 
 export const WelcomeView = ({ navigation }) => {
