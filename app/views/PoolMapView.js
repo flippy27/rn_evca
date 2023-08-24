@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Platform, Text, View, StyleSheet } from "react-native";
 
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 import MapView from "react-native-maps";
 export const PoolMapView = () => {
@@ -21,15 +21,25 @@ export const PoolMapView = () => {
     })();
   }, []);
 
-  let text = "Waiting..";
   if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
+    return <Text>{errorMsg}</Text>;
+  }
+
+  if (!location) {
+    return <Text>Waiting for location...</Text>;
   }
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
+      <MapView
+        style={styles.map}
+        region={{
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        showsUserLocation={true}
+      />
     </View>
   );
 };
