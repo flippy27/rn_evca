@@ -2,10 +2,10 @@ import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { is_valid_email } from "../utils/LoginUtils";
 import { checkUser, useCheckUser } from "../hooks/hooks";
-import { CustomTextField } from "../components/CustomTextField";
+import { CustomTextInput } from "../components/CustomTextInput";
 import { COMPANY } from "../configs/global";
 export const WelcomeView = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("asd@asd.asd");
   const handleEmailCheck = async () => {
     console.log("handling email check");
     if (is_valid_email({ email })) {
@@ -28,7 +28,7 @@ export const WelcomeView = ({ navigation }) => {
   };
   return (
     <View style={{ padding: 50 }}>
-      <CustomTextField value={email} onChangeText={handleInputChange} />
+      <CustomTextInput value={email} onChangeText={handleInputChange} />
       <TouchableOpacity
         style={{ borderRadius: 50, backgroundColor: "red", height: 60 }}
         onPress={handleEmailCheck}

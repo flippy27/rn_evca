@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import { Colors } from "../configs/common";
 
-export const CustomTextField = (props) => {
+export const CustomTextInput = (props) => {
   
   return <TextInput style={[styles.field, props.style]} {...props} />;
 };
