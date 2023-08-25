@@ -10,7 +10,7 @@ export function HoldingBlock ({children})  {
 const styles = StyleSheet.create({
   boxWithShadow: {
     backgroundColor:'#FFF',
-    borderRadius:50,
+    borderRadius:21,
     margin:20,
     padding:20, 
     shadowColor: "#000",

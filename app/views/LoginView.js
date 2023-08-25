@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 import { loginUser } from "../hooks/hooks";
 import { COMPANY } from "../configs/global";
 import { CustomButton } from "../components/CustomButton";
+import { TextAndLogo } from "../components/TextAndLogo";
+import { DhemaxText } from "../components/DhemaxText";
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
-
 
   useEffect(() => {
     setEmail(w_email);
@@ -41,10 +42,13 @@ export const LoginView = ({ route, navigation }) => {
 
   return (
     <View style={{ padding: 20 }}>
+      <TextAndLogo></TextAndLogo>
       <HoldingBlock>
         <CustomTextInput value={email} onChangeText={handleEmailChange} />
-        <CustomText>Hemos detectado que ya estás registrado.</CustomText>
-        <CustomText>Por favor ingresa tu contraseña</CustomText>
+        <CustomText type="info">
+          Hemos detectado que ya estás registrado.
+        </CustomText>
+        <CustomText type="info">Por favor ingresa tu contraseña</CustomText>
         <CustomSecureTextInput
           value={password}
           onChangeText={handlePasswordChange}
@@ -60,7 +64,7 @@ export const LoginView = ({ route, navigation }) => {
           we're in login view
         </Text>
       </HoldingBlock>
-      <CustomButton>Hola</CustomButton>
+      <DhemaxText></DhemaxText>
     </View>
   );
 };

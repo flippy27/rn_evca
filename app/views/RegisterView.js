@@ -8,6 +8,8 @@ import { CustomText } from "../components/CustomText";
 import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 import { registerUser } from "../hooks/hooks";
 import { COMPANY } from "../configs/global";
+import { TextAndLogo } from "../components/TextAndLogo";
+import {DhemaxText} from '../components/DhemaxText'
 
 export const RegisterView = ({ route, navigation }) => {
   const { w_email } = route.params;
@@ -51,12 +53,16 @@ export const RegisterView = ({ route, navigation }) => {
 
   return (
     <View style={{ padding: 20 }}>
+        <TextAndLogo></TextAndLogo>
       <HoldingBlock style={{ padding: 20 }}>
+      <CustomText>Ingresa tu correo</CustomText>
         <CustomTextInput value={email} onChangeText={handleEmailChange} />
+        <CustomText>Ingresa tu contraseña</CustomText>
         <CustomSecureTextInput
           value={password}
           onChangeText={handlePass1Change}
         />
+          <CustomText>Confirma tu contraseña</CustomText>
         <CustomSecureTextInput
           value={password2}
           onChangeText={handlePass2Change}
@@ -84,6 +90,7 @@ export const RegisterView = ({ route, navigation }) => {
           <Text>Siguiente</Text>
         </TouchableOpacity>
       </HoldingBlock>
+      <DhemaxText></DhemaxText>
     </View>
   );
 };

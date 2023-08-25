@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Text, TouchableOpacity, View, } from "react-native";
-import { CustomTextInput } from "../components/CustomTextInput";
-import { MapPin } from "../components/MapPin";
-import { Colors } from "../configs/common";
-import { COMPANY } from "../configs/global";
-import { HoldingBlock } from "../components/HoldingBlock";
+import { Text, TouchableOpacity, View } from "react-native";
 import { CustomButton } from "../components/CustomButton";
+import { CustomTextInput } from "../components/CustomTextInput";
+import { HoldingBlock } from "../components/HoldingBlock";
+import { COMPANY } from "../configs/global";
+import { is_valid_email } from "../utils/LoginUtils";
+import { checkUser } from "../hooks/hooks";
+import { CustomText } from "../components/CustomText";
+import { TextAndLogo } from "../components/TextAndLogo";
+import { DhemaxText } from "../components/DhemaxText";
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
@@ -24,26 +27,32 @@ export const WelcomeView = ({ navigation }) => {
       }
     }
   };
+  const handleSkipLogin = () =>{
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "App" }],
+    });
+  }
   const handleInputChange = (text) => {
     setEmail(text);
   };
-  
+
   return (
     <View style={{ padding: 20 }}>
+        <TextAndLogo></TextAndLogo>
       <HoldingBlock>
+        <CustomText >Ingresa tu correo</CustomText>
         <CustomTextInput value={email} onChangeText={handleInputChange} />
-        <TouchableOpacity
-          style={{ borderRadius: 50, backgroundColor: "red", height: 60 }}
-          onPress={handleEmailCheck}
-        >
-          <Text>Siguiente</Text>
-        </TouchableOpacity>
-        <Text>We're in welcome view</Text>
+        <View style={{alignItems:'center'}}>
+      <CustomButton text={"Siguiente"} type={"primary"} fontsize={18} padding={10} width={180} onPress={handleEmailCheck} />
+      <CustomButton text={"Saltar inicio de sesión"} type={"link"} fontsize={18} padding={0} width={230} onPress={handleSkipLogin} />
+        
+        </View>
+      
       </HoldingBlock>
-      <CustomButton text={"Action"} type={'primary'} padding={10} width={180}/>
-      <CustomButton text={"Action"} type={'secondary'} padding={10} width={180}/>
-      <CustomButton text={"Action"} type={'tertiary'} padding={10} width={180}/>
-      <CustomButton text={"Action"} type={'link'} padding={10} width={180}/>
+      
+      
+      <DhemaxText></DhemaxText>
     </View>
   );
 };
