@@ -1,38 +1,59 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BottomTabBar } from "./app/components/BottomTabBar";
 import { LoginView } from "./app/views/LoginView";
 import { PoolDetailView } from "./app/views/PoolDetailView";
 import { PoolMapView } from "./app/views/PoolMapView";
 import { RegisterView } from "./app/views/RegisterView";
 import { WelcomeView } from "./app/views/WelcomeView";
+import { ChargeHistoryView } from "./app/views/ChargeHistoryView";
+
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
 
 export const MainNavigator = () => (
-  <MainStack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <MainStack.Screen name="Auth" component={AuthNavigator} />
-    <MainStack.Screen name="App" component={AppNavigator} />
-  </MainStack.Navigator>
+  <View style={styles.container}>
+    <MainStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        background: "#FFF",
+        backgroundColor: "#FFF",
+      }}
+    >
+      <MainStack.Screen name="Auth" component={AuthNavigator} />
+      <MainStack.Screen name="App" component={AppNavigator} />
+    </MainStack.Navigator>
+  </View>
 );
 
 export const AuthNavigator = () => (
-  <AuthStack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <AuthStack.Screen name="Welcome" component={WelcomeView} />
-    <AuthStack.Screen name="Register" component={RegisterView} />
-    <AuthStack.Screen name="Login" component={LoginView} />
-  </AuthStack.Navigator>
+  <View style={styles.container}>
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: { backgroundColor: "#FFF" },
+      }}
+    >
+      <AuthStack.Screen
+        name="Welcome"
+        component={WelcomeView}
+        options={{ contentStyle: { backgroundColor: "white" } }}
+      />
+      <AuthStack.Screen
+        name="Register"
+        component={RegisterView}
+        options={{ contentStyle: { backgroundColor: "white" } }}
+      />
+      <AuthStack.Screen
+        name="Login"
+        component={LoginView}
+        options={{ contentStyle: { backgroundColor: "white" } }}
+      />
+    </AuthStack.Navigator>
+  </View>
 );
 
 export const AppNavigator = () => (
@@ -40,11 +61,29 @@ export const AppNavigator = () => (
     initialRouteName="BottomTabBar" // Set the initial route
     screenOptions={{
       headerShown: false,
+      cardStyle: { backgroundColor: "blue" },
     }}
   >
-    <AppStack.Screen name="PoolMap" component={PoolMapView} />
-    <AppStack.Screen name="PoolDetail" component={PoolDetailView} />
-    <AppStack.Screen name="BottomTabBar" component={BottomTabBar} />
+    <AppStack.Screen
+      name="PoolMap"
+      component={PoolMapView}
+      options={{ contentStyle: { backgroundColor: "white" } }}
+    />
+    <AppStack.Screen
+      name="PoolDetail"
+      component={PoolDetailView}
+      options={{ contentStyle: { backgroundColor: "white" } }}
+    />
+    <AppStack.Screen
+      name="BottomTabBar"
+      component={BottomTabBar}
+      options={{ contentStyle: { backgroundColor: "white" } }}
+    />
+    <AppStack.Screen
+      name="ChargeHistoryView"
+      component={ChargeHistoryView}
+      options={{ contentStyle: { backgroundColor: "white" } }}
+    />
   </AppStack.Navigator>
 );
 
@@ -58,10 +97,17 @@ export default function App() {
     return null; // Return a loading screen or something
   }
   return (
-    <NavigationContainer>
-      <MainNavigator />
-    </NavigationContainer>
+      <View style={styles.container}>
+        <NavigationContainer>
+          <MainNavigator />
+        </NavigationContainer>
+      </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "red",
+  },
+});

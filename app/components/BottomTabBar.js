@@ -1,10 +1,13 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons"; // or any other icon library you prefer
-import { PoolMapView } from "../views/PoolMapView";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
+import { Colors } from "../configs/common";
 import { ChargeHistoryView } from "../views/ChargeHistoryView";
+import { PoolMapView } from "../views/PoolMapView";
+import ConfigIcon from "./icons/config_icon";
+import HistorialIcon from "./icons/historial_icon";
+import MapIcon from "./icons/map_icon";
+
 const Tab = createBottomTabNavigator();
 
 // Sample views
@@ -27,30 +30,121 @@ function View3() {
 export const BottomTabBar = () => {
   return (
     <Tab.Navigator
-      initialRouteName="View2"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "View1") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "View2") {
-            iconName = focused ? "list" : "list-outline";
-          } else if (route.name === "View3") {
-            iconName = focused ? "person" : "person-outline";
-          }
-
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-      }}
+      tabBar={(props) => <MyTabBar {...props} />}
+      initialRouteName="Mapa"
     >
-      <Tab.Screen name="View1" component={View1} />
-      <Tab.Screen name="View2" component={View2} />
-      <Tab.Screen name="View3" component={View3} />
+      <Tab.Screen
+        name="Historial"
+        component={View1}
+        options={{
+          contentStyle: { backgroundColor: "white" },
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Mapa"
+        component={View2}
+        options={{
+          contentStyle: { backgroundColor: "white" },
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Config"
+        component={View3}
+        options={{
+          contentStyle: { backgroundColor: "white" },
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
+function MyTabBar({ state, descriptors, navigation }) {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        height: 120,
+      }}
+    >
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: "tabPress",
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            // The `merge: true` option makes sure that the params inside the tab screen are preserved
+            navigation.navigate({ name: route.name, merge: true });
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: "tabLongPress",
+            target: route.key,
+          });
+        };
+
+        const renderIcon = (routeName, isFocused) => {
+          let color = isFocused ? "white" : Colors.COMPANY.PRIMARY;
+          switch (routeName) {
+            case "Mapa":
+              return <MapIcon fill={color} />;
+            case "Historial":
+              return <HistorialIcon fill={color} />; // Replace 'AnotherIcon' with your other component's name
+            case "Config":
+              return <ConfigIcon fill={color} />; // Similarly, replace 'YetAnotherIcon' with your other component's name
+            default:
+              return null;
+          }
+        };
+
+        return (
+          <View style={{ flex: 1 }}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: isFocused ? Colors.COMPANY.PRIMARY : "white",
+                borderRadius: 30,
+              }}
+            >
+              {renderIcon(route.name, isFocused)}
+              <Text
+                style={{
+                  color: isFocused ? "white" : Colors.COMPANY.PRIMARY,
+                  fontFamily: "Montserrat-Semi",
+                  fontSize: 15,
+                  paddingTop: 5,
+                }}
+              >
+                {label}
+              </Text>
+            </Pressable>
+          </View>
+        );
+      })}
+    </View>
+  );
+}

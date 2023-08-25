@@ -1,7 +1,17 @@
 import { Pressable, Text } from "react-native";
 import { Colors } from "../configs/common";
 
-export const CustomButton = ({ text, type, padding, width, height, onPress, fontsize}) => {
+export const CustomButton = ({
+  text,
+  type,
+  padding,
+  width,
+  height,
+  onPress,
+  fontsize,
+  underline = "none",
+  disabled = false,
+}) => {
   const bd = () => {
     if (type == "primary") {
       return {
@@ -49,7 +59,11 @@ export const CustomButton = ({ text, type, padding, width, height, onPress, font
   return (
     <Pressable
       style={({ pressed }) => ({
-        backgroundColor: pressed ? bd().background_pressed : bd().background, // adjust the rgba value to your base color
+        backgroundColor: disabled
+          ? bd().background_disabled
+          : pressed
+          ? bd().background_pressed
+          : bd().background, // adjust the rgba value to your base color
         padding: padding,
         alignItems: "center",
         borderRadius: 9999,
@@ -59,13 +73,14 @@ export const CustomButton = ({ text, type, padding, width, height, onPress, font
         borderColor: bd().borderColor,
       })}
       onPress={onPress}
+      disabled={disabled}
     >
       <Text
         style={{
-          color: bd().color,
+          color: disabled ? bd().color_disabled : bd().color,
           fontFamily: "Montserrat-Semi",
-          textDecorationLine: type == "link" ? "underline" : "none",
-          fontSize:fontsize
+          textDecorationLine: type == "link" ? underline : "none",
+          fontSize: fontsize,
         }}
       >
         {text}

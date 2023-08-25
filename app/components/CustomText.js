@@ -1,7 +1,7 @@
 import { Text, StyleSheet } from "react-native";
 import { Colors } from "../configs/common";
 
-export const CustomText = ({ children, type = "input", style, ...props }) => {
+export const CustomText = ({ children, type = "input" }) => {
   const tt = () => {
     if (type == "input") {
       return {
@@ -23,9 +23,10 @@ export const CustomText = ({ children, type = "input", style, ...props }) => {
         fontFamily: `Montserrat-${tt().weight}`,
         fontSize: tt().fontSize,
         color: tt().color,
+        width:'100%'
         
       }}
-      {...props}
+     
     >
       {children}
     </Text>

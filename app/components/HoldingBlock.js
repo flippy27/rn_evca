@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 export function HoldingBlock ({children})  {
 
-    return <View style={styles.boxWithShadow}>{children}</View>;
+    return <View style={styles.modalView}>{children}</View>;
   
   
 }
@@ -23,5 +23,21 @@ const styles = StyleSheet.create({
 
     elevation: 3,
     overflow:'hidden'
+  },
+
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding:20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

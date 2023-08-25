@@ -6,19 +6,19 @@ import { Colors } from "../configs/common";
 export const CustomSecureTextInput = ({ value, onChangeText, ...props }) => {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const EyeIcon = () => {
-    return <SvgXml xml={eyeSvg} width="24" height="24" />;
+    return <SvgXml xml={eyeSvg} width="18" height="18" />;
   };
   return (
     <View>
       <View
         style={{
-          marginTop: 10,
           flexDirection: "row",
-          backgroundColor: Colors.APP.INPUT_BACKGROUND,
+          backgroundColor: Colors.APP.LIGHT_GRAY,
           borderRadius: 999,
           alignItems: "center",
-          height: 48,
-          paddingHorizontal: 8,
+          height: 42,
+          paddingHorizontal: 6,
+          width: "100%",
         }}
       >
         <TextInput
@@ -26,7 +26,7 @@ export const CustomSecureTextInput = ({ value, onChangeText, ...props }) => {
             flex: 1,
             paddingHorizontal: 10,
             backgroundColor: "transparent",
-            fontSize: Platform.OS === "android" ? 16 : 0,
+            fontSize: 16,
           }} // You can adjust fontSize as needed
           secureTextEntry={isPasswordSecure}
           placeholder=""

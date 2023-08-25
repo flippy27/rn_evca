@@ -1,71 +1,62 @@
-import { View, Text, FlatList, Dimensions, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { Colors } from "../configs/common";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMobileChargeHistory } from "../hooks/hooks";
 import { CHARGE_USER_ID } from "../configs/global";
-
-const screenWidth = Dimensions.get("window").width;
-
-const DottedLine = ({
-  dotDiameter = 2,
-  spaceBetweenDots = 2,
-  parentPadding = 0,
-}) => {
-  const dotWidthWithSpace = dotDiameter + spaceBetweenDots;
-  const effectiveWidth = screenWidth - 2 * parentPadding;
-  const numberOfDots = Math.floor(effectiveWidth / dotWidthWithSpace);
-
-  return (
-    <View style={styles2.container}>
-      {Array.from({ length: numberOfDots }).map((_, index) => (
-        <View
-          key={index}
-          style={[
-            styles2.dot,
-            {
-              width: dotDiameter,
-              height: dotDiameter,
-              borderRadius: dotDiameter / 2,
-              marginRight: spaceBetweenDots,
-            },
-          ]}
-        />
-      ))}
-    </View>
-  );
-};
-const styles2 = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-  },
-  dot: {
-    backgroundColor: "black",
-  },
-});
-
+import { DottedLine } from "../components/DottedLine";
+import CCS1 from "../components/icons/CCS1";
 const ChargeHistoryItem = ({ item }) => {
   return (
-    <View style={{ padding: 10 }}>
+    <View style={{ paddingVertical: 10, paddingHorizontal: 30 }}>
       <View
-        style={{ flexDirection: "row", gap: 10, justifyContent: "flex-end" }}
+        style={{
+          flexDirection: "row",
+          gap: 10,
+          justifyContent: "flex-end",
+          paddingBottom: 5,
+        }}
       >
-        <Text>{moment(item.date_init).format("DD/mm/YY")}</Text>
-        <Text>{moment(item.date_init).format("HH:MM")}</Text>
+        <Text style={styles.text}>
+          {moment(item.date_init).format("DD/mm/YY")}
+        </Text>
+        <Text style={styles.text}>
+          {moment(item.date_init).format("HH:MM")}
+        </Text>
       </View>
-      
-      <Text>{item.location}</Text>
-      <Text>{item.connector_alias}</Text>
-      <Text>
-        Tiempo de carga: <Text>{item.minutes}</Text>{" "}
-      </Text>
-      <DottedLine parentPadding={10} />
+
+      <View style={{ flexDirection: "row", paddingBottom: 7, gap: 10 }}>
+        <CCS1></CCS1>
+        <View style={{ flexDirection: "column" }}>
+          <Text style={styles.text}>{item.location}</Text>
+          <Text style={styles.text}>{item.connector_alias}</Text>
+          <Text style={styles.textLight}>
+            Tiempo de carga:{" "}
+            <Text style={styles.text}>
+              {parseFloat(item.minutes).toFixed(2)} min
+            </Text>{" "}
+          </Text>
+        </View>
+      </View>
+
+      <DottedLine parentPadding={30} />
     </View>
   );
 };
 export const ChargeHistoryView = () => {
+  const [dataArr, setDataArr] = useState([]);
   const { data } = useMobileChargeHistory(CHARGE_USER_ID);
+  useEffect(() => {
+    setDataArr(data);
+  }, []);
   return (
     <View>
       <Text
@@ -73,7 +64,7 @@ export const ChargeHistoryView = () => {
           color: Colors.COMPANY.PRIMARY_DARK,
           fontFamily: "Montserrat-Bold",
           fontSize: 20,
-          padding: 10,
+          paddingHorizontal: 30,
         }}
       >
         Historial
@@ -86,3 +77,16 @@ export const ChargeHistoryView = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: "Montserrat-Bold",
+    fontSize: 13,
+    color: Colors.APP.DARK_GRAY,
+  },
+  textLight: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 13,
+    color: Colors.APP.DARK_GRAY,
+  },
+});
