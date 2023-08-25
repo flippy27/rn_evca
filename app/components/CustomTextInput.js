@@ -10,7 +10,7 @@ export const CustomTextInput = (props) => {
 const styles = StyleSheet.create({
   field: {
     fontFamily: "Montserrat-Regular",
-    backgroundColor: Colors.APP.PLACEHOLDER_LIGHT_GRAY,
+    backgroundColor: Colors.APP.INPUT_BACKGROUND,
     color:  Colors.APP.APP_DARK_GRAY,
     borderRadius: 50, 
     paddingHorizontal: 15, 

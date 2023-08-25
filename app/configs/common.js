@@ -16,6 +16,7 @@ export const Colors = {
     LIGHT_GRAY: "#F5F5F5",
     DARK_GRAY: "#393737",
     PLACEHOLDER_LIGHT_GRAY: "#BFBFBF",
+    INPUT_BACKGROUND: "#E5E5E5"
   },
   PIN: {
     ALL_AVAILABLE: "#2EB85E",

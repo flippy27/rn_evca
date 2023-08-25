@@ -1,8 +1,7 @@
-import { View, TouchableOpacity, Text, Pressable } from "react-native";
+import { Pressable, Text } from "react-native";
 import { Colors } from "../configs/common";
-import { useEffect, useState } from "react";
 
-export const CustomButton = ({ text, type, padding, width, height }) => {
+export const CustomButton = ({ text, type, padding, width, height, onPress, fontsize}) => {
   const bd = () => {
     if (type == "primary") {
       return {
@@ -47,7 +46,6 @@ export const CustomButton = ({ text, type, padding, width, height }) => {
     }
   };
 
-  useEffect(() => {}, []);
   return (
     <Pressable
       style={({ pressed }) => ({
@@ -60,15 +58,14 @@ export const CustomButton = ({ text, type, padding, width, height }) => {
         borderWidth: bd().border,
         borderColor: bd().borderColor,
       })}
-      onPress={() => {
-        console.log("Button Pressed!");
-      }}
+      onPress={onPress}
     >
       <Text
         style={{
           color: bd().color,
           fontFamily: "Montserrat-Semi",
           textDecorationLine: type == "link" ? "underline" : "none",
+          fontSize:fontsize
         }}
       >
         {text}

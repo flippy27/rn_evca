@@ -2,18 +2,19 @@ import { useState } from "react";
 import { Platform, TextInput, TouchableOpacity, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { eyeSvg } from "../../assets/img/eye";
+import { Colors } from "../configs/common";
 export const CustomSecureTextInput = ({ value, onChangeText, ...props }) => {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const EyeIcon = () => {
     return <SvgXml xml={eyeSvg} width="24" height="24" />;
   };
   return (
-    <View >
+    <View>
       <View
         style={{
           marginTop: 10,
           flexDirection: "row",
-          backgroundColor: "#E5E5E5",
+          backgroundColor: Colors.APP.INPUT_BACKGROUND,
           borderRadius: 999,
           alignItems: "center",
           height: 48,
@@ -42,5 +43,3 @@ export const CustomSecureTextInput = ({ value, onChangeText, ...props }) => {
     </View>
   );
 };
-
-
