@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Text, TouchableOpacity, View, } from "react-native";
-import { CustomTextInput } from "../components/CustomTextInput";
-import { MapPin } from "../components/MapPin";
-import { Colors } from "../configs/common";
-import { COMPANY } from "../configs/global";
-import { HoldingBlock } from "../components/HoldingBlock";
+import { Text, TouchableOpacity, View } from "react-native";
 import { CustomButton } from "../components/CustomButton";
+import { CustomTextInput } from "../components/CustomTextInput";
+import { HoldingBlock } from "../components/HoldingBlock";
+import { COMPANY } from "../configs/global";
+
+
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
@@ -40,7 +40,7 @@ export const WelcomeView = ({ navigation }) => {
         </TouchableOpacity>
         <Text>We're in welcome view</Text>
       </HoldingBlock>
-      <CustomButton text={"Action"} type={'primary'} padding={10} width={180}/>
+      <CustomButton text={"Action"} type={'primary'} padding={10} width={180} margin/>
       <CustomButton text={"Action"} type={'secondary'} padding={10} width={180}/>
       <CustomButton text={"Action"} type={'tertiary'} padding={10} width={180}/>
       <CustomButton text={"Action"} type={'link'} padding={10} width={180}/>
