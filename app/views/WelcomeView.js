@@ -12,7 +12,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../configs/common";
 
 export const WelcomeView = ({ navigation }) => {
-  const [email, setEmail] = useState("hola@dhemax.comm");
+  const [email, setEmail] = useState("hola@dhemax.com");
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const handleEmailCheck = async () => {
     console.log("handling email check");
     if (is_valid_email({ email })) {
@@ -36,13 +37,20 @@ export const WelcomeView = ({ navigation }) => {
     });
   };
   const handleInputChange = (text) => {
+    const email = text;
+    console.log(text);
+    if (!is_valid_email({ email })) {
+      setButtonDisabled(true);
+    } else {
+      setButtonDisabled(false);
+    }
     setEmail(text);
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25, justifyContent: 'space-between' }}>
-        <View >
+      <View style={{ flex: 1, padding: 25, justifyContent: "space-between" }}>
+        <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>
             <Text style={styles.text}>Ingresa tu correo</Text>
@@ -53,7 +61,7 @@ export const WelcomeView = ({ navigation }) => {
                 onChangeText={handleInputChange}
               />
             </View>
-            <View style={{ alignItems: "center", gap: 20 ,paddingBottom:30}}>
+            <View style={{ alignItems: "center", gap: 20, paddingBottom: 30 }}>
               <CustomButton
                 text={"Siguiente"}
                 type={"primary"}
@@ -61,6 +69,7 @@ export const WelcomeView = ({ navigation }) => {
                 padding={10}
                 width={180}
                 onPress={handleEmailCheck}
+                disabled={buttonDisabled}
               />
               <CustomButton
                 text={"Saltar inicio de sesión"}
@@ -73,7 +82,9 @@ export const WelcomeView = ({ navigation }) => {
             </View>
           </HoldingBlock>
         </View>
-        <DhemaxText  style={{ position: 'absolute', bottom: 0, left: 25, right: 25 }}></DhemaxText>
+        <DhemaxText
+          style={{ position: "absolute", bottom: 0, left: 25, right: 25 }}
+        ></DhemaxText>
       </View>
     </SafeAreaView>
   );

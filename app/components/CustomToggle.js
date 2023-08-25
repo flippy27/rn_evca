@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors } from "../configs/common";
 
-export const CustomToggle = () => {
-  const [toggle, setToggle] = useState(false);
+export const CustomToggle = ({toggle,onToggleChange}) => {
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.button, toggle ? styles.buttonActive : {}]}
-        onPress={() => setToggle(!toggle)}
+        onPress={()=>onToggleChange(!toggle)}
       >
         <View
           style={[styles.innerCircle, toggle ? styles.innerCircleActive : {}]}
@@ -25,10 +24,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    width: 40, // Assuming 12 units = 48 pixels in RN
+    width: 40, 
     height: 24,
-    backgroundColor: "#FFF", // Gray-200
-    borderRadius: 9999, // Rounded-full in Tailwind
+    backgroundColor: "#FFF", 
+    borderRadius: 9999, 
     
     borderWidth: 2,
     borderColor: Colors.COMPANY.PRIMARY,
@@ -37,25 +36,26 @@ const styles = StyleSheet.create({
 
   },
   buttonActive: {
-    backgroundColor: Colors.COMPANY.PRIMARY, // Green-300
+    backgroundColor: Colors.COMPANY.PRIMARY, 
   },
   innerCircle: {
-    height: 24, // 6 units
-    width: 24, // 6 units
+    height: 24, 
+    width: 24, 
     backgroundColor: "white",
-    borderRadius: 16, // Rounded-full in Tailwind
+    borderRadius: 16, 
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 5,
     borderWidth:2,
-    borderColor: Colors.COMPANY.PRIMARY
+    borderColor: Colors.COMPANY.PRIMARY,
+    marginLeft: -2,
   },
   innerCircleActive: {
-    transform: [{ translateX: 14 }], // Assuming 6 units = 24 pixels in RN
+    transform: [{ translateX: 16 }], 
   },
 });

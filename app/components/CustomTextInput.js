@@ -8,6 +8,7 @@ export const CustomTextInput = (props) => {
       style={[styles.field, props.style]}
       {...props}
       placeholder={props.placeholder}
+      
     />
   );
 };

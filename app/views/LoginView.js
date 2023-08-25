@@ -14,13 +14,27 @@ import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [email, setEmail] = useState(w_email);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     setEmail(w_email);
   }, []);
 
-  const [email, setEmail] = useState(w_email);
-  const [password, setPassword] = useState("");
+  const checkValidity = ({ email, password, password2, toggle }) => {
+    console.log(email, password, password2);
+    if (!is_valid_email({ email })) {
+      setButtonDisabled(true);
+      return;
+    }
+    if (!is_valid_password({ password })) {
+      setButtonDisabled(true);
+      return;
+    }
+
+    setButtonDisabled(false);
+  };
 
   const handleLogin = async () => {
     console.log("empas", email, password);
@@ -34,9 +48,11 @@ export const LoginView = ({ route, navigation }) => {
     }
   };
   const handleEmailChange = (text) => {
+    checkValidity({ email: text, password });
     setEmail(text);
   };
   const handlePasswordChange = (text) => {
+    checkValidity({ email, password: text });
     setPassword(text);
   };
 
@@ -48,22 +64,26 @@ export const LoginView = ({ route, navigation }) => {
           <HoldingBlock>
             <Text style={styles.text}>Ingresa tu correo</Text>
             <CustomTextInput value={email} onChangeText={handleEmailChange} />
-            <View style={{ paddingBottom: 15 }}>
-              <Text style={styles.info}>
-                Hemos detectado que ya estás registrado.
-              </Text>
-              <Text style={styles.info}>Por favor ingresa tu contraseña</Text>
-            </View>
-            <View style={{ paddingBottom: 30 }}>
-              <Text style={styles.text}>Ingresa tu contraseña</Text>
 
-              <CustomSecureTextInput
-                value={password}
-                onChangeText={handlePasswordChange}
-              />
-            </View>
+            <Text
+              style={[styles.info, { paddingTop: 20, paddingHorizontal: 10 }]}
+            >
+              Hemos detectado que ya estás registrado.
+            </Text>
+            <Text style={[styles.info, { paddingHorizontal: 10 }]}>
+              Por favor ingresa tu contraseña
+            </Text>
 
-            <View style={{ paddingBottom: 20 }}>
+            <Text style={[styles.text, { paddingTop: 20 }]}>
+              Ingresa tu contraseña
+            </Text>
+
+            <CustomSecureTextInput
+              value={password}
+              onChangeText={handlePasswordChange}
+            />
+
+            <View style={{ paddingVertical: 20 }}>
               <CustomButton
                 text={"Siguiente"}
                 type={"primary"}
@@ -71,6 +91,7 @@ export const LoginView = ({ route, navigation }) => {
                 padding={10}
                 width={180}
                 onPress={handleLogin}
+                disabled={buttonDisabled}
               />
             </View>
           </HoldingBlock>
@@ -93,6 +114,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: `Montserrat-Regular`,
     width: "100%",
- 
   },
 });

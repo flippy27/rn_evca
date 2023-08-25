@@ -10,6 +10,7 @@ export const CustomButton = ({
   onPress,
   fontsize,
   underline = "none",
+  disabled = false,
 }) => {
   const bd = () => {
     if (type == "primary") {
@@ -58,7 +59,11 @@ export const CustomButton = ({
   return (
     <Pressable
       style={({ pressed }) => ({
-        backgroundColor: pressed ? bd().background_pressed : bd().background, // adjust the rgba value to your base color
+        backgroundColor: disabled
+          ? bd().background_disabled
+          : pressed
+          ? bd().background_pressed
+          : bd().background, // adjust the rgba value to your base color
         padding: padding,
         alignItems: "center",
         borderRadius: 9999,
@@ -68,10 +73,11 @@ export const CustomButton = ({
         borderColor: bd().borderColor,
       })}
       onPress={onPress}
+      disabled={disabled}
     >
       <Text
         style={{
-          color: bd().color,
+          color: disabled ? bd().color_disabled : bd().color,
           fontFamily: "Montserrat-Semi",
           textDecorationLine: type == "link" ? underline : "none",
           fontSize: fontsize,
