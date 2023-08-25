@@ -15,6 +15,64 @@ const markersData = [
   { id: 3, latitude: -33.0273086, longitude: -71.5485086, title: "Marker 3" },
   // ... add more markers as needed
 ];
+
+const mock_pool = {
+  id: 1,
+  pool_name: "L1 Voltex01",
+  pool_address: "Vicente Reyes 224,Viña del Mar, Valparaíso, Chile",
+  pool_latitude: -33.029262,
+  pool_longitude: -71.58064,
+  stations: [
+    {
+      id: 24,
+      lineas_id: 1,
+      station_name: "DEV-EMULATOR-00003",
+      station_alias: null,
+      station_status: 1,
+      station_identifier: null,
+      connectors: [],
+    },
+    {
+      id: 23,
+      lineas_id: 1,
+      station_name: "DEV-EMULATOR-00002",
+      station_alias: null,
+      station_status: 1,
+      station_identifier: 123456789,
+      connectors: [
+        {
+          id: 166,
+          connector_name: "CON-DEV",
+          connector_number: 1,
+          connector_alias: "CON-DEV-EMU",
+          connector_type: "EVPhysicalConnectorType_GBT_DC",
+          connector_type_alias: "GB/T_DC",
+          connector_status: "Available",
+        },
+      ],
+    },
+    {
+      id: 12,
+      lineas_id: 1,
+      station_name: "56722441970181",
+      station_alias: "WEEYU 05",
+      station_status: 1,
+      station_identifier: 56722441970181,
+      connectors: [
+        {
+          id: 16,
+          connector_name: "NameConector",
+          connector_number: 1,
+          connector_alias: "AliasConector",
+          connector_type: "EVPhysicalConnectorType_IEC_62196_T2",
+          connector_type_alias: "Tipo 2",
+          connector_status: "Preparing",
+        },
+      ],
+    },
+  ],
+};
+
 export const CenterButton = ({ onCenter }) => {
   return (
     <View style={styles.centerButtonContainer}>
@@ -94,12 +152,15 @@ export const PoolMapView = () => {
               latitude: marker.latitude,
               longitude: marker.longitude,
             }}
+            onPress={() => {
+              navigation.navigate("PoolDetail", { pool: mock_pool });
+            }}
           >
             <MapPin
               example={marker.title}
               color={Colors.PIN.ALL_AVAILABLE}
               onPress={() => {
-                navigation.navigate("PoolDetail");
+                console.log("clicking ");
               }}
             />
           </Marker>

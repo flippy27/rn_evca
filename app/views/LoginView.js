@@ -1,17 +1,17 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CustomTextInput } from "../components/CustomTextInput";
-import { CustomSecureTextInput } from "../components/CustomSecureTextInput";
-import { HoldingBlock } from "../components/HoldingBlock";
-import { CustomText } from "../components/CustomText";
-import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 import { useEffect, useState } from "react";
-import { loginUser } from "../hooks/hooks";
-import { COMPANY } from "../configs/global";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../components/CustomButton";
-import { TextAndLogo } from "../components/TextAndLogo";
+import { CustomSecureTextInput } from "../components/CustomSecureTextInput";
+import { CustomTextInput } from "../components/CustomTextInput";
 import { DhemaxText } from "../components/DhemaxText";
+import { HoldingBlock } from "../components/HoldingBlock";
+import { TextAndLogo } from "../components/TextAndLogo";
+import { Colors } from "../configs/common";
+import { COMPANY } from "../configs/global";
+import { loginUser } from "../hooks/hooks";
+import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
+
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
 
@@ -41,30 +41,58 @@ export const LoginView = ({ route, navigation }) => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <TextAndLogo></TextAndLogo>
-      <HoldingBlock>
-        <CustomTextInput value={email} onChangeText={handleEmailChange} />
-        <CustomText type="info">
-          Hemos detectado que ya estás registrado.
-        </CustomText>
-        <CustomText type="info">Por favor ingresa tu contraseña</CustomText>
-        <CustomSecureTextInput
-          value={password}
-          onChangeText={handlePasswordChange}
-        />
-        <TouchableOpacity
-          style={{ borderRadius: 50, backgroundColor: "blue", height: 40 }}
-          title="Siguiente"
-          onPress={handleLogin}
-        >
-          <Text>Siguiente</Text>
-        </TouchableOpacity>
-        <Text style={{ fontFamily: "Montserrat-Regular" }}>
-          we're in login view
-        </Text>
-      </HoldingBlock>
-      <DhemaxText></DhemaxText>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1, padding: 25, justifyContent: "space-between" }}>
+        <View>
+          <TextAndLogo></TextAndLogo>
+          <HoldingBlock>
+            <Text style={styles.text}>Ingresa tu correo</Text>
+            <CustomTextInput value={email} onChangeText={handleEmailChange} />
+            <View style={{ paddingBottom: 15 }}>
+              <Text style={styles.info}>
+                Hemos detectado que ya estás registrado.
+              </Text>
+              <Text style={styles.info}>Por favor ingresa tu contraseña</Text>
+            </View>
+            <View style={{ paddingBottom: 30 }}>
+              <Text style={styles.text}>Ingresa tu contraseña</Text>
+
+              <CustomSecureTextInput
+                value={password}
+                onChangeText={handlePasswordChange}
+              />
+            </View>
+
+            <View style={{ paddingBottom: 20 }}>
+              <CustomButton
+                text={"Siguiente"}
+                type={"primary"}
+                fontsize={18}
+                padding={10}
+                width={180}
+                onPress={handleLogin}
+              />
+            </View>
+          </HoldingBlock>
+        </View>
+        <DhemaxText></DhemaxText>
+      </View>
+    </SafeAreaView>
   );
 };
+const styles = StyleSheet.create({
+  text: {
+    color: Colors.APP.DARK_GRAY,
+    fontFamily: `Montserrat-Semi`,
+    fontSize: 18,
+    width: "100%",
+    padding: 10,
+  },
+  info: {
+    color: Colors.COMPANY.PRIMARY_DARK,
+    fontSize: 12,
+    fontFamily: `Montserrat-Regular`,
+    width: "100%",
+ 
+  },
+});

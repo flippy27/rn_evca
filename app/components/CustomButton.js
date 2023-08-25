@@ -1,7 +1,16 @@
 import { Pressable, Text } from "react-native";
 import { Colors } from "../configs/common";
 
-export const CustomButton = ({ text, type, padding, width, height, onPress, fontsize}) => {
+export const CustomButton = ({
+  text,
+  type,
+  padding,
+  width,
+  height,
+  onPress,
+  fontsize,
+  underline = "none",
+}) => {
   const bd = () => {
     if (type == "primary") {
       return {
@@ -64,8 +73,8 @@ export const CustomButton = ({ text, type, padding, width, height, onPress, font
         style={{
           color: bd().color,
           fontFamily: "Montserrat-Semi",
-          textDecorationLine: type == "link" ? "underline" : "none",
-          fontSize:fontsize
+          textDecorationLine: type == "link" ? underline : "none",
+          fontSize: fontsize,
         }}
       >
         {text}
