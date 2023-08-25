@@ -4,15 +4,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons"; // or any other icon library you prefer
 import { PoolMapView } from "../views/PoolMapView";
+import { ChargeHistoryView } from "../views/ChargeHistoryView";
 const Tab = createBottomTabNavigator();
 
 // Sample views
 function View1() {
-  return (
-    <View>
-      <Text>View 1</Text>
-    </View>
-  );
+  return <ChargeHistoryView />;
 }
 
 function View2() {

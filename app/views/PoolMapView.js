@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, Button,Pressable } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { MapPin } from "../components/MapPin";
 import { Colors } from "../configs/common";
 
@@ -7,7 +7,6 @@ import * as Location from "expo-location";
 
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
-import { CustomMarker } from "../components/CustomMarker";
 import { MapModal } from "../components/MapModal";
 
 const markersData = [
@@ -24,7 +23,7 @@ export const CenterButton = ({ onCenter }) => {
     </View>
   );
 };
-export const HelpDialogButton = ({setModal}) => {
+export const HelpDialogButton = ({ setModal }) => {
   return (
     <View style={styles.centerButtonContainer2}>
       <Pressable onPress={() => setModal(true)}>
@@ -107,8 +106,11 @@ export const PoolMapView = () => {
         ))}
       </MapView>
       <CenterButton onCenter={centerMapOnUser} />
-      <HelpDialogButton setModal={setIsModalVisible}/>
-      <MapModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
+      <HelpDialogButton setModal={setIsModalVisible} />
+      <MapModal
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
     </View>
   );
 };
