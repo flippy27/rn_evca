@@ -130,7 +130,41 @@ export const checkUser = (companyId, email) => {
     });
   });
 };
+export const usePool = (company) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const fetchUsePool = useCallback(() => {
+    setLoading(true);
 
+    // Form the endpoint URL with company parameter
+    fetch(`${API_URL}pools/?company=${company}`)
+    .then((response) => {
+      if (response.status > 499) {
+        throw new Error("Server error");
+      }
+      return response.json();
+    })
+    .then((responseJson) => {
+      setData(responseJson);
+      setLoading(false);
+    })
+    .catch((err) => {
+      setError(err);
+      setLoading(false);
+    });
+  }, []); 
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchUsePool(company);
+    }, 10000); //Time
+
+    return () => clearInterval(intervalId); 
+  }, [fetchUsePool]);
+
+  return { data, loading, error };
+};
 
 export const loginUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {

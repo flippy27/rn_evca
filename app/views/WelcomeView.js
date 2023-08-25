@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { CustomButton } from "../components/CustomButton";
 import { CustomText } from "../components/CustomText";
 import { CustomTextInput } from "../components/CustomTextInput";
+import { DhemaxText } from "../components/DhemaxText";
 import { HoldingBlock } from "../components/HoldingBlock";
 import { TextAndLogo } from "../components/TextAndLogo";
 import { COMPANY } from "../configs/global";
-import { checkUser } from "../hooks/hooks";
+import { checkUser, usePool } from "../hooks/hooks";
 import { is_valid_email } from "../utils/LoginUtils";
-import { DhemaxText } from "../components/DhemaxText";
+
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
@@ -46,11 +47,9 @@ export const WelcomeView = ({ navigation }) => {
         <View style={{alignItems:'center'}}>
       <CustomButton text={"Siguiente"} type={"primary"} fontsize={18} padding={10} width={180} onPress={handleEmailCheck} />
       <CustomButton text={"Saltar inicio de sesión"} type={"link"} fontsize={18} padding={0} width={230} onPress={handleSkipLogin} />
-        
         </View>
-      
       </HoldingBlock>
       <DhemaxText></DhemaxText>
-    </View>
+       </View>
   );
 };

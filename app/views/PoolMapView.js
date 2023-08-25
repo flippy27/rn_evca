@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { MapPin } from "../components/MapPin";
-import { Colors } from "../configs/common";
 
 import * as Location from "expo-location";
 
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { MapModal } from "../components/MapModal";
+import { COMPANY } from "../configs/global";
+import { usePinMaker } from "../components/PinMaker";
 
 const markersData = [
   { id: 1, latitude: -33.0271086, longitude: -71.5489086, title: "Marker 1" },
@@ -34,6 +35,8 @@ export const HelpDialogButton = ({ setModal }) => {
   );
 };
 export const PoolMapView = () => {
+  const markersData2 = usePinMaker(COMPANY);
+  console.log(markersData2[0].pool.pool_latitute, 'a');
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -86,18 +89,18 @@ export const PoolMapView = () => {
         showsCompass={false}
         showsMyLocationButton={false}
       >
-        {markersData.map((marker) => (
+        {markersData2.map((marker) => (
           <Marker
             tracksViewChanges={false}
             key={marker.id}
             coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
+              latitude: marker.pool.pool_latitude,
+              longitude: marker.pool.pool_longitude,
             }}
           >
             <MapPin
-              example={marker.title}
-              color={Colors.PIN.ALL_AVAILABLE}
+              example={marker.text}
+              color={marker.color}
               onPress={() => {
                 navigation.navigate("PoolDetail");
               }}
