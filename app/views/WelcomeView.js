@@ -8,7 +8,6 @@ import { TextAndLogo } from "../components/TextAndLogo";
 import { COMPANY } from "../configs/global";
 import { checkUser, usePool } from "../hooks/hooks";
 import { is_valid_email } from "../utils/LoginUtils";
-import { DhemaxText } from "../components/DhemaxText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../configs/common";
 

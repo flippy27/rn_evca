@@ -15,6 +15,8 @@ const COMPANY_COLORS = () => {
       SECONDARY_DISABLED: "#FFF",
 
       PRIMARY_DISABLED: "#1C355E10",
+
+      COMPANY_LOGO: "dhemax",
     };
   } else if (COMPANY == "6dae7536-27c3-4c10-9a49-ff303e7d925f") {
     com_col = {
@@ -27,9 +29,11 @@ const COMPANY_COLORS = () => {
       SECONDARY_DISABLED: "#FFF",
 
       PRIMARY_DISABLED: "#FF355E10",
+
+      COMPANY_LOGO: "copec",
     };
   }
-  return com_col
+  return com_col;
 };
 
 export const Colors = {
