@@ -8,6 +8,7 @@ import { TextAndLogo } from "../components/TextAndLogo";
 import { COMPANY } from "../configs/global";
 import { checkUser } from "../hooks/hooks";
 import { is_valid_email } from "../utils/LoginUtils";
+import { DhemaxText } from "../components/DhemaxText";
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const handleEmailCheck = async () => {
