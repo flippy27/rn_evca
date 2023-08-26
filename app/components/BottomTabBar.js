@@ -7,8 +7,40 @@ import { PoolMapView } from "../views/PoolMapView";
 import ConfigIcon from "./icons/config_icon";
 import HistorialIcon from "./icons/historial_icon";
 import MapIcon from "./icons/map_icon";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { PoolDetailView } from "../views/PoolDetailView";
+import { StartStopChargeView } from "../views/StartStopChargeView";
 
 const Tab = createBottomTabNavigator();
+const MapStack = createNativeStackNavigator();
+
+function PoolMapStack() {
+  return (
+    <MapStack.Navigator initialRouteName="PoolMapMain">
+      <MapStack.Screen
+        name="PoolMapMain"
+        component={PoolMapView}
+        options={{ headerShown: false }}
+      />
+      <MapStack.Screen
+        name="PoolDetail"
+        component={PoolDetailView}
+        options={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "white" },
+        }}
+      />
+      <MapStack.Screen
+        name="ChargeScreen"
+        component={StartStopChargeView}
+        options={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "white" },
+        }}
+      />
+    </MapStack.Navigator>
+  );
+}
 
 // Sample views
 function View1() {
@@ -43,7 +75,7 @@ export const BottomTabBar = () => {
       />
       <Tab.Screen
         name="Mapa"
-        component={View2}
+        component={PoolMapStack}
         options={{
           contentStyle: { backgroundColor: "white" },
           headerShown: false,
@@ -114,7 +146,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         };
 
         return (
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }} key={route.key}>
             <Pressable
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}

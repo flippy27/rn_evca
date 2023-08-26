@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
-import { Text, View, FlatList, Image, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../components/CustomButton";
-import { Colors } from "../configs/common";
 import { DottedLine } from "../components/DottedLine";
-import CCS1 from "../components/icons/CCS1";
+import ArrowIcon from "../components/icons/ArrowIcon";
+import { Colors, Connector } from "../configs/common";
 
 export const PoolDetailView = ({ route }) => {
+  const navigation = useNavigation();
+
   const {
     pool,
     pool: { stations },
@@ -13,37 +16,55 @@ export const PoolDetailView = ({ route }) => {
       stations: { connectors },
     },
   } = route.params;
-  console.log("jp", pool);
+
+  const handleBackButton = () => {
+    navigation.goBack();
+  };
 
   return (
-    <View style={{ padding: 30 }}>
-      <View style={{ flexDirection: "row" }}>
-
-        <Text>{"<-"}</Text>
-        <Text>{pool.pool_name}, </Text>
-        <Text>{pool.pool_address}</Text>
-        <Text>a {"1,1Km de tu ubicación"}</Text>
-      </View>
-      <View style={{ alignItems: "flex-end" }}>
-        <CustomButton
-          type={"primary"}
-          text={"Cómo llegar"}
-          padding={7}
-          width={120}
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ paddingHorizontal: 30, flex: 1, paddingVertical: 10 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Pressable onPress={handleBackButton}>
+            <ArrowIcon />
+          </Pressable>
+          <Text style={styles.textBlueBold}>
+            {pool.pool_name},{" "}
+            <Text style={styles.textBlue}>{pool.pool_address}</Text>{" "}
+            <Text style={styles.textBlueBold}>a {"1,1Km de tu ubicación"}</Text>
+          </Text>
+        </View>
+        <View style={{ alignItems: "flex-end" }}>
+          <CustomButton
+            type={"primary"}
+            text={"Cómo llegar"}
+            padding={7}
+            width={120}
+          />
+        </View>
+        <FlatList
+          data={stations}
+          renderItem={({ item }) => (
+            <StationItem item={item} navigation={navigation} pool={pool} />
+          )}
+          keyExtractor={(item) => item.id || uuidv4()}
         />
       </View>
-      <FlatList
-        data={stations}
-        renderItem={({ item }) => <StationItem item={item} />}
-        keyExtractor={(item) => item.id || uuidv4()}
-      />
-    </View>
+    </SafeAreaView>
   );
 };
 
-const StationItem = ({ item }) => {
+const StationItem = ({ item, navigation, pool }) => {
+  const station = item;
   return (
-    <View style={{paddingVertical:10}}>
+    <View style={{ paddingVertical: 10 }}>
       <Text
         style={{
           fontFamily: "Montserrat-Bold",
@@ -56,7 +77,14 @@ const StationItem = ({ item }) => {
       <View style={{ padding: 10 }}>
         <FlatList
           data={item.connectors}
-          renderItem={({ item }) => <ConnectorItem item={item} />}
+          renderItem={({ item }) => (
+            <ConnectorItem
+              item={item}
+              navigation={navigation}
+              pool={pool}
+              station={station}
+            />
+          )}
           keyExtractor={(item) => item.id || uuidv4()}
         />
       </View>
@@ -65,15 +93,15 @@ const StationItem = ({ item }) => {
   );
 };
 
-const ConnectorItem = ({ item }) => {
+const ConnectorItem = ({ item, navigation, pool, station }) => {
   return (
     <Pressable
       style={{ flexDirection: "row" }}
       onPress={() => {
-        console.log("pressing", item);
+        navigation.navigate("ChargeScreen", { pool, connector: item, station });
       }}
     >
-      <CCS1/>
+      {Connector({ name: item.connector_type_alias })}
       <View style={{ gap: 5, padding: 10 }}>
         <Text
           style={{
@@ -93,8 +121,8 @@ const ConnectorItem = ({ item }) => {
 
 const ConnectorStatusItem = ({ status }) => {
   console.log(status);
-  let pin_color = "purple";
-  let text = "default";
+  let pin_color;
+  let text;
   switch (status) {
     case ("Available", "SuspendedEV", "SuspendedEVSE"):
       pin_color = Colors.PIN.ALL_AVAILABLE;
@@ -107,6 +135,11 @@ const ConnectorStatusItem = ({ status }) => {
     case ("Offline", "Faulted", "Unavailable"):
       pin_color = Colors.PIN.UNAVAILABLE;
       text = "No disponible";
+      break;
+    default:
+      pin_color = "purple";
+      text = "Default";
+      break;
   }
   return (
     <Text
@@ -116,3 +149,16 @@ const ConnectorStatusItem = ({ status }) => {
     </Text>
   );
 };
+
+const styles = StyleSheet.create({
+  textBlueBold: {
+    fontFamily: "Montserrat-Bold",
+    fontSize: 16,
+    color: Colors.COMPANY.PRIMARY_DARK,
+  },
+  textBlue: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 16,
+    color: Colors.COMPANY.PRIMARY_DARK,
+  },
+});

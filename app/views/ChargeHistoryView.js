@@ -1,19 +1,14 @@
-import {
-  View,
-  Text,
-  FlatList,
-  Dimensions,
-  StyleSheet,
-  Image,
-} from "react-native";
-import { Colors } from "../configs/common";
-import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useMobileChargeHistory } from "../hooks/hooks";
-import { CHARGE_USER_ID } from "../configs/global";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import { v4 as uuidv4 } from "uuid";
 import { DottedLine } from "../components/DottedLine";
 import CCS1 from "../components/icons/CCS1";
+import { Colors } from "../configs/common";
+import { CHARGE_USER_ID } from "../configs/global";
+import { useMobileChargeHistory } from "../hooks/hooks";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 const ChargeHistoryItem = ({ item }) => {
   return (
     <View style={{ paddingVertical: 10, paddingHorizontal: 30 }}>
@@ -58,23 +53,25 @@ export const ChargeHistoryView = () => {
     setDataArr(data);
   }, []);
   return (
-    <View>
-      <Text
-        style={{
-          color: Colors.COMPANY.PRIMARY_DARK,
-          fontFamily: "Montserrat-Bold",
-          fontSize: 20,
-          paddingHorizontal: 30,
-        }}
-      >
-        Historial
-      </Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <ChargeHistoryItem item={item} />}
-        keyExtractor={(item) => item.id || uuidv4()}
-      />
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text
+          style={{
+            color: Colors.COMPANY.PRIMARY_DARK,
+            fontFamily: "Montserrat-Bold",
+            fontSize: 20,
+            paddingHorizontal: 30,
+          }}
+        >
+          Historial
+        </Text>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <ChargeHistoryItem item={item} />}
+          keyExtractor={(item) => item.id || uuidv4()}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

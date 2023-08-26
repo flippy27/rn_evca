@@ -8,22 +8,22 @@ export function HoldingBlock ({children})  {
   
 }
 const styles = StyleSheet.create({
-  boxWithShadow: {
-    backgroundColor:'#FFF',
-    borderRadius:21,
-    margin:20,
-    padding:20, 
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
+  // boxWithShadow: {
+  //   backgroundColor:'#FFF',
+  //   borderRadius:21,
+  //   margin:20,
+  //   padding:20, 
+  //   shadowColor: "#000",
+  //   shadowOffset: {
+  //     width: 1,
+  //     height: 1,
+  //   },
+  //   shadowOpacity: 0.5,
+  //   shadowRadius: 4,
 
-    elevation: 3,
-    overflow:'hidden'
-  },
+  //   elevation: 3,
+  //   overflow:'hidden'
+  // },
 
   modalView: {
     margin: 20,

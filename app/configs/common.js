@@ -1,3 +1,8 @@
+import CCS1 from "../components/icons/CCS1";
+import CCS2 from "../components/icons/CCS2";
+import GBT_DC from "../components/icons/GBT_DC";
+import Tipo1 from "../components/icons/Tipo1";
+import Tipo2 from "../components/icons/Tipo2";
 import { COMPANY } from "./global";
 
 //COLORS
@@ -55,4 +60,18 @@ export const texts = {
   COMPANY: {
     WELCOME: "Hola",
   },
+};
+
+export const Connector = ({ name }) => {
+  if (name == "Tipo 1") {
+    return <Tipo1 />;
+  } else if (name == "Tipo 2" || name == "IEC Tipo 2") {
+    return <Tipo2 />;
+  } else if (name == "CCS1") {
+    return <CCS1 />;
+  } else if (name == "CCS2") {
+    return <CSS2 />;
+  } else if (name == "GB/T_DC") {
+    return <GBT_DC />;
+  }
 };

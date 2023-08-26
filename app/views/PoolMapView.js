@@ -94,7 +94,6 @@ export const HelpDialogButton = ({ setModal }) => {
 };
 export const PoolMapView = () => {
   const markersData2 = usePinMaker(COMPANY);
-  console.log(markersData2[0].pool.pool_latitute, 'a');
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
