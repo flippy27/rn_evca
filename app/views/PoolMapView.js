@@ -9,6 +9,11 @@ import MapView, { Marker } from "react-native-maps";
 import { MapModal } from "../components/MapModal";
 import { COMPANY } from "../configs/global";
 import { usePinMaker } from "../components/PinMaker";
+import { CustomButton } from "../components/CustomButton";
+
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CenterMapIcon from "../components/icons/CenterMapIcon";
+import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 
 const markersData = [
   { id: 1, latitude: -33.0271086, longitude: -71.5489086, title: "Marker 1" },
@@ -75,18 +80,57 @@ const mock_pool = {
 };
 
 export const CenterButton = ({ onCenter }) => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.centerButtonContainer}>
-      <Button title="Center" onPress={onCenter} />
-      {/* Adjust the Button styling as needed */}
+    <View
+      style={[styles.centerButtonContainer, { top: 40 + insets.top, left: 20 }]}
+    >
+      <Pressable
+        onPress={onCenter}
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
+        <CenterMapIcon />
+      </Pressable>
     </View>
   );
 };
-export const HelpDialogButton = ({ setModal }) => {
+export const FilterButton = ({ pools, filtered, setFiltered }) => {
+  const filterPools = () => {
+    return pools.filter((x) => {
+      return parseInt(x.text.split("/")[0]) > 0;
+    });
+  };
+  const insets = useSafeAreaInsets();
+  const handleFilterPressed = () => {
+    setFiltered(!filtered);
+    filterPools();
+  };
   return (
-    <View style={styles.centerButtonContainer2}>
-      <Pressable onPress={() => setModal(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
+    <View style={[styles.filterButtonContainer, { top: 15 + insets.top }]}>
+      <CustomButton
+        type={filtered?"secondary":"primary"}
+        text={filtered?"Ver todos":"Filtrar disponibles"}
+        padding={5}
+        width={150}
+        onPress={() => handleFilterPressed()}
+      ></CustomButton>
+    </View>
+  );
+};
+
+export const HelpDialogButton = ({ setModal }) => {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View
+      style={[styles.helpButtonContainer, { top: 110 + insets.top, left: 20 }]}
+    >
+      <Pressable
+        onPress={() => setModal(true)}
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
+        <QuestionMarkIcon />
       </Pressable>
       {/* Adjust the Button styling as needed */}
     </View>
@@ -97,6 +141,8 @@ export const PoolMapView = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filteredMarkers, setFilteredMarkers] = useState(markersData2);
   const mapRef = useRef(null);
   const navigation = useNavigation();
 
@@ -168,6 +214,11 @@ export const PoolMapView = () => {
           </Marker>
         ))}
       </MapView>
+      <FilterButton
+        pools={markersData2}
+        filtered={isFiltered}
+        setFiltered={setIsFiltered}
+      />
       <CenterButton onCenter={centerMapOnUser} />
       <HelpDialogButton setModal={setIsModalVisible} />
       <MapModal
@@ -189,11 +240,25 @@ const styles = StyleSheet.create({
   centerButtonContainer: {
     position: "absolute",
     bottom: 10,
-    alignSelf: "center", // this will center the button horizontally
+    alignSelf: "center",
+    backgroundColor: "#FFF",
+    width: 54,
+    height: 54,
+    borderRadius: 999,
   },
-  centerButtonContainer2: {
+  filterButtonContainer: {
+    position: "absolute",
+    alignSelf: "center",
+  },
+  helpButtonContainer: {
     position: "absolute",
     bottom: 10,
+    left: 10,
+    top: 10,
+    backgroundColor: "#FFF",
+    width: 54,
+    height: 54,
+    borderRadius: 999,
     alignSelf: "start", // this will center the button horizontally
   },
 });
