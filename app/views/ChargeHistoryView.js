@@ -47,13 +47,10 @@ const ChargeHistoryItem = ({ item }) => {
   );
 };
 export const ChargeHistoryView = () => {
-  const [dataArr, setDataArr] = useState([]);
   const { data } = useMobileChargeHistory(CHARGE_USER_ID);
-  useEffect(() => {
-    setDataArr(data);
-  }, []);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View>
         <Text
           style={{
@@ -66,7 +63,7 @@ export const ChargeHistoryView = () => {
           Historial
         </Text>
         <FlatList
-          data={data}
+          data={data?.slice(0, 15)}
           renderItem={({ item }) => <ChargeHistoryItem item={item} />}
           keyExtractor={(item) => item.id || uuidv4()}
         />

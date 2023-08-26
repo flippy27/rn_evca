@@ -23,7 +23,7 @@ const COMPANY_COLORS = () => {
 
       COMPANY_LOGO: "dhemax",
     };
-  } else if (COMPANY == "6dae7536-27c3-4c10-9a49-ff303e7d925f") {
+  } else if (COMPANY == "23ad7a11-0e23-40bc-be90-11ee80019d88") {
     com_col = {
       PRIMARY: "#FF5484",
       PRIMARY_DARK: "#FF355E",

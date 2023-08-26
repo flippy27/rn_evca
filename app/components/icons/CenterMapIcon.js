@@ -1,5 +1,6 @@
 import * as React from "react"
 import Svg, { Path, Circle } from "react-native-svg"
+import { Colors } from "../../configs/common"
 
 function CenterMapIcon(props) {
   return (
@@ -7,17 +8,17 @@ function CenterMapIcon(props) {
       width={28}
       height={28}
       viewBox="0 0 28 28"
-      fill="none"
+      fill={Colors.COMPANY.PRIMARY_DARK}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <Path d="M0 14h28M14 0v28" stroke="#1C355E" strokeWidth={2} />
+      <Path d="M0 14h28M14 0v28" stroke={Colors.COMPANY.PRIMARY_DARK} strokeWidth={2} />
       <Circle
         cx={14.0001}
         cy={14.0001}
         r={11.0909}
         fill="#fff"
-        stroke="#1C355E"
+        stroke={Colors.COMPANY.PRIMARY_DARK}
         strokeWidth={2}
       />
       <Circle
@@ -25,7 +26,7 @@ function CenterMapIcon(props) {
         cy={5.72727}
         r={5.72727}
         transform="matrix(-1 0 0 1 19.727 8.273)"
-        fill="#1C355E"
+        fill={Colors.COMPANY.PRIMARY_DARK}
       />
     </Svg>
   )

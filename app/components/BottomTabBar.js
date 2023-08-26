@@ -97,7 +97,7 @@ function MyTabBar({ state, descriptors, navigation }) {
     <View
       style={{
         flexDirection: "row",
-        height: 120,
+        height: 121,
       }}
     >
       {state.routes.map((route, index) => {
@@ -147,33 +147,43 @@ function MyTabBar({ state, descriptors, navigation }) {
 
         return (
           <View style={{ flex: 1 }} key={route.key}>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityState={isFocused ? { selected: true } : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
+            <View
               style={{
                 flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: isFocused ? Colors.COMPANY.PRIMARY : "white",
-                borderRadius: 30,
+                // alignItems: "center",
+                // justifyContent: "center",
+                backgroundColor: isFocused ? Colors.COMPANY.PRIMARY_DARK : "white",
+                borderRadius: 14,
+                marginVertical:10,
+                marginHorizontal:23
               }}
             >
-              {renderIcon(route.name, isFocused)}
-              <Text
+              <Pressable
+                accessibilityRole="button"
+                accessibilityState={isFocused ? { selected: true } : {}}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                testID={options.tabBarTestID}
+                onPress={onPress}
+                onLongPress={onLongPress}
                 style={{
-                  color: isFocused ? "white" : Colors.COMPANY.PRIMARY,
-                  fontFamily: "Montserrat-Semi",
-                  fontSize: 15,
-                  paddingTop: 5,
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                {label}
-              </Text>
-            </Pressable>
+                {renderIcon(route.name, isFocused)}
+                <Text
+                  style={{
+                    color: isFocused ? "white" : Colors.COMPANY.PRIMARY_DARK,
+                    fontFamily: "Montserrat-Semi",
+                    fontSize: 15,
+                    paddingTop: 5,
+                  }}
+                >
+                  {label}
+                </Text>
+              </Pressable>
+            </View>
           </View>
         );
       })}

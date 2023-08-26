@@ -105,8 +105,9 @@ export const useMobileChargeHistory = (id) => {
 
   useEffect(() => {
     fetchMobileChargeHistory();
-  }, [fetchMobileChargeHistory]);
-  return { data, loading, error};
+  }, []);  // Use an empty dependency array to run only on the first render
+
+  return { data, loading, error };
 };
 
 export const checkUser = (companyId, email) => {
