@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../components/CustomButton";
 import { CustomSecureTextInput } from "../components/CustomSecureTextInput";
@@ -63,7 +69,11 @@ export const LoginView = ({ route, navigation }) => {
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>
             <Text style={styles.text}>Ingresa tu correo</Text>
-            <CustomTextInput value={email} onChangeText={handleEmailChange} />
+            <CustomTextInput
+              value={email}
+              onChangeText={handleEmailChange}
+              keyboardType={"email-address"}
+            />
 
             <Text
               style={[styles.info, { paddingTop: 20, paddingHorizontal: 10 }]}
@@ -81,6 +91,7 @@ export const LoginView = ({ route, navigation }) => {
             <CustomSecureTextInput
               value={password}
               onChangeText={handlePasswordChange}
+              keyboardType={"default"}
             />
 
             <View style={{ paddingVertical: 20 }}>
@@ -97,15 +108,17 @@ export const LoginView = ({ route, navigation }) => {
           </HoldingBlock>
         </View>
       </View>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: Platform.OS == "android" ? 40 : 20,
-        }}
-      >
-        <DhemaxText></DhemaxText>
-      </View>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : "padding"}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginBottom: Platform.OS == "android" ? 40 : 20,
+          }}
+        >
+          <DhemaxText></DhemaxText>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

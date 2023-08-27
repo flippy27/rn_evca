@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView,Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomSecureTextInput } from "../components/CustomSecureTextInput";
 import { CustomText } from "../components/CustomText";
@@ -98,7 +98,11 @@ export const RegisterView = ({ route, navigation }) => {
           <TextAndLogo></TextAndLogo>
           <HoldingBlock style={{ padding: 20 }}>
             <Text style={styles.text}>Ingresa tu correo</Text>
-            <CustomTextInput value={email} onChangeText={handleEmailChange} />
+            <CustomTextInput
+              value={email}
+              onChangeText={handleEmailChange}
+              keyboardType={"email-address"}
+            />
 
             <Text style={[styles.text, { paddingTop: 20 }]}>
               Ingresa tu contraseña
@@ -106,6 +110,7 @@ export const RegisterView = ({ route, navigation }) => {
             <CustomSecureTextInput
               value={password}
               onChangeText={handlePass1Change}
+              keyboardType={"default"}
             />
             <Text style={[styles.text, { paddingTop: 20 }]}>
               Confirma tu contraseña
@@ -113,6 +118,7 @@ export const RegisterView = ({ route, navigation }) => {
             <CustomSecureTextInput
               value={password2}
               onChangeText={handlePass2Change}
+              keyboardType={"default"}
             />
 
             <View
@@ -145,17 +151,18 @@ export const RegisterView = ({ route, navigation }) => {
             </View>
           </HoldingBlock>
         </View>
-       
       </View>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: Platform.OS == "android" ? 40 : 20,
-        }}
-      >
-        <DhemaxText></DhemaxText>
-      </View>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : "padding"}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginBottom: Platform.OS == "android" ? 40 : 20,
+          }}
+        >
+          <DhemaxText></DhemaxText>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

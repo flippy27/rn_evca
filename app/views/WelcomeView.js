@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { CustomButton } from "../components/CustomButton";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { DhemaxText } from "../components/DhemaxText";
@@ -59,6 +65,7 @@ export const WelcomeView = ({ navigation }) => {
                 placeholder={"hola@dhemax.com"}
                 value={email}
                 onChangeText={handleInputChange}
+                keyboardType={"email-address"}
               />
             </View>
             <View style={{ alignItems: "center", gap: 20, paddingBottom: 30 }}>
@@ -83,15 +90,17 @@ export const WelcomeView = ({ navigation }) => {
           </HoldingBlock>
         </View>
       </View>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: Platform.OS == "android" ? 40 : 20,
-        }}
-      >
-        <DhemaxText></DhemaxText>
-      </View>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : ""}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginBottom: Platform.OS == "android" ? 40 : 20,
+          }}
+        >
+          <DhemaxText></DhemaxText>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
