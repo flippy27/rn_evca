@@ -132,7 +132,7 @@ export const usePool = (company) => {
     setLoading(true);
 
     // Form the endpoint URL with company parameter
-    fetch(`${QA_URL}pools/?company=${company}`)
+    fetch(`${API_URL}pools/?company=${company}`)
       .then((response) => {
         if (response.status > 499) {
           throw new Error("Server error");
