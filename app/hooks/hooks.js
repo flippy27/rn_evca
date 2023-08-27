@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-const API_URL = "https://evca.dev.dhemax.link/api/v1/";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc";
+import { useState, useEffect, useCallback } from 'react';
+const API_URL = 'https://evca.dev.dhemax.link/api/v1/';
+const QA_URL="https://evca.qa.dhemax.link/api/v1/"
+const token= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc'
 
 export const registerUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {
@@ -127,11 +127,12 @@ export const usePool = (company) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const fetchUsePool = useCallback(() => {
     setLoading(true);
 
     // Form the endpoint URL with company parameter
-    fetch(`${API_URL}pools/?company=${company}`)
+    fetch(`${QA_URL}pools/?company=${company}`)
       .then((response) => {
         if (response.status > 499) {
           throw new Error("Server error");
@@ -146,19 +147,30 @@ export const usePool = (company) => {
         setError(err);
         setLoading(false);
       });
-  }, []);
+  }, [company]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetchUsePool(company);
-    }, 4000); //Time
+    const timeoutId = setTimeout(() => {
+      fetchUsePool();
 
-    return () => clearInterval(intervalId);
+      const intervalId = setInterval(() => {
+        fetchUsePool();
+      }, 10000); // Regular interval of 10 seconds
+
+      return () => {
+        clearInterval(intervalId);
+      };
+
+    }, 0); // Initial delay of 3 seconds
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+
   }, [fetchUsePool]);
 
   return { data, loading, error };
 };
-
 export const loginUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {
     const dataToSend = { companyId, email, password };
