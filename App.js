@@ -17,8 +17,7 @@ const AppStack = createNativeStackNavigator();
 
 export const MainNavigator = () => (
   <View style={styles.container}>
-    <StatusBar style="dark" />
-
+    <StatusBar style="dark"/>
     <MainStack.Navigator
       screenOptions={{
         headerShown: false,

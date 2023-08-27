@@ -196,7 +196,6 @@ export const startCharge = (equipo, pistola, corrienteMaxima, user_id) => {
         if (response.status > 499) {
           throw new Error("Server error");
         }
-        console.log("start response", response);
         return response.json();
       })
       .then((responseJson) => {
@@ -226,7 +225,6 @@ export const stopCharge = (equipo, pistola) => {
         if (response.status > 499) {
           throw new Error("Server error");
         }
-        console.log("start response", response);
         return response.json();
       })
       .then((responseJson) => {

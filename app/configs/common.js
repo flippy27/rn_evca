@@ -37,6 +37,20 @@ const COMPANY_COLORS = () => {
 
       COMPANY_LOGO: "copec",
     };
+  }else if (COMPANY == "6dae7536-27c3-4c10-9a49-ff303e7d925f") {
+    com_col = {
+      PRIMARY: "#005484",
+      PRIMARY_DARK: "#00355E",
+      PRIMARY_DISABLED: "#00355E80",
+
+      SECONDARY: "#FFF",
+      SECONDARY_DARK: "#00355E10",
+      SECONDARY_DISABLED: "#FFF",
+
+      PRIMARY_DISABLED: "#00355E10",
+
+      COMPANY_LOGO: "copec",
+    };
   }
   return com_col;
 };
