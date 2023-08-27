@@ -22,6 +22,53 @@ const markersData = [
   // ... add more markers as needed
 ];
 
+function haversineDistance(coord1, coord2) {
+  const R = 6371; // Radius of the Earth in km
+  const dLat = (coord2.latitude - coord1.latitude) * (Math.PI / 180);
+  const dLon = (coord2.longitude - coord1.longitude) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(coord1.latitude * (Math.PI / 180)) * Math.cos(coord2.latitude * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function getTwoClosestPins(userLocation, mapPins) {
+  // Calculate the distance for each pin from the user location
+  const distances = mapPins.map(pin => {
+    return {
+      pin: pin,
+      distance: haversineDistance(userLocation, {
+        latitude: pin.pool.pool_latitude,
+        longitude: pin.pool.pool_longitude
+      })
+    };
+  });
+
+  // Sort the distances and pick the first two
+  distances.sort((a, b) => a.distance - b.distance);
+  
+  return distances.slice(0, 2).map(d => d.pin);
+}
+const getBoundingRegion = (points) => {
+  const latitudes = points.map(point => point.latitude);
+  const longitudes = points.map(point => point.longitude);
+  
+  const maxLat = Math.max(...latitudes);
+  const minLat = Math.min(...latitudes);
+  const maxLon = Math.max(...longitudes);
+  const minLon = Math.min(...longitudes);
+  
+  return {
+      latitude: (maxLat + minLat) / 2,
+      longitude: (maxLon + minLon) / 2,
+      latitudeDelta: (maxLat - minLat) + 0.70, // added a small buffer
+      longitudeDelta: (maxLon - minLon) + 0.70  // added a small buffer
+  };
+};
+
+
 const mock_pool = {
   id: 1,
   pool_name: "L1 Voltex01",
@@ -137,7 +184,7 @@ export const HelpDialogButton = ({ setModal }) => {
   );
 };
 export const PoolMapView = () => {
-  const markersData2 = usePinMaker(COMPANY);
+  const markersData2 = usePinMaker('6dae7536-27c3-4c10-9a49-ff303e7d925f');
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -145,6 +192,7 @@ export const PoolMapView = () => {
   const [filteredMarkers, setFilteredMarkers] = useState(markersData2);
   const mapRef = useRef(null);
   const navigation = useNavigation();
+
 
   useEffect(() => {
     (async () => {
@@ -159,8 +207,31 @@ export const PoolMapView = () => {
     })();
   }, []);
 
+  const [centerCoords, setCenterCoords] = useState(null);
+
+  const centerMapIncludingUserAndPools = () => {
+    if (location && markersData2 && markersData2.length > 0) {
+        const twoClosestPins = getTwoClosestPins(location, markersData2);
+  
+        // Create an array of points that includes user location and the two closest pins
+        const points = [
+            { latitude: location.coords.latitude, longitude: location.coords.longitude },
+            { latitude: twoClosestPins[0].pool.pool_latitude, longitude: twoClosestPins[0].pool.pool_longitude },
+            { latitude: twoClosestPins[1].pool.pool_latitude, longitude: twoClosestPins[1].pool.pool_longitude }
+        ];
+  
+        // Get the bounding region using our modified function
+        const boundingRegion = getBoundingRegion(points);
+  
+        // Animate the map to the calculated region
+        mapRef.current.animateToRegion(boundingRegion);
+    }
+};
+useEffect(() => {
+  centerMapIncludingUserAndPools();
+}, [location, markersData2]);
+
   const centerMapOnUser = () => {
-    // Assuming the map ref is called mapRef
     mapRef.current.animateToRegion({
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
@@ -219,7 +290,7 @@ export const PoolMapView = () => {
         filtered={isFiltered}
         setFiltered={setIsFiltered}
       />
-      <CenterButton onCenter={centerMapOnUser} />
+      <CenterButton onCenter={centerMapIncludingUserAndPools} />
       <HelpDialogButton setModal={setIsModalVisible} />
       <MapModal
         isModalVisible={isModalVisible}
