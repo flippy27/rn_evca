@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BackBar } from "../components/BackBar";
@@ -7,7 +7,7 @@ import { CustomButton } from "../components/CustomButton";
 import { HoldingBlock } from "../components/HoldingBlock";
 import { StopChargeModal } from "../components/StopChargeModal";
 import { Colors, Connector } from "../configs/common";
-import { fetchPoolCurrent, startCharge,stopCharge } from "../hooks/hooks";
+import { fetchPoolCurrent, startCharge, stopCharge } from "../hooks/hooks";
 
 export const StartStopChargeView = ({ route }) => {
   const [isCharging, setIsCharging] = useState(false);
@@ -60,9 +60,7 @@ export const StartStopChargeView = ({ route }) => {
     setIsCharging(false);
     setIsChageFinalized(true);
   };
-  const handleBackButton = () => {
-    navigation.goBack();
-  };
+
   const handleCloseVoucher = () => {
     navigation.reset({
       index: 0,
@@ -74,32 +72,6 @@ export const StartStopChargeView = ({ route }) => {
     <SafeAreaView style={{ flex: 1, paddingHorizontal: 30 }}>
       <View style={{ flex: 1 }}>
         <BackBar text1={pool.pool_name} text2={pool.pool_address} />
-
-        {/* DELETE ME */}
-
-        <View style={{ width: "100%" }}>
-          <HoldingBlock>
-            <View style={{ paddingVertical: 20 }}>
-              <Text style={styles.currentChargeTxt}>Carga en curso</Text>
-              <Text style={styles.currentChargeType}>kWh</Text>
-              <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                {status?.kwh}
-              </Text>
-              <Text style={styles.currentChargeType}>Tiempo cargando</Text>
-              <Text style={styles.currentChargeData}>{status?.seconds}</Text>
-            </View>
-          </HoldingBlock>
-          <View style={{ alignItems: "center" }}>
-            <CustomButton
-              type={"secondary"}
-              text={"Detener carga"}
-              onPress={() => setIsModalVisible(true)}
-              padding={10}
-              width={190}
-            />
-          </View>
-        </View>
-        {/* DELETE ME */}
 
         {/* START CHARGER DATA */}
         <View style={{ paddingHorizontal: 10 }}>
@@ -146,10 +118,12 @@ export const StartStopChargeView = ({ route }) => {
                 <Text style={styles.currentChargeTxt}>Carga en curso</Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                  60 kWh
+                  {status?.kwh} kWh
                 </Text>
                 <Text style={styles.currentChargeType}>Tiempo cargando</Text>
-                <Text style={styles.currentChargeData}>25.3 min</Text>
+                <Text style={styles.currentChargeData}>
+                  {status?.seconds} min
+                </Text>
               </View>
             </HoldingBlock>
             <View style={{ alignItems: "center" }}>
@@ -170,10 +144,10 @@ export const StartStopChargeView = ({ route }) => {
                 <Text style={styles.currentChargeTxt}>Carga finalizada!</Text>
                 <Text style={styles.currentChargeType}>Tiempo de carga</Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                  25.3 min
+                {status?.seconds} min
                 </Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
-                <Text style={styles.currentChargeData}>60 kWh</Text>
+                <Text style={styles.currentChargeData}>{status?.kwh} kWh</Text>
               </View>
             </HoldingBlock>
             <View style={{ alignItems: "center" }}>

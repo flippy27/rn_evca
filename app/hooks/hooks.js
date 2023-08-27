@@ -132,7 +132,7 @@ export const usePool = (company) => {
     setLoading(true);
 
     // Form the endpoint URL with company parameter
-    fetch(`${QA_URL}pools/?company=${company}`)
+    fetch(`${API_URL}pools/?company=${company}`)
       .then((response) => {
         if (response.status > 499) {
           throw new Error("Server error");
@@ -155,7 +155,7 @@ export const usePool = (company) => {
 
       const intervalId = setInterval(() => {
         fetchUsePool();
-      }, 10000); // Regular interval of 10 seconds
+      }, 4000); // Regular interval of 10 seconds
 
       return () => {
         clearInterval(intervalId);
@@ -226,7 +226,6 @@ export const startCharge = (equipo, pistola, corrienteMaxima, user_id) => {
         if (response.status > 499) {
           throw new Error("Server error");
         }
-        console.log("start response", response);
         return response.json();
       })
       .then((responseJson) => {
@@ -256,7 +255,6 @@ export const stopCharge = (equipo, pistola) => {
         if (response.status > 499) {
           throw new Error("Server error");
         }
-        console.log("start response", response);
         return response.json();
       })
       .then((responseJson) => {
