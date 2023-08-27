@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PoolDetailView } from "../views/PoolDetailView";
 import { StartStopChargeView } from "../views/StartStopChargeView";
 import AddNewCardView, { NewCardView } from "../views/AddNewCardView";
+import { v4 as uuidv4 } from "uuid";
 
 const Tab = createBottomTabNavigator();
 const MapStack = createNativeStackNavigator();
@@ -136,25 +137,25 @@ function MyTabBar({ state, descriptors, navigation }) {
             case "Mapa":
               return <MapIcon fill={color} />;
             case "Historial":
-              return <HistorialIcon fill={color} />; // Replace 'AnotherIcon' with your other component's name
+              return <HistorialIcon fill={color} />;
             case "Config":
-              return <ConfigIcon fill={color} />; // Similarly, replace 'YetAnotherIcon' with your other component's name
+              return <ConfigIcon fill={color} />;
             default:
               return null;
           }
         };
 
         return (
-          <View style={{ flex: 1 }} key={route.key}>
+          <View style={{ flex: 1 }} key={uuidv4()}>
             <View
               style={{
                 flex: 1,
-                // alignItems: "center",
-                // justifyContent: "center",
-                backgroundColor: isFocused ? Colors.COMPANY.PRIMARY_DARK : "white",
+                backgroundColor: isFocused
+                  ? Colors.COMPANY.PRIMARY_DARK
+                  : "white",
                 borderRadius: 14,
-                marginVertical:10,
-                marginHorizontal:23
+                marginVertical: 10,
+                marginHorizontal: 23,
               }}
             >
               <Pressable

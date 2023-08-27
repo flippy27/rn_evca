@@ -9,6 +9,7 @@ import { PoolMapView } from "./app/views/PoolMapView";
 import { RegisterView } from "./app/views/RegisterView";
 import { WelcomeView } from "./app/views/WelcomeView";
 import { ChargeHistoryView } from "./app/views/ChargeHistoryView";
+import { StatusBar } from "expo-status-bar";
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ const AppStack = createNativeStackNavigator();
 
 export const MainNavigator = () => (
   <View style={styles.container}>
+    <StatusBar style="dark"/>
     <MainStack.Navigator
       screenOptions={{
         headerShown: false,
@@ -97,11 +99,11 @@ export default function App() {
     return null; // Return a loading screen or something
   }
   return (
-      <View style={styles.container}>
-        <NavigationContainer>
-          <MainNavigator />
-        </NavigationContainer>
-      </View>
+    <View style={styles.container}>
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </View>
   );
 }
 

@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-const API_URL = 'https://evca.dev.dhemax.link/api/v1/';
-const QA_URL="https://evca.qa.dhemax.link/api/v1/"
-const token= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc'
+import { useState, useEffect, useCallback } from "react";
+const API_URL = "https://evca.dev.dhemax.link/api/v1/";
+const QA_URL = "https://evca.qa.dhemax.link/api/v1/";
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc";
 
 export const registerUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {
@@ -123,8 +124,15 @@ export const checkUser = (companyId, email) => {
       });
   });
 };
-export const fetchPoolData = (company) => {
-  return new Promise((resolve, reject) => {
+export const usePool = (company) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchUsePool = useCallback(() => {
+    setLoading(true);
+
+    // Form the endpoint URL with company parameter
     fetch(`${API_URL}pools/?company=${company}`)
       .then((response) => {
         if (response.status > 499) {
@@ -133,12 +141,34 @@ export const fetchPoolData = (company) => {
         return response.json();
       })
       .then((responseJson) => {
-        resolve(responseJson);
+        setData(responseJson);
+        setLoading(false);
       })
-      .catch((error) => {
-        reject(error);
+      .catch((err) => {
+        setError(err);
+        setLoading(false);
       });
-  });
+  }, [company]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchUsePool();
+
+      const intervalId = setInterval(() => {
+        fetchUsePool();
+      }, 4000); // Regular interval of 10 seconds
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, 0); // Initial delay of 3 seconds
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [fetchUsePool]);
+
+  return { data, loading, error };
 };
 
 export const loginUser = (companyId, email, password) => {
@@ -196,7 +226,6 @@ export const startCharge = (equipo, pistola, corrienteMaxima, user_id) => {
         if (response.status > 499) {
           throw new Error("Server error");
         }
-        console.log("start response", response);
         return response.json();
       })
       .then((responseJson) => {
@@ -226,7 +255,6 @@ export const stopCharge = (equipo, pistola) => {
         if (response.status > 499) {
           throw new Error("Server error");
         }
-        console.log("start response", response);
         return response.json();
       })
       .then((responseJson) => {
