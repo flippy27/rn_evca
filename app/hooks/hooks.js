@@ -289,3 +289,28 @@ export const fetchPoolCurrent = ({ connector_id }) => {
       });
   });
 };
+export const fetchPoolCompany = ({ company }) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${API_URL}pools/?company=${company}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Although typically unnecessary for GET, added for consistency
+        // Assuming you might need an Authorization header as in the previous example. 
+        // Make sure to have 'token' defined or received as a parameter
+        Authorization: `Bearer ${token}`, 
+      },
+    })
+    .then((response) => {
+      if (response.status > 499) {
+        throw new Error("Server error");
+      }
+      return response.json();
+    })
+    .then((responseJson) => {
+      resolve(responseJson);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+  });
+};

@@ -196,10 +196,13 @@ export const PoolMapView = () => {
       markersData.length > 0
     ) {
       centerMapIncludingUserAndPools();
-      setFilteredMarkers(markersData);
+      setFilteredMarkers(markersData); // This line ensures that the filteredMarkers are updated every time markersData changes.
       setIsMapInitialized(true); // Mark map as initialized
+    } else if (isMapInitialized && markersData) {
+      // Ensure that once the map is initialized, markers are still updated.
+      setFilteredMarkers(markersData);
     }
-  }, [location, markersData]);
+  }, [location, markersData, isMapInitialized]);
 
   const centerMapOnUser = () => {
     mapRef.current.animateToRegion({
