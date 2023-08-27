@@ -1,13 +1,13 @@
-import { Text, Pressable, View, StyleSheet } from "react-native";
-import { CustomButton } from "../components/CustomButton";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import ArrowIcon from "../components/icons/ArrowIcon";
-import { Colors, Connector } from "../configs/common";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BackBar } from "../components/BackBar";
+import { CustomButton } from "../components/CustomButton";
 import { HoldingBlock } from "../components/HoldingBlock";
 import { StopChargeModal } from "../components/StopChargeModal";
-import { BackBar } from "../components/BackBar";
+import { Colors, Connector } from "../configs/common";
+import { fetchPoolCurrent, startCharge,stopCharge } from "../hooks/hooks";
 
 export const StartStopChargeView = ({ route }) => {
   const [isCharging, setIsCharging] = useState(false);
@@ -16,13 +16,47 @@ export const StartStopChargeView = ({ route }) => {
   const navigation = useNavigation();
   const { connector, pool, station } = route.params;
 
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let intervalId;
+
+    // Function to fetch status and update state
+    const fetchStatus = () => {
+      fetchPoolCurrent({ connector_id: connector.id })
+        .then((response) => {
+          console.log("response", response);
+          setStatus(response);
+          setError(null);
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+    };
+
+    // If isCharging is true, set an interval to call the function every 4 seconds
+    if (isCharging) {
+      fetchStatus(); // Call the function immediately when isCharging turns true
+      intervalId = setInterval(fetchStatus, 4000);
+    }
+
+    // Clear the interval when the component is unmounted or when isCharging turns false
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [isCharging]);
+
   const handleStartCharge = () => {
-    console.log("starting charge");
+    startCharge(station.station_name, connector.connector_number, 200, 99999);
     setIsCharging(true);
   };
 
   const handleStopCharge = () => {
     console.log("stopping charge");
+    stopCharge(station.station_name, connector.connector_number);
     setIsCharging(false);
     setIsChageFinalized(true);
   };
@@ -41,8 +75,34 @@ export const StartStopChargeView = ({ route }) => {
       <View style={{ flex: 1 }}>
         <BackBar text1={pool.pool_name} text2={pool.pool_address} />
 
+        {/* DELETE ME */}
+
+        <View style={{ width: "100%" }}>
+          <HoldingBlock>
+            <View style={{ paddingVertical: 20 }}>
+              <Text style={styles.currentChargeTxt}>Carga en curso</Text>
+              <Text style={styles.currentChargeType}>kWh</Text>
+              <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
+                {status?.kwh}
+              </Text>
+              <Text style={styles.currentChargeType}>Tiempo cargando</Text>
+              <Text style={styles.currentChargeData}>{status?.seconds}</Text>
+            </View>
+          </HoldingBlock>
+          <View style={{ alignItems: "center" }}>
+            <CustomButton
+              type={"secondary"}
+              text={"Detener carga"}
+              onPress={() => setIsModalVisible(true)}
+              padding={10}
+              width={190}
+            />
+          </View>
+        </View>
+        {/* DELETE ME */}
+
         {/* START CHARGER DATA */}
-        <View style={{}}>
+        <View style={{ paddingHorizontal: 10 }}>
           <View style={{ paddingBottom: 30 }}>
             <Text style={styles.stationName}>{station.station_name}</Text>
           </View>

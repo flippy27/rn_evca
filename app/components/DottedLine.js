@@ -1,4 +1,5 @@
 import { View, Dimensions, StyleSheet } from "react-native";
+import { Colors } from "../configs/common";
 const screenWidth = Dimensions.get("window").width;
 
 export const DottedLine = ({
@@ -34,6 +35,6 @@ const styles2 = StyleSheet.create({
     flexDirection: "row",
   },
   dot: {
-    backgroundColor: "black",
+    backgroundColor: Colors.APP.PLACEHOLDER_LIGHT_GRAY,
   },
 });

@@ -11,7 +11,6 @@ export const BackBar = ({
   userCoords = null,
   poolCoords = null,
 }) => {
-    console.log('userCC',userCoords);
   const navigation = useNavigation();
   const handleBackButton = () => {
     navigation.goBack();
@@ -23,9 +22,9 @@ export const BackBar = ({
         gap: 20,
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal:30,
-        paddingBottom:20,
-        paddingTop:20
+        paddingHorizontal: 30,
+        paddingBottom: 20,
+        paddingTop: 20,
       }}
     >
       <Pressable onPress={handleBackButton}>
@@ -34,7 +33,9 @@ export const BackBar = ({
       <Text style={styles.textBlueBold}>
         {text1} {text2 && <Text style={styles.textBlue}>, {text2}</Text>}{" "}
         {text3 && userCoords && poolCoords && (
-          <Text style={styles.textBlueBold}>a {getPoolDistanceFromUser(userCoords,poolCoords)}</Text>
+          <Text style={styles.textBlueBold}>
+            a {getPoolDistanceFromUser(userCoords, poolCoords)}
+          </Text>
         )}
       </Text>
     </View>
