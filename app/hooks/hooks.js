@@ -123,16 +123,9 @@ export const checkUser = (companyId, email) => {
       });
   });
 };
-export const usePool = (company) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchUsePool = useCallback(() => {
-    setLoading(true);
-
-    // Form the endpoint URL with company parameter
-    fetch(`${QA_URL}pools/?company=${company}`)
+export const fetchPoolData = (company) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${API_URL}pools/?company=${company}`)
       .then((response) => {
         if (response.status > 499) {
           throw new Error("Server error");
@@ -140,37 +133,14 @@ export const usePool = (company) => {
         return response.json();
       })
       .then((responseJson) => {
-        setData(responseJson);
-        setLoading(false);
+        resolve(responseJson);
       })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
+      .catch((error) => {
+        reject(error);
       });
-  }, [company]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      fetchUsePool();
-
-      const intervalId = setInterval(() => {
-        fetchUsePool();
-      }, 10000); // Regular interval of 10 seconds
-
-      return () => {
-        clearInterval(intervalId);
-      };
-
-    }, 0); // Initial delay of 3 seconds
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-
-  }, [fetchUsePool]);
-
-  return { data, loading, error };
+  });
 };
+
 export const loginUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {
     const dataToSend = { companyId, email, password };
