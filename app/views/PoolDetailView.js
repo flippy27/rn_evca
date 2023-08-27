@@ -1,13 +1,36 @@
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BackBar } from "../components/BackBar";
 import { CustomButton } from "../components/CustomButton";
 import { DottedLine } from "../components/DottedLine";
-import ArrowIcon from "../components/icons/ArrowIcon";
 import { Colors, Connector } from "../configs/common";
+import { Platform, Linking } from 'react-native';
 
-export const PoolDetailView = ({ route }) => {
+export const PoolDetailView = ({ route,userCoords }) => {
   const navigation = useNavigation();
+
+
+  const openMapsAppWithDirections = (latitude, longitude) => {
+    let url = "";
+  
+    if (Platform.OS === 'ios') {
+      url = `http://maps.apple.com/?daddr=${latitude},${longitude}&dirflg=d`;
+    } else {
+      url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&travelmode=driving`;
+    }
+  
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (!supported) {
+          console.log("Can't handle URL: " + url);
+        } else {
+          return Linking.openURL(url);
+        }
+      })
+      .catch((err) => console.error('An error occurred', err));
+  };
 
   const {
     pool,
@@ -17,36 +40,26 @@ export const PoolDetailView = ({ route }) => {
     },
   } = route.params;
 
-  const handleBackButton = () => {
-    navigation.goBack();
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ paddingHorizontal: 30, flex: 1, paddingVertical: 10 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 10,
-            justifyContent: "center",
-            alignItems: "center",
+      <View style={{ paddingHorizontal: 30, flex: 1 }}>
+        <BackBar
+          text1={pool.pool_name}
+          text2={pool.pool_address}
+          text3={true}
+          userCoords={userCoords}
+          poolCoords={{
+            latitude: pool.pool_latitude,
+            longitude: pool.pool_longitude,
           }}
-        >
-          <Pressable onPress={handleBackButton}>
-            <ArrowIcon />
-          </Pressable>
-          <Text style={styles.textBlueBold}>
-            {pool.pool_name},{" "}
-            <Text style={styles.textBlue}>{pool.pool_address}</Text>{" "}
-            <Text style={styles.textBlueBold}>a {"1,1Km de tu ubicación"}</Text>
-          </Text>
-        </View>
+        />
         <View style={{ alignItems: "flex-end" }}>
           <CustomButton
             type={"primary"}
             text={"Cómo llegar"}
             padding={7}
             width={120}
+            onPress={() => openMapsAppWithDirections(pool.pool_latitude,pool.pool_longitude)}
           />
         </View>
         <FlatList
@@ -120,7 +133,6 @@ const ConnectorItem = ({ item, navigation, pool, station }) => {
 };
 
 const ConnectorStatusItem = ({ status }) => {
-  console.log(status);
   let pin_color;
   let text;
   switch (status) {
