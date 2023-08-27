@@ -96,6 +96,14 @@ export const LoginView = ({ route, navigation }) => {
             </View>
           </HoldingBlock>
         </View>
+      </View>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginBottom: Platform.OS == "android" ? 40 : 20,
+        }}
+      >
         <DhemaxText></DhemaxText>
       </View>
     </SafeAreaView>

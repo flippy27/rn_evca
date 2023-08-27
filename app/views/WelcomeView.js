@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { CustomButton } from "../components/CustomButton";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { DhemaxText } from "../components/DhemaxText";
@@ -49,7 +49,7 @@ export const WelcomeView = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25, justifyContent: "space-between" }}>
+      <View style={{ flex: 1, padding: 25 }}>
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>
@@ -82,9 +82,15 @@ export const WelcomeView = ({ navigation }) => {
             </View>
           </HoldingBlock>
         </View>
-        <DhemaxText
-          style={{ position: "absolute", bottom: 0, left: 25, right: 25 }}
-        ></DhemaxText>
+      </View>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginBottom: Platform.OS == "android" ? 40 : 20,
+        }}
+      >
+        <DhemaxText></DhemaxText>
       </View>
     </SafeAreaView>
   );

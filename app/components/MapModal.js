@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import React from "react";
+import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Colors } from "../configs/common";
 import { CustomText } from "./CustomText";
 import { MapPin } from "./MapPin";
-import { Colors } from "../configs/common";
 
 export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
   return (
@@ -18,46 +18,77 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{justifyContent:'flex-end'}}> 
-              <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
-                <Text style={{ fontFamily: "Montserrat-Bold" }}>X</Text>
+            <View
+              style={{
+                paddingTop: 15,
+                paddingBottom: 10,
+                minWidth: 200,
+                alignItems: "flex-end",
+              }}
+            >
+              <Pressable
+                onPress={() => setIsModalVisible(!isModalVisible)}
+                style={{ width: 30, height: 30 }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Montserrat-Bold",
+                    fontSize: 24,
+                    color: Colors.APP.DARK_GRAY,
+                  }}
+                >
+                  X
+                </Text>
               </Pressable>
             </View>
-            <CustomText style={styles.modalText}>Estados</CustomText>
-            <View style={{ flexDirection: "row", alignItems: "center",gap:10 }}>
-              <View>
-                <MapPin onPress={""} color={Colors.PIN.ALL_AVAILABLE} />
-                <View style={{ alignItems: "center" }}>
+            <Text style={styles.modalText}>Estados</Text>
+
+            <View style={{ flexDirection: "column" }}>
+              {/* First Row */}
+              <View
+                style={{
+                  marginTop: 10,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 15,
+                  gap: 20,
+                }}
+              >
+                <View style={{ alignItems: "center", minWidth: 70 }}>
+                  <MapPin onPress={""} color={Colors.PIN.ALL_AVAILABLE} />
                   <Text style={styles.pinText}>Todos</Text>
                   <Text style={styles.pinText}>disponibles</Text>
                 </View>
-              </View>
-              <View>
-                <MapPin onPress={""} color={Colors.PIN.SOME_AVAILABLE} />
-                <View style={{ alignItems: "center" }}>
+                <View style={{ alignItems: "center", minWidth: 70 }}>
+                  <MapPin onPress={""} color={Colors.PIN.SOME_AVAILABLE} />
                   <Text style={styles.pinText}>Algunos</Text>
                   <Text style={styles.pinText}>disponibles</Text>
                 </View>
               </View>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center",gap:12 }}>
-              <View>
-                <MapPin onPress={""} color={Colors.PIN.NONE_AVAILABLE} />
-                <View style={{ alignItems: "center" }}>
+
+              {/* Second Row */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View style={{ alignItems: "center", minWidth: 70 }}>
+                  <MapPin onPress={""} color={Colors.PIN.NONE_AVAILABLE} />
                   <Text style={styles.pinText}>Ninguno</Text>
                   <Text style={styles.pinText}>disponibles</Text>
                 </View>
-              </View>
-              <View>
-                <MapPin onPress={""} />
-                <View style={{ alignItems: "center" }}>
+                <View style={{ alignItems: "center", minWidth: 70 }}>
+                  <MapPin onPress={""} />
                   <Text style={styles.pinText}>Fuera de</Text>
                   <Text style={styles.pinText}>servicio</Text>
                 </View>
               </View>
             </View>
 
-            <CustomText>Disponibilidad</CustomText>
+            <Text style={[styles.modalText, { paddingTop: 20 }]}>
+              Disponibilidad
+            </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -66,7 +97,7 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
                 gap: 10,
               }}
             >
-              <View>
+              <View style={styles.pinTextContainer}>
                 <Text style={styles.pinTextBottom}>Conectores</Text>
                 <Text style={styles.pinTextBottom}>disponibles</Text>
               </View>
@@ -76,7 +107,7 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
                 example={"00/00"}
                 textColor={Colors.APP.DARK_GRAY}
               />
-              <View>
+              <View style={styles.pinTextContainer}>
                 <Text style={styles.pinTextBottom}>Conectores</Text>
                 <Text style={styles.pinTextBottom}>en la estación</Text>
               </View>
@@ -93,13 +124,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
   },
   modalView: {
-    margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    paddingBottom: 35,
+    paddingHorizontal: 25,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -129,6 +159,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    fontFamily: "Montserrat-Bold",
+    fontSize: 13,
   },
   pinText: {
     fontFamily: "Montserrat-Regular",
@@ -137,5 +169,9 @@ const styles = StyleSheet.create({
   pinTextBottom: {
     fontFamily: "Montserrat-Regular",
     fontSize: 10,
+  },
+  pinTextContainer: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

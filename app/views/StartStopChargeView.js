@@ -7,6 +7,7 @@ import { Colors, Connector } from "../configs/common";
 import { useState } from "react";
 import { HoldingBlock } from "../components/HoldingBlock";
 import { StopChargeModal } from "../components/StopChargeModal";
+import { BackBar } from "../components/BackBar";
 
 export const StartStopChargeView = ({ route }) => {
   const [isCharging, setIsCharging] = useState(false);
@@ -36,30 +37,12 @@ export const StartStopChargeView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ paddingHorizontal: 30, flex: 1 }}>
-        {/* START BACK BUTTON */}
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 30,
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 20,
-            paddingHorizontal:20,
-          }}
-        >
-          <Pressable onPress={handleBackButton}>
-            <ArrowIcon />
-          </Pressable>
-          <Text style={styles.textBlueBold}>
-            {pool.pool_name},{" "}
-            <Text style={styles.textBlue}>{pool.pool_address}</Text>
-          </Text>
-        </View>
-        {/* STOP BACK BUTTON */}
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 30 }}>
+      <View style={{ flex: 1 }}>
+        <BackBar text1={pool.pool_name} text2={pool.pool_address} />
+
         {/* START CHARGER DATA */}
-        <View style={{ paddingHorizontal: 30 }}>
+        <View style={{}}>
           <View style={{ paddingBottom: 30 }}>
             <Text style={styles.stationName}>{station.station_name}</Text>
           </View>
