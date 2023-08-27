@@ -127,13 +127,13 @@ export const PoolMapView = () => {
   const navigation = useNavigation();
   const [markersData, setMarkersData]= useState([])
 
-  useEffect(()=>{
-    const markersData = pinMaker(COMPANY).then(pines => {
-      setMarkersData(pines)
-    }).catch(error => {
-      console.error("Error generating pines:", error);
-    });
-  },[])
+  // useEffect(()=>{
+  //   const markersData = pinMaker(COMPANY).then(pines => {
+  //     setMarkersData(pines)
+  //   }).catch(error => {
+  //     console.error("Error generating pines:", error);
+  //   });
+  // },[])
   
   useEffect(() => {
     (async () => {

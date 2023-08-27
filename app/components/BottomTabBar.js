@@ -10,6 +10,7 @@ import MapIcon from "./icons/map_icon";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PoolDetailView } from "../views/PoolDetailView";
 import { StartStopChargeView } from "../views/StartStopChargeView";
+import AddNewCardView, { NewCardView } from "../views/AddNewCardView";
 
 const Tab = createBottomTabNavigator();
 const MapStack = createNativeStackNavigator();
@@ -53,9 +54,7 @@ function View2() {
 
 function View3() {
   return (
-    <View>
-      <Text>View 3</Text>
-    </View>
+   <AddNewCardView></AddNewCardView>
   );
 }
 
