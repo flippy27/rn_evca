@@ -8,13 +8,13 @@ import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { MapModal } from "../components/MapModal";
 import { COMPANY } from "../configs/global";
-import { pinMaker } from "../components/PinMaker";
 import { CustomButton } from "../components/CustomButton";
+import { v4 as uuidv4 } from "uuid";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
-
+import { usePinMaker } from "../components/PinMaker";
 function haversineDistance(lat1, lon1, lat2, lon2) {
   const R = 6371.0; // Radius of the Earth in kilometers
   const dLat = degreesToRadians(lat2 - lat1);
@@ -236,7 +236,8 @@ export const PoolMapView = () => {
         {filteredMarkers.map((marker) => (
           <Marker
             tracksViewChanges={false}
-            key={marker.id}
+            key={uuidv4()}
+            keyExtractor={uuidv4()}
             coordinate={{
               latitude: marker.pool.pool_latitude,
               longitude: marker.pool.pool_longitude,

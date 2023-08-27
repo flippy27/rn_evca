@@ -1,6 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { FlatList, Linking, Platform, Pressable, Text, View } from "react-native";
+import {
+  FlatList,
+  Linking,
+  Platform,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BackBar } from "../components/BackBar";
 import { CustomButton } from "../components/CustomButton";
@@ -184,8 +191,9 @@ const ConnectorItem = ({
         </Text>
         <ConnectorStatusItem
           status={
-            getConnectorStatus({ item, conn_status_arr }) ??
-            item.connector_type_alias
+            conn_status_arr != null
+              ? getConnectorStatus({ item, conn_status_arr })
+              : item.connector_status
           }
         />
       </View>
@@ -194,6 +202,7 @@ const ConnectorItem = ({
 };
 
 const getConnectorStatus = ({ item, conn_status_arr }) => {
+  console.log(conn_status_arr);
   if (!conn_status_arr?.data) {
     return null;
   }
