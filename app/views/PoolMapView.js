@@ -8,20 +8,13 @@ import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { MapModal } from "../components/MapModal";
 import { COMPANY } from "../configs/global";
-import { usePinMaker } from "../components/PinMaker";
+import { pinMaker } from "../components/PinMaker";
 import { CustomButton } from "../components/CustomButton";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 import { Colors } from "../configs/common";
-
-const markersData = [
-  { id: 1, latitude: -33.0271086, longitude: -71.5489086, title: "Marker 1" },
-  { id: 2, latitude: -33.0269086, longitude: -71.5486886, title: "Marker 2" },
-  { id: 3, latitude: -33.0273086, longitude: -71.5485086, title: "Marker 3" },
-  // ... add more markers as needed
-];
 
 function haversineDistance(coord1, coord2) {
   const R = 6371; // Radius of the Earth in km
@@ -71,64 +64,6 @@ const getBoundingRegion = (points) => {
     longitudeDelta: maxLon - minLon + 0.7, // added a small buffer
   };
 };
-
-const mock_pool = {
-  id: 1,
-  pool_name: "L1 Voltex01",
-  pool_address: "Vicente Reyes 224,Viña del Mar, Valparaíso, Chile",
-  pool_latitude: -33.029262,
-  pool_longitude: -71.58064,
-  stations: [
-    {
-      id: 24,
-      lineas_id: 1,
-      station_name: "DEV-EMULATOR-00003",
-      station_alias: null,
-      station_status: 1,
-      station_identifier: null,
-      connectors: [],
-    },
-    {
-      id: 23,
-      lineas_id: 1,
-      station_name: "DEV-EMULATOR-00002",
-      station_alias: null,
-      station_status: 1,
-      station_identifier: 123456789,
-      connectors: [
-        {
-          id: 166,
-          connector_name: "CON-DEV",
-          connector_number: 1,
-          connector_alias: "CON-DEV-EMU",
-          connector_type: "EVPhysicalConnectorType_GBT_DC",
-          connector_type_alias: "GB/T_DC",
-          connector_status: "Available",
-        },
-      ],
-    },
-    {
-      id: 12,
-      lineas_id: 1,
-      station_name: "56722441970181",
-      station_alias: "WEEYU 05",
-      station_status: 1,
-      station_identifier: 56722441970181,
-      connectors: [
-        {
-          id: 16,
-          connector_name: "NameConector",
-          connector_number: 1,
-          connector_alias: "AliasConector",
-          connector_type: "EVPhysicalConnectorType_IEC_62196_T2",
-          connector_type_alias: "Tipo 2",
-          connector_status: "Preparing",
-        },
-      ],
-    },
-  ],
-};
-
 export const CenterButton = ({ onCenter }) => {
   const insets = useSafeAreaInsets();
 
@@ -187,15 +122,23 @@ export const HelpDialogButton = ({ setModal }) => {
   );
 };
 export const PoolMapView = () => {
-  const markersData2 = usePinMaker(COMPANY);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [filteredMarkers, setFilteredMarkers] = useState(markersData2);
+  const [filteredMarkers, setFilteredMarkers] = useState(markersData);
   const mapRef = useRef(null);
   const navigation = useNavigation();
+  const [markersData, setMarkersData]= useState([])
 
+  useEffect(()=>{
+    const markersData = pinMaker(COMPANY).then(pines => {
+      setMarkersData(pines)
+    }).catch(error => {
+      console.error("Error generating pines:", error);
+    });
+  },[])
+  
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -212,35 +155,26 @@ export const PoolMapView = () => {
   const [centerCoords, setCenterCoords] = useState(null);
 
   const centerMapIncludingUserAndPools = () => {
-    if (location && markersData2 && markersData2.length > 0) {
-      const twoClosestPins = getTwoClosestPins(location, markersData2);
-
-      // Create an array of points that includes user location and the two closest pins
-      const points = [
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        },
-        {
-          latitude: twoClosestPins[0].pool.pool_latitude,
-          longitude: twoClosestPins[0].pool.pool_longitude,
-        },
-        {
-          latitude: twoClosestPins[1].pool.pool_latitude,
-          longitude: twoClosestPins[1].pool.pool_longitude,
-        },
-      ];
-
-      // Get the bounding region using our modified function
-      const boundingRegion = getBoundingRegion(points);
-
-      // Animate the map to the calculated region
-      mapRef.current.animateToRegion(boundingRegion);
+    if (location && markersData && markersData.length > 0) {
+        const twoClosestPins = getTwoClosestPins(location, markersData);
+  
+        // Create an array of points that includes user location and the two closest pins
+        const points = [
+            { latitude: location.coords.latitude, longitude: location.coords.longitude },
+            { latitude: twoClosestPins[0].pool.pool_latitude, longitude: twoClosestPins[0].pool.pool_longitude },
+            { latitude: twoClosestPins[1].pool.pool_latitude, longitude: twoClosestPins[1].pool.pool_longitude }
+        ];
+  
+        // Get the bounding region using our modified function
+        const boundingRegion = getBoundingRegion(points);
+  
+        // Animate the map to the calculated region
+        mapRef.current.animateToRegion(boundingRegion);
     }
-  };
-  useEffect(() => {
-    centerMapIncludingUserAndPools();
-  }, [location, markersData2]);
+};
+useEffect(() => {
+  centerMapIncludingUserAndPools();
+}, [location, markersData]);
 
   const centerMapOnUser = () => {
     mapRef.current.animateToRegion({
@@ -274,7 +208,7 @@ export const PoolMapView = () => {
         showsCompass={false}
         showsMyLocationButton={false}
       >
-        {markersData2.map((marker) => (
+        {markersData.map((marker) => (
           <Marker
             tracksViewChanges={false}
             key={marker.id}
@@ -297,7 +231,7 @@ export const PoolMapView = () => {
         ))}
       </MapView>
       <FilterButton
-        pools={markersData2}
+        pools={markersData}
         filtered={isFiltered}
         setFiltered={setIsFiltered}
       />
