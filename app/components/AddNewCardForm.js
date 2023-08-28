@@ -19,21 +19,33 @@ export const NewCardForm = ({ onSave }) => {
   const isExpiryDateValid = (expDate) => {
     if (expDate.length >= 4) {
       const expiryMoment = moment(expDate, "MM/YY");
-
-      return expiryMoment.isValid() && moment().isBefore(expiryMoment);
+  
+      return expiryMoment.isValid() && moment().isBefore(expiryMoment.endOf('month'));
     } else {
       return false;
     }
   };
-
   const formatExpiryDate = (input) => {
     const numericInput = input.replace(/\D/g, "");
-
-    if (numericInput.length > 2) {
-      return `${numericInput.substring(0, 2)}/${numericInput.substring(2, 4)}`;
+  
+    let month = numericInput.substring(0, 2);
+    if (parseInt(month) > 12) {
+      month = "12";
     }
-
-    return numericInput;
+    let year = numericInput.substring(2, 4);
+    const currentYear = moment().format('YY');
+    const maxAllowableYear = (parseInt(currentYear) + 20).toString().slice(-2); 
+  
+    if (parseInt(year) < parseInt(currentYear)) {
+      year = numericInput.substring(2,3);
+    }
+    if (parseInt(year) > parseInt(maxAllowableYear)) {
+      year = maxAllowableYear
+    }
+    if (numericInput.length > 2) {
+      return `${month}/${year}`;
+    }
+    return month;
   };
 
   const handleSave = () => {
@@ -65,6 +77,9 @@ export const NewCardForm = ({ onSave }) => {
       cardNumber.length === 19 &&
       isExpiryDateValid(expiringDate) &&
       CVV.length >= 3;
+
+      console.log( isExpiryDateValid(expiringDate)? true:false, 'thin');
+      console.log(isValid, 'isvalid');
 
     setButtonDisabled(!isValid);
   }, [fullName, cardNumber, expiringDate, CVV]);
