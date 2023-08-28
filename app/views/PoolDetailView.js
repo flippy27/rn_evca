@@ -97,7 +97,7 @@ export const PoolDetailView = ({ route, userCoords }) => {
         <View style={{ alignItems: "flex-end" }}>
           <CustomButton
             type={"primary"}
-            text={tra('pool_det','llegar')}
+            text={tra("pool_det", "llegar")}
             padding={7}
             width={140}
             onPress={() =>
@@ -191,6 +191,7 @@ const ConnectorItem = ({
           {item.connector_alias ?? item.connector_name}
         </Text>
         <ConnectorStatusItem
+          item={item}
           status={
             conn_status_arr != null
               ? getConnectorStatus({ item, conn_status_arr })
@@ -209,34 +210,39 @@ const getConnectorStatus = ({ item, conn_status_arr }) => {
   }
   const { data } = conn_status_arr;
   const conn = data.find((x) => {
-    return x.connector_id == item.id;
+    return x?.connector_id == item.id;
   });
-  return conn.status;
+  return conn?.status ?? null;
 };
 
-const ConnectorStatusItem = ({ status }) => {
+const ConnectorStatusItem = ({ status, item }) => {
   let pin_color;
   let text;
-  if (
-    status == "Available" ||
-    status == "SuspendedEV" ||
-    status == "SuspendedEVSE"
-  ) {
-    pin_color = Colors.PIN.ALL_AVAILABLE;
-    text = tra("pool_det", "disponible");
-  } else if (status == "Charging" || status == "Preparing") {
-    pin_color = Colors.PIN.NONE_AVAILABLE;
-    text = tra("pool_det", "ocupado");
-  } else if (
-    status == "Offline" ||
-    status == "Faulted" ||
-    status == "Unavailable"
-  ) {
-    pin_color = Colors.PIN.UNAVAILABLE;
-    text = tra("pool_det", "nodisponible");
+  if (!status) {
+    pin_color = "purple";
+    text = `no status (ver actual alarmas ${item.id}) `;
   } else {
-    pin_color = "black";
-    text = tra("pool_det", "nodisponible");
+    if (
+      status == "Available" ||
+      status == "SuspendedEV" ||
+      status == "SuspendedEVSE"
+    ) {
+      pin_color = Colors.PIN.ALL_AVAILABLE;
+      text = tra("pool_det", "disponible");
+    } else if (status == "Charging" || status == "Preparing") {
+      pin_color = Colors.PIN.NONE_AVAILABLE;
+      text = tra("pool_det", "ocupado");
+    } else if (
+      status == "Offline" ||
+      status == "Faulted" ||
+      status == "Unavailable"
+    ) {
+      pin_color = Colors.PIN.UNAVAILABLE;
+      text = tra("pool_det", "nodisponible");
+    } else {
+      pin_color = "black";
+      text = tra("pool_det", "nodisponible");
+    }
   }
 
   return (

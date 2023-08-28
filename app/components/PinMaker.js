@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Colors } from '../configs/common';
+import { useEffect, useState } from "react";
+import { Colors } from "../configs/common";
 import { fetchPoolCompany } from "../hooks/hooks"; // Replace with the path to your fetchPoolCompany function
 
 export const usePinMaker = (company) => {
@@ -11,20 +11,31 @@ export const usePinMaker = (company) => {
         .then((data) => {
           let newPines = [];
           if (!data) return;
-
-          data.forEach(element => {
-            let color = '';
+          //chequeo que tenga latitudes y longitudes
+          data = data.filter((x) => {
+            return x.pool_latitude != 0 && x.pool_longitude != 0;
+          });
+          data.forEach((element) => {
+            let color = "";
             let availableConnectors = 0;
             let unAvailableConnectors = 0;
             let amountOfConnectors = 0;
 
-            element.stations.forEach(station => {
+            element.stations.forEach((station) => {
               amountOfConnectors += station.connectors.length;
 
-              station.connectors.forEach(connector => {
-                if (["Available", "SuspendedEV", "SuspendedEVSE"].includes(connector.connector_status)) {
+              station.connectors.forEach((connector) => {
+                if (
+                  ["Available", "SuspendedEV", "SuspendedEVSE"].includes(
+                    connector.connector_status
+                  )
+                ) {
                   availableConnectors++;
-                } else if (["Offline", "Faulted", "Unavailable"].includes(connector.connector_status)) {
+                } else if (
+                  ["Offline", "Faulted", "Unavailable"].includes(
+                    connector.connector_status
+                  )
+                ) {
                   unAvailableConnectors++;
                 }
               });
@@ -34,7 +45,10 @@ export const usePinMaker = (company) => {
               color = Colors.PIN.ALL_AVAILABLE;
             } else if (unAvailableConnectors === amountOfConnectors) {
               color = Colors.PIN.UNAVAILABLE;
-            } else if (availableConnectors > 0 && availableConnectors !== amountOfConnectors) {
+            } else if (
+              availableConnectors > 0 &&
+              availableConnectors !== amountOfConnectors
+            ) {
               color = Colors.PIN.SOME_AVAILABLE;
             } else {
               color = Colors.PIN.NONE_AVAILABLE;
@@ -43,7 +57,7 @@ export const usePinMaker = (company) => {
             newPines.push({
               text: `${availableConnectors}/${amountOfConnectors}`,
               color,
-              pool: element
+              pool: element,
             });
           });
 

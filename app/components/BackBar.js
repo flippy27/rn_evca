@@ -20,7 +20,6 @@ export const BackBar = ({
       style={{
         flexDirection: "row",
         gap: 20,
-        justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 30,
         paddingBottom: 20,

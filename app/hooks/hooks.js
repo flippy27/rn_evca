@@ -291,7 +291,7 @@ export const fetchPoolCurrent = ({ connector_id }) => {
 };
 export const fetchPoolCompany = ({ company }) => {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}pools/?company=${company}`, {
+    fetch(`${QA_URL}pools/?company=${company}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Although typically unnecessary for GET, added for consistency
