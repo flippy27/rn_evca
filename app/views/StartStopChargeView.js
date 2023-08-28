@@ -102,7 +102,7 @@ export const StartStopChargeView = ({ route }) => {
           >
             <CustomButton
               type={"primary"}
-              text={tra('startcharge','iniciar')}
+              text={tra("startcharge", "iniciar")}
               onPress={handleStartCharge}
               padding={10}
               width={190}
@@ -113,22 +113,35 @@ export const StartStopChargeView = ({ route }) => {
         {isCharging && !isChargeFinalized && (
           <View style={{ width: "100%" }}>
             <HoldingBlock>
-              <View style={{ paddingVertical: 20,justifyContent:'center', alignItems:'center' }}>
-                <Text style={styles.currentChargeTxt}>{tra('startcharge','cargacurso')}</Text>
+              <View
+                style={{
+                  paddingVertical: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.currentChargeTxt}>
+                  {tra("startcharge", "cargacurso")}
+                </Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                  {status?.kwh} kWh
+                  {status?.kwh ? status?.kwh.toString().slice(0, 4) : "--"} kWh
                 </Text>
-                <Text style={styles.currentChargeType}>{tra('startcharge','tiempocargando')}</Text>
+                <Text style={styles.currentChargeType}>
+                  {tra("startcharge", "tiempocargando")}
+                </Text>
                 <Text style={styles.currentChargeData}>
-                  {status?.seconds} {tra('startcharge','min')}
+                  {status?.seconds != null
+                    ? (status?.seconds / 60).toFixed(2)
+                    : "--"}{" "}
+                  {tra("startcharge", "min")}
                 </Text>
               </View>
             </HoldingBlock>
             <View style={{ alignItems: "center" }}>
               <CustomButton
                 type={"secondary"}
-                text={tra('startcharge','detener')}
+                text={tra("startcharge", "detener")}
                 onPress={() => setIsModalVisible(true)}
                 padding={10}
                 width={190}
@@ -139,20 +152,35 @@ export const StartStopChargeView = ({ route }) => {
         {isChargeFinalized && !isCharging && (
           <View style={{ width: "100%" }}>
             <HoldingBlock>
-              <View style={{ paddingVertical: 20 ,justifyContent:'center', alignItems:'center' }}>
-                <Text style={styles.currentChargeTxt}>{tra('startcharge','finalizada')}</Text>
-                <Text style={styles.currentChargeType}>{tra('startcharge','tiempocarga')}</Text>
+              <View
+                style={{
+                  paddingVertical: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.currentChargeTxt}>
+                  {tra("startcharge", "finalizada")}
+                </Text>
+                <Text style={styles.currentChargeType}>
+                  {tra("startcharge", "tiempocarga")}
+                </Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                  {status?.seconds} {tra('startcharge','min')}
+                  {status?.seconds != null
+                    ? (status?.seconds / 60).toFixed(2)
+                    : "--"}{" "}
+                  {tra("startcharge", "min")}
                 </Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
-                <Text style={styles.currentChargeData}>{status?.kwh} kWh</Text>
+                <Text style={styles.currentChargeData}>
+                  {status?.kwh ? status?.kwh.toString().slice(0, 4) : "--"} kWh
+                </Text>
               </View>
             </HoldingBlock>
             <View style={{ alignItems: "center" }}>
               <CustomButton
                 type={"primary"}
-                text={tra('startcharge','comprobante')}
+                text={tra("startcharge", "comprobante")}
                 onPress={() => handleCloseVoucher()}
                 padding={10}
                 width={190}

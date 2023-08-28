@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { MapPin } from "../components/MapPin";
 
 import * as Location from "expo-location";
 
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
+import { CustomButton } from "../components/CustomButton";
 import { MapModal } from "../components/MapModal";
 import { COMPANY } from "../configs/global";
-import { CustomButton } from "../components/CustomButton";
-import { v4 as uuidv4 } from "uuid";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { usePinMaker } from "../components/PinMaker";
 import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
-import { usePinMaker } from "../components/PinMaker";
 import { tra } from "../configs/common";
 import { remove } from "../utils/saveLoadData";
 
@@ -197,7 +196,7 @@ export const PoolMapView = () => {
         // const latslons = markersData.map((x) => {
         //   return { la: x.pool.pool_latitude, lo: x.pool.pool_longitude };
         // });
-      
+
         // Animate the map to the calculated region
         mapRef.current.animateToRegion(boundingRegion);
       }
@@ -263,7 +262,10 @@ export const PoolMapView = () => {
               longitude: marker.pool.pool_longitude,
             }}
             onPress={() => {
-              navigation.navigate("PoolDetail", { pool: marker.pool });
+              navigation.navigate("PoolDetail", {
+                pool: marker.pool,
+                userCoords: location.coords,
+              });
             }}
           >
             <MapPin

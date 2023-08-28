@@ -85,7 +85,7 @@ export const NewCardForm = ({ onSave }) => {
   }, [fullName, cardNumber, expiringDate, CVV]);
 
   return (
-    <View style={{ padding: 10 }}>
+    <View style={{ paddingHorizontal: 10 }}>
       <HoldingBlock>
         <View>
           <View style={{ paddingBottom: 20, paddingTop: 10 }}>
@@ -152,10 +152,10 @@ export const NewCardForm = ({ onSave }) => {
               <CustomTextInput
                 placeholder="00/00"
                 value={formatExpiryDate(expiringDate)}
-                onChangeText={(input)=>{
-                  setExpiringDate(input)
-                  if (input.length==5) {
-                    Keyboard.dismiss()
+                onChangeText={(input) => {
+                  setExpiringDate(input);
+                  if (input.length == 5) {
+                    Keyboard.dismiss();
                   }
                 }}
                 keyboardType={"numeric"}
@@ -179,8 +179,8 @@ export const NewCardForm = ({ onSave }) => {
                 onChangeText={(inputCVV) => {
                   const maxLength = isAmex ? 4 : 3;
                   setCVV(inputCVV.slice(0, maxLength));
-                  if (inputCVV.length==maxLength) {
-                    Keyboard.dismiss()
+                  if (inputCVV.length == maxLength) {
+                    Keyboard.dismiss();
                   }
                 }}
                 keyboardType={"numeric"}
@@ -193,7 +193,7 @@ export const NewCardForm = ({ onSave }) => {
             fontSize: 14,
             padding: 20,
             fontFamily: "Montserrat-Regular",
-            color: '#00000044',
+            color: "#00000044",
             paddingBottom: 20,
           }}
         >
