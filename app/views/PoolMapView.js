@@ -237,6 +237,7 @@ export const PoolMapView = () => {
         rotateEnabled={false}
         showsCompass={false}
         showsMyLocationButton={false}
+        userInterfaceStyle={'light'}
       >
         {filteredMarkers.map((marker) => (
           <Marker

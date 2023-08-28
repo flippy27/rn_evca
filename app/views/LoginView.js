@@ -65,7 +65,7 @@ export const LoginView = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25, justifyContent: "space-between" }}>
+      <View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>

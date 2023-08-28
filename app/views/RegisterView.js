@@ -31,7 +31,7 @@ export const RegisterView = ({ route, navigation }) => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [toggle, setToggle] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const checkValidity = ({ email, password, password2, toggle }) => {
     console.log(email, password, password2);
@@ -96,7 +96,7 @@ export const RegisterView = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25 }}>
+      <View style={{ flex: 1, padding: 15 }}>
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock style={{ padding: 20 }}>

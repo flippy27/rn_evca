@@ -73,7 +73,7 @@ export const WelcomeView = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25 }}>
+      <View style={{ flex: 1, padding: 15 }}>
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>

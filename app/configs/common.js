@@ -214,7 +214,7 @@ export const tra = (view, text_id) => {
               text_id: "hemos",
               text: "Hemos detectado que ya estas registrado.",
             },
-            { text_id: "porfavor", text: "pPor favor ingresa tu contraseña" },
+            { text_id: "porfavor", text: "Por favor ingresa tu contraseña" },
             { text_id: "siguiente", text: "Siguiente" },
           ],
         },
