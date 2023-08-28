@@ -242,8 +242,8 @@ export const PoolMapView = () => {
         {filteredMarkers.map((marker) => (
           <Marker
             tracksViewChanges={false}
-            key={uuidv4()}
-            keyExtractor={uuidv4()}
+            key={marker.pool.id}
+            keyExtractor={marker.pool.id}
             coordinate={{
               latitude: marker.pool.pool_latitude,
               longitude: marker.pool.pool_longitude,
