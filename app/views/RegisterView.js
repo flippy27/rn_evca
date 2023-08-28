@@ -20,6 +20,7 @@ import { registerUser } from "../hooks/hooks";
 import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 import { CustomButton } from "../components/CustomButton";
 import { tra } from "../configs/common";
+import { save } from "../utils/saveLoadData";
 
 export const RegisterView = ({ route, navigation }) => {
   const { w_email } = route.params;
@@ -84,11 +85,16 @@ export const RegisterView = ({ route, navigation }) => {
     }
     if (is_valid_email({ email }) && is_valid_password({ password })) {
       const response = await registerUser(COMPANY, email, password);
-
-      if (response.message == "User Created") {
-        navigation.navigate("Login", { w_email: email });
+      console.log(response);
+      if (response.message.includes("exists with that company")) {
+        return;
       } else {
-        navigation.navigate("App", { screen: "BottomTabBar" });
+        await save({ where: "token", what: response.token });
+        if (response.token == null) {
+          navigation.navigate("Login", { w_email: email });
+        } else {
+          navigation.navigate("App", { screen: "BottomTabBar" });
+        }
       }
     }
   };
@@ -107,7 +113,7 @@ export const RegisterView = ({ route, navigation }) => {
             />
 
             <Text style={[styles.text, { paddingTop: 20 }]}>
-            {tra("signin", "contra1")}
+              {tra("signin", "contra1")}
             </Text>
             <CustomSecureTextInput
               value={password}
@@ -115,7 +121,7 @@ export const RegisterView = ({ route, navigation }) => {
               keyboardType={"default"}
             />
             <Text style={[styles.text, { paddingTop: 20 }]}>
-            {tra("signin", "contra2")}
+              {tra("signin", "contra2")}
             </Text>
             <CustomSecureTextInput
               value={password2}
@@ -136,8 +142,10 @@ export const RegisterView = ({ route, navigation }) => {
                 toggle={toggle}
               />
               <Text style={styles.terms}>
-              {tra("signin", "acepto1")}{" "}
-                <Text style={styles.terms_link}>{tra("signin", "acepto2")}</Text>
+                {tra("signin", "acepto1")}{" "}
+                <Text style={styles.terms_link}>
+                  {tra("signin", "acepto2")}
+                </Text>
               </Text>
             </View>
             <View style={{ paddingBottom: 20 }}>
