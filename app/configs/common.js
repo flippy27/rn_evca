@@ -77,6 +77,7 @@ export const texts = {
 };
 
 export const Connector = ({ name }) => {
+  console.log(name);
   if (name == "Tipo 1") {
     return <Tipo1 />;
   } else if (name == "Tipo 2" || name == "IEC Tipo 2") {

@@ -1,18 +1,17 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { Colors } from "../configs/common";
+import { v4 as uuidv4 } from "uuid";
+import { Colors, tra } from "../configs/common";
+import AddNewCardView from "../views/AddNewCardView";
 import { ChargeHistoryView } from "../views/ChargeHistoryView";
+import { PoolDetailView } from "../views/PoolDetailView";
 import { PoolMapView } from "../views/PoolMapView";
+import { StartStopChargeView } from "../views/StartStopChargeView";
 import ConfigIcon from "./icons/config_icon";
 import HistorialIcon from "./icons/historial_icon";
 import MapIcon from "./icons/map_icon";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PoolDetailView } from "../views/PoolDetailView";
-import { StartStopChargeView } from "../views/StartStopChargeView";
-import AddNewCardView, { NewCardView } from "../views/AddNewCardView";
-import { v4 as uuidv4 } from "uuid";
-import { tra } from "../configs/common";
 const Tab = createBottomTabNavigator();
 const MapStack = createNativeStackNavigator();
 

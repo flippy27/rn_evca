@@ -9,6 +9,7 @@ import { CHARGE_USER_ID } from "../configs/global";
 import { useMobileChargeHistory } from "../hooks/hooks";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { tra } from "../configs/common";
+import { Connector } from "../configs/common";
 
 const ChargeHistoryItem = ({ item }) => {
   return (
@@ -30,7 +31,7 @@ const ChargeHistoryItem = ({ item }) => {
       </View>
 
       <View style={{ flexDirection: "row", paddingBottom: 7, gap: 10 }}>
-        <CCS1></CCS1>
+        {Connector({ name: item.connector_alias })}
         <View style={{ flexDirection: "column" }}>
           <Text style={styles.text}>{item.location}</Text>
           <Text style={styles.text}>{item.connector_alias}</Text>
@@ -52,7 +53,7 @@ export const ChargeHistoryView = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <View>
+      <View style={{paddingVertical:20}}>
         <Text
           style={{
             color: Colors.COMPANY.PRIMARY_DARK,
