@@ -2,6 +2,7 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Colors } from "../configs/common";
 import { useNavigation } from "@react-navigation/native";
 import ArrowIcon from "../components/icons/ArrowIcon";
+import { tra } from "../configs/common";
 
 /// text 2 and 3 are for pool
 export const BackBar = ({
@@ -16,27 +17,31 @@ export const BackBar = ({
     navigation.goBack();
   };
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        gap: 20,
-        alignItems: "center",
-        paddingHorizontal: 30,
-        paddingBottom: 20,
-        paddingTop: 20,
-      }}
-    >
-      <Pressable onPress={handleBackButton}>
+    <View style={styles.container}>
+      <Pressable onPress={handleBackButton} style={styles.backButton}>
         <ArrowIcon />
       </Pressable>
-      <Text style={styles.textBlueBold}>
-        {text1} {text2 && <Text style={styles.textBlue}>, {text2}</Text>}{" "}
-        {text3 && userCoords && poolCoords && (
-          <Text style={styles.textBlueBold}>
-            a {getPoolDistanceFromUser(userCoords, poolCoords)}
-          </Text>
-        )}
-      </Text>
+      <View style={styles.textContainer}>
+        <Text
+          style={[
+            styles.textBlueBold,
+            text3 && text2 ? { paddingHorizontal: 0 } : {},
+          ]}
+        >
+          {text1}
+          {text2 && <Text style={styles.textBlue}>, {text2}</Text>}{" "}
+          {text3 && userCoords && poolCoords && (
+            <Text style={styles.textBlueBold}>
+              {tra('backbar','a')}{" "}
+              {getPoolDistanceFromUser(userCoords, poolCoords)
+                .toFixed(1)
+                .replace(".", ",")}
+              Km {tra('backbar','ubicacion')}
+            </Text>
+          )}
+        </Text>
+      </View>
+      {/* <View style={{ flex: 1 }}></View> */}
     </View>
   );
 };
@@ -66,6 +71,15 @@ const getPoolDistanceFromUser = (userCoords, poolCoords) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 30,
+    paddingBottom: 20,
+    paddingTop: 20,
+    gap: 20,
+  },
   textBlueBold: {
     fontFamily: "Montserrat-Bold",
     fontSize: 16,
@@ -75,5 +89,16 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Regular",
     fontSize: 16,
     color: Colors.COMPANY.PRIMARY_DARK,
+  },
+  backButton: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 0,
+    paddingRight: 0, // un poco de espacio adicional entre el botón y el texto
+  },
+  textContainer: {
+    flex: 6, // puedes ajustar esto según tus necesidades
+    justifyContent: "center",
   },
 });

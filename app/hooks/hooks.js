@@ -191,7 +191,7 @@ export const loginUser = (companyId, email, password) => {
       },
     })
       .then((response) => {
-        if (!response.ok) {
+        if (response.status > 499) {
           throw new Error("Network response was not ok");
         }
         return response.json();

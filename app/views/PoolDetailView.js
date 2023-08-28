@@ -16,7 +16,7 @@ import { Colors, Connector } from "../configs/common";
 import { fetchConnectorsStatus } from "../hooks/hooks";
 import { tra } from "../configs/common";
 
-export const PoolDetailView = ({ route, userCoords }) => {
+export const PoolDetailView = ({ route }) => {
   const navigation = useNavigation();
 
   const [status, setStatus] = useState(null);
@@ -28,6 +28,7 @@ export const PoolDetailView = ({ route, userCoords }) => {
     pool: {
       stations: { connectors },
     },
+    userCoords,
   } = route.params;
   const getConnectorIds = () => {
     let id_arr = [];
@@ -83,7 +84,7 @@ export const PoolDetailView = ({ route, userCoords }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ paddingHorizontal: 30, flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <BackBar
           text1={pool.pool_name}
           text2={pool.pool_address}
@@ -94,7 +95,13 @@ export const PoolDetailView = ({ route, userCoords }) => {
             longitude: pool.pool_longitude,
           }}
         />
-        <View style={{ alignItems: "flex-end" }}>
+        <View
+          style={{
+            alignItems: "flex-end",
+            paddingRight: 30,
+            paddingBottom: 20,
+          }}
+        >
           <CustomButton
             type={"primary"}
             text={tra("pool_det", "llegar")}
@@ -105,21 +112,23 @@ export const PoolDetailView = ({ route, userCoords }) => {
             }
           />
         </View>
-        <FlatList
-          data={stations.filter((x) => {
-            return x.connectors.length > 0;
-          })}
-          renderItem={({ item }) => (
-            <StationItem
-              item={item}
-              navigation={navigation}
-              pool={pool}
-              conn_status_arr={status}
-            />
-          )}
-          keyExtractor={(item) => item.id || uuidv4()}
-          style={{ paddingHorizontal: 10 }}
-        />
+        <View style={{ paddingHorizontal: 30 }}>
+          <FlatList
+            data={stations.filter((x) => {
+              return x.connectors.length > 0;
+            })}
+            renderItem={({ item }) => (
+              <StationItem
+                item={item}
+                navigation={navigation}
+                pool={pool}
+                conn_status_arr={status}
+              />
+            )}
+            keyExtractor={(item) => item.id || uuidv4()}
+            style={{ paddingHorizontal: 10 }}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -228,7 +237,11 @@ const ConnectorStatusItem = ({ status, item }) => {
     ) {
       pin_color = Colors.PIN.ALL_AVAILABLE;
       text = tra("pool_det", "disponible");
-    } else if (status == "Charging" || status == "Preparing") {
+    } else if (
+      status == "Charging" ||
+      status == "Preparing" ||
+      status == "Finishing"
+    ) {
       pin_color = Colors.PIN.NONE_AVAILABLE;
       text = tra("pool_det", "ocupado");
     } else if (

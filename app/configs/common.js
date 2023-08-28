@@ -141,6 +141,14 @@ export const tra = (view, text_id) => {
           ],
         },
         {
+          view: "backbar",
+          data: [
+            { text_id: "agregar", text: "Add new card" },
+            { text_id: "a", text: "at" },
+            { text_id: "ubicacion", text: "from your location" },
+          ],
+        },
+        {
           view: "map",
           data: [
             { text_id: "filtrar", text: "Filter available" },
@@ -227,6 +235,14 @@ export const tra = (view, text_id) => {
             { text_id: "historial", text: "Historial" },
             { text_id: "mapa", text: "Mapa" },
             { text_id: "config", text: "Config." },
+          ],
+        },
+        {
+          view: "backbar",
+          data: [
+            { text_id: "agregar", text: "Agregar nueva tarjeta" },
+            { text_id: "a", text: "a" },
+            { text_id: "ubicacion", text: "de tu ubicación" },
           ],
         },
         {

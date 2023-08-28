@@ -25,6 +25,7 @@ export const LoginView = ({ route, navigation }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [email, setEmail] = useState(w_email);
   const [password, setPassword] = useState("");
+  const [credencialesIncorrectas, setCredencialesIncorrectas] = useState(false);
 
   useEffect(() => {
     setEmail(w_email);
@@ -46,11 +47,18 @@ export const LoginView = ({ route, navigation }) => {
   const handleLogin = async () => {
     if (is_valid_email({ email }) && is_valid_password({ password })) {
       const response = await loginUser(COMPANY, email, password);
-      await save({ where: "token", what: response.token });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "App" }],
-      });
+      if (response.message == "Credentials are not valid") {
+        setCredencialesIncorrectas(true);
+        setTimeout(() => {
+          setCredencialesIncorrectas(false);
+        }, 2000);
+      } else {
+        await save({ where: "token", what: response.token });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "App" }],
+        });
+      }
     }
   };
   const handleEmailChange = (text) => {
@@ -93,6 +101,17 @@ export const LoginView = ({ route, navigation }) => {
               onChangeText={handlePasswordChange}
               keyboardType={"default"}
             />
+            {credencialesIncorrectas && 
+              <View
+                style={{
+                  justifyContent: "flex-start",
+                  width: "100%",
+                  paddingHorizontal: 15,
+                }}
+              >
+                <Text style={styles.incorrectas}>Credenciales incorrectas</Text>
+              </View>
+            }
 
             <View style={{ paddingVertical: 20 }}>
               <CustomButton
@@ -135,5 +154,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: `Montserrat-Regular`,
     width: "100%",
+  },
+  incorrectas: {
+    fontFamily: `Montserrat-Regular`,
+    fontSize: 12,
+    color: "#F30808",
   },
 });
