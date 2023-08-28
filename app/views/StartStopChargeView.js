@@ -27,7 +27,6 @@ export const StartStopChargeView = ({ route }) => {
     const fetchStatus = () => {
       fetchPoolCurrent({ connector_id: connector.id })
         .then((response) => {
-          console.log("response", response);
           setStatus(response);
           setError(null);
         })

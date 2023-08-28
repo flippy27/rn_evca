@@ -23,7 +23,7 @@ export const registerUser = (companyId, email, password) => {
     })
       .then((response) => {
         if (response.status > 499) {
-          throw new Error("Server error");
+          throw new Error("Server error en register");
         }
         return response.json();
       })
@@ -55,7 +55,7 @@ export const fetchConnectorsStatus = (connectorIds) => {
     })
       .then((response) => {
         if (response.status > 499) {
-          throw new Error("Server error");
+          throw new Error("Server error en fetch connectors");
         }
         return response.json();
       })
@@ -85,7 +85,7 @@ export const useMobileChargeHistory = (id) => {
     })
       .then((response) => {
         if (response.status > 499) {
-          throw new Error("Server error");
+          throw new Error("Server error en historial");
         }
         return response.json();
       })
@@ -112,7 +112,7 @@ export const checkUser = (companyId, email) => {
     })
       .then((response) => {
         if (response.status > 499) {
-          throw new Error("Server error");
+          throw new Error("Server error en check user");
         }
         return response.json();
       })
@@ -224,7 +224,7 @@ export const startCharge = (equipo, pistola, corrienteMaxima, user_id) => {
     })
       .then((response) => {
         if (response.status > 499) {
-          throw new Error("Server error");
+          throw new Error("Server error en start charge");
         }
         return response.json();
       })
@@ -277,7 +277,7 @@ export const fetchPoolCurrent = ({ connector_id }) => {
     })
       .then((response) => {
         if (response.status > 499) {
-          throw new Error("Server error");
+          throw new Error("Server error en pool current");
         }
         return response.json();
       })
@@ -295,22 +295,22 @@ export const fetchPoolCompany = ({ company }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Although typically unnecessary for GET, added for consistency
-        // Assuming you might need an Authorization header as in the previous example. 
+        // Assuming you might need an Authorization header as in the previous example.
         // Make sure to have 'token' defined or received as a parameter
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     })
-    .then((response) => {
-      if (response.status > 499) {
-        throw new Error("Server error");
-      }
-      return response.json();
-    })
-    .then((responseJson) => {
-      resolve(responseJson);
-    })
-    .catch((error) => {
-      reject(error);
-    });
+      .then((response) => {
+        if (response.status > 499) {
+          throw new Error("Server error en pool company");
+        }
+        return response.json();
+      })
+      .then((responseJson) => {
+        resolve(responseJson);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };

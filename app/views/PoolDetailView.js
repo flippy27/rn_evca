@@ -73,7 +73,7 @@ export const PoolDetailView = ({ route, userCoords }) => {
     Linking.canOpenURL(url)
       .then((supported) => {
         if (!supported) {
-          console.log("Can't handle URL: " + url);
+          console.error("Can't handle URL: " + url);
         } else {
           return Linking.openURL(url);
         }
@@ -204,7 +204,6 @@ const ConnectorItem = ({
 };
 
 const getConnectorStatus = ({ item, conn_status_arr }) => {
-  console.log(conn_status_arr);
   if (!conn_status_arr?.data) {
     return null;
   }
