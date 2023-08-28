@@ -16,6 +16,7 @@ import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 import { usePinMaker } from "../components/PinMaker";
 import { tra } from "../configs/common";
+import { remove } from "../utils/saveLoadData";
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
   const R = 6371.0; // Radius of the Earth in kilometers
@@ -30,6 +31,13 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
+const DEFAULT_LOCATION = {
+  coords: {
+    latitude: -33.0053579,
+    longitude: -71.6126569,
+  },
+};
 
 function degreesToRadians(degrees) {
   return degrees * (Math.PI / 180);
@@ -102,6 +110,9 @@ export const CenterButton = ({ onCenter }) => {
     </View>
   );
 };
+export const removeToken = async () => {
+  await remove({ what: "token" });
+};
 export const FilterButton = ({
   pools,
   filtered,
@@ -125,7 +136,7 @@ export const FilterButton = ({
     <View style={[styles.filterButtonContainer, { top: 15 + insets.top }]}>
       <CustomButton
         type={filtered ? "secondary" : "primary"}
-        text={filtered ? tra('map',"todos"): tra('map',"filtrar")}
+        text={filtered ? tra("map", "todos") : tra("map", "filtrar")}
         padding={5}
         width={150}
         onPress={() => handleFilterPressed()}
@@ -153,12 +164,14 @@ export const HelpDialogButton = ({ setModal }) => {
 };
 export const PoolMapView = () => {
   const markersData = usePinMaker(COMPANY);
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState(DEFAULT_LOCATION);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
   const [filteredMarkers, setFilteredMarkers] = useState(markersData);
   const [isMapInitialized, setIsMapInitialized] = useState(false);
+  const [usingDefaultLocation, setUsingDefaultLocation] = useState(true);
+
   const mapRef = useRef(null);
   const navigation = useNavigation();
 
@@ -171,6 +184,7 @@ export const PoolMapView = () => {
       }
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
+      setUsingDefaultLocation(false);
     })();
   }, []);
 
@@ -183,8 +197,7 @@ export const PoolMapView = () => {
         // const latslons = markersData.map((x) => {
         //   return { la: x.pool.pool_latitude, lo: x.pool.pool_longitude };
         // });
-        console.log(location.coords);
-        console.log(close);
+      
         // Animate the map to the calculated region
         mapRef.current.animateToRegion(boundingRegion);
       }
@@ -195,6 +208,7 @@ export const PoolMapView = () => {
       !isMapInitialized &&
       location &&
       markersData &&
+      !usingDefaultLocation &&
       markersData.length > 0
     ) {
       centerMapIncludingUserAndPools();
@@ -237,13 +251,13 @@ export const PoolMapView = () => {
         rotateEnabled={false}
         showsCompass={false}
         showsMyLocationButton={false}
-        userInterfaceStyle={'light'}
+        userInterfaceStyle={"light"}
       >
         {filteredMarkers.map((marker) => (
           <Marker
             tracksViewChanges={false}
-            key={uuidv4()}
-            keyExtractor={uuidv4()}
+            key={marker.pool.id}
+            keyExtractor={marker.pool.id}
             coordinate={{
               latitude: marker.pool.pool_latitude,
               longitude: marker.pool.pool_longitude,
@@ -260,13 +274,15 @@ export const PoolMapView = () => {
           </Marker>
         ))}
       </MapView>
+
       <FilterButton
         pools={markersData}
         filtered={isFiltered}
         setFiltered={setIsFiltered}
         setFilteredMarkers={setFilteredMarkers}
       />
-      <CenterButton onCenter={centerMapOnUser} />
+      <CenterButton onCenter={removeToken} />
+
       <HelpDialogButton setModal={setIsModalVisible} />
       <MapModal
         isModalVisible={isModalVisible}

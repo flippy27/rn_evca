@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, LogBox } from "react-native";
 import { BottomTabBar } from "./app/components/BottomTabBar";
 import { LoginView } from "./app/views/LoginView";
 import { PoolDetailView } from "./app/views/PoolDetailView";
@@ -10,14 +10,15 @@ import { RegisterView } from "./app/views/RegisterView";
 import { WelcomeView } from "./app/views/WelcomeView";
 import { ChargeHistoryView } from "./app/views/ChargeHistoryView";
 import { StatusBar } from "expo-status-bar";
+import { SplashScreen } from "./app/views/SplashScreen";
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
-
+//LogBox.ignoreAllLogs(true);
 export const MainNavigator = () => (
   <View style={styles.container}>
-    <StatusBar style="dark"/>
+    <StatusBar style="dark" />
     <MainStack.Navigator
       screenOptions={{
         headerShown: false,
@@ -34,11 +35,17 @@ export const MainNavigator = () => (
 export const AuthNavigator = () => (
   <View style={styles.container}>
     <AuthStack.Navigator
+      initialRouteName="SplashScreen"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: "#FFF" },
       }}
     >
+      <AuthStack.Screen
+        name="SplashScreen"
+        component={SplashScreen}
+        options={{ contentStyle: { backgroundColor: "white" } }}
+      />
       <AuthStack.Screen
         name="Welcome"
         component={WelcomeView}

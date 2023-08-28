@@ -18,6 +18,7 @@ import { COMPANY } from "../configs/global";
 import { loginUser } from "../hooks/hooks";
 import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 import { tra } from "../configs/common";
+import { save } from "../utils/saveLoadData";
 
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
@@ -30,7 +31,6 @@ export const LoginView = ({ route, navigation }) => {
   }, []);
 
   const checkValidity = ({ email, password, password2, toggle }) => {
-    console.log(email, password, password2);
     if (!is_valid_email({ email })) {
       setButtonDisabled(true);
       return;
@@ -44,10 +44,9 @@ export const LoginView = ({ route, navigation }) => {
   };
 
   const handleLogin = async () => {
-    console.log("empas", email, password);
     if (is_valid_email({ email }) && is_valid_password({ password })) {
       const response = await loginUser(COMPANY, email, password);
-      console.log("res", response);
+      await save({ where: "token", what: response.token });
       navigation.reset({
         index: 0,
         routes: [{ name: "App" }],

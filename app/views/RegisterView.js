@@ -34,7 +34,6 @@ export const RegisterView = ({ route, navigation }) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const checkValidity = ({ email, password, password2, toggle }) => {
-    console.log(email, password, password2);
     if (!is_valid_email({ email })) {
       setButtonDisabled(true);
       return;

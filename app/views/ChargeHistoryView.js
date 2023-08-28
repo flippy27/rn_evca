@@ -38,7 +38,7 @@ const ChargeHistoryItem = ({ item }) => {
           <Text style={styles.textLight}>
             {tra("historial", "tiempocarga")}:{" "}
             <Text style={styles.text}>
-              {parseFloat(item.minutes).toFixed(2)} min
+              {item.minutes.split('.')[0]} min
             </Text>{" "}
           </Text>
         </View>

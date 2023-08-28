@@ -3,6 +3,7 @@ import CCS2 from "../components/icons/CCS2";
 import GBT_DC from "../components/icons/GBT_DC";
 import Tipo1 from "../components/icons/Tipo1";
 import Tipo2 from "../components/icons/Tipo2";
+import CHAdeMO from "../components/icons/CHAdeMO";
 import { COMPANY, LANGUAGE } from "./global";
 
 //COLORS
@@ -77,17 +78,18 @@ export const texts = {
 };
 
 export const Connector = ({ name }) => {
-  console.log(name);
   if (name == "Tipo 1") {
     return <Tipo1 />;
   } else if (name == "Tipo 2" || name == "IEC Tipo 2") {
     return <Tipo2 />;
   } else if (name == "CCS1") {
     return <CCS1 />;
-  } else if (name == "CCS2") {
-    return <CSS2 />;
+  } else if (name == "CCS2" || name == "CCS Combo 2") {
+    return <CCS2 />;
   } else if (name == "GB/T_DC") {
     return <GBT_DC />;
+  } else if (name == "CHAdeMO") {
+    return <CHAdeMO />;
   }
 };
 

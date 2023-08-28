@@ -25,11 +25,8 @@ export const WelcomeView = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleEmailCheck = async () => {
-    console.log("handling email check");
     if (is_valid_email({ email })) {
-      console.log("company", COMPANY);
       const response = await checkUser(COMPANY, email);
-      console.log("le data", response);
 
       if (response.code > 399) {
         //email doenst exists, go to register
@@ -48,7 +45,6 @@ export const WelcomeView = ({ navigation }) => {
   };
   const handleInputChange = (text) => {
     const email = text;
-    console.log(text);
     if (!is_valid_email({ email })) {
       setButtonDisabled(true);
     } else {
@@ -67,9 +63,10 @@ export const WelcomeView = ({ navigation }) => {
 
     initApp();
   }, []);
-  if (isLoading) {
-    return <SplashScreen />;
-  }
+
+  // if (isLoading) {
+  //   return <SplashScreen />;
+  // }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
