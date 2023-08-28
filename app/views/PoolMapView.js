@@ -15,6 +15,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 import { usePinMaker } from "../components/PinMaker";
+import { tra } from "../configs/common";
+
 function haversineDistance(lat1, lon1, lat2, lon2) {
   const R = 6371.0; // Radius of the Earth in kilometers
   const dLat = degreesToRadians(lat2 - lat1);
@@ -45,8 +47,8 @@ const getBoundingRegion = (points) => {
   const a = {
     latitude: (maxLat + minLat) / 2,
     longitude: (maxLon + minLon) / 2,
-    latitudeDelta: maxLat - minLat + 0.1, // added a small buffer
-    longitudeDelta: maxLon - minLon + 0.1, // added a small buffer
+    latitudeDelta: maxLat - minLat + 0.01, // added a small buffer
+    longitudeDelta: maxLon - minLon + 0.01, // added a small buffer
   };
   return a;
 };
@@ -123,7 +125,7 @@ export const FilterButton = ({
     <View style={[styles.filterButtonContainer, { top: 15 + insets.top }]}>
       <CustomButton
         type={filtered ? "secondary" : "primary"}
-        text={filtered ? "Ver todos" : "Filtrar disponibles"}
+        text={filtered ? tra('map',"todos"): tra('map',"filtrar")}
         padding={5}
         width={150}
         onPress={() => handleFilterPressed()}
@@ -196,10 +198,13 @@ export const PoolMapView = () => {
       markersData.length > 0
     ) {
       centerMapIncludingUserAndPools();
-      setFilteredMarkers(markersData);
+      setFilteredMarkers(markersData); // This line ensures that the filteredMarkers are updated every time markersData changes.
       setIsMapInitialized(true); // Mark map as initialized
+    } else if (isMapInitialized && markersData) {
+      // Ensure that once the map is initialized, markers are still updated.
+      setFilteredMarkers(markersData);
     }
-  }, [location, markersData]);
+  }, [location, markersData, isMapInitialized]);
 
   const centerMapOnUser = () => {
     mapRef.current.animateToRegion({
@@ -232,6 +237,7 @@ export const PoolMapView = () => {
         rotateEnabled={false}
         showsCompass={false}
         showsMyLocationButton={false}
+        userInterfaceStyle={'light'}
       >
         {filteredMarkers.map((marker) => (
           <Marker

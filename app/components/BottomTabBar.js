@@ -1,18 +1,17 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { Colors } from "../configs/common";
+import { v4 as uuidv4 } from "uuid";
+import { Colors, tra } from "../configs/common";
+import AddNewCardView from "../views/AddNewCardView";
 import { ChargeHistoryView } from "../views/ChargeHistoryView";
+import { PoolDetailView } from "../views/PoolDetailView";
 import { PoolMapView } from "../views/PoolMapView";
+import { StartStopChargeView } from "../views/StartStopChargeView";
 import ConfigIcon from "./icons/config_icon";
 import HistorialIcon from "./icons/historial_icon";
 import MapIcon from "./icons/map_icon";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PoolDetailView } from "../views/PoolDetailView";
-import { StartStopChargeView } from "../views/StartStopChargeView";
-import AddNewCardView, { NewCardView } from "../views/AddNewCardView";
-import { v4 as uuidv4 } from "uuid";
-
 const Tab = createBottomTabNavigator();
 const MapStack = createNativeStackNavigator();
 
@@ -54,19 +53,17 @@ function View2() {
 }
 
 function View3() {
-  return (
-   <AddNewCardView></AddNewCardView>
-  );
+  return <AddNewCardView></AddNewCardView>;
 }
 
 export const BottomTabBar = () => {
   return (
     <Tab.Navigator
       tabBar={(props) => <MyTabBar {...props} />}
-      initialRouteName="Mapa"
+      initialRouteName={tra("bottomtab", "mapa")}
     >
       <Tab.Screen
-        name="Historial"
+        name={tra("bottomtab", "historial")}
         component={View1}
         options={{
           contentStyle: { backgroundColor: "white" },
@@ -74,7 +71,7 @@ export const BottomTabBar = () => {
         }}
       />
       <Tab.Screen
-        name="Mapa"
+        name={tra("bottomtab", "mapa")}
         component={PoolMapStack}
         options={{
           contentStyle: { backgroundColor: "white" },
@@ -82,7 +79,7 @@ export const BottomTabBar = () => {
         }}
       />
       <Tab.Screen
-        name="Config"
+        name={tra("bottomtab", "config")}
         component={View3}
         options={{
           contentStyle: { backgroundColor: "white" },
@@ -134,11 +131,11 @@ function MyTabBar({ state, descriptors, navigation }) {
         const renderIcon = (routeName, isFocused) => {
           let color = isFocused ? "white" : Colors.COMPANY.PRIMARY;
           switch (routeName) {
-            case "Mapa":
+            case tra("bottomtab", "mapa"):
               return <MapIcon fill={color} />;
-            case "Historial":
+            case tra("bottomtab", "historial"):
               return <HistorialIcon fill={color} />;
-            case "Config":
+            case tra("bottomtab", "config"):
               return <ConfigIcon fill={color} />;
             default:
               return null;

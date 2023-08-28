@@ -4,11 +4,11 @@ import { Colors } from "../configs/common";
 
 export const CustomTextInput = (props) => {
   return (
-    <TextInput keyboardType={props.keyboardType}
+    <TextInput
+      keyboardType={props.keyboardType}
       style={[styles.field, props.style]}
       {...props}
       placeholder={props.placeholder}
-      
     />
   );
 };

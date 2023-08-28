@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../components/CustomButton";
 import { CustomSecureTextInput } from "../components/CustomSecureTextInput";
@@ -11,6 +17,7 @@ import { Colors } from "../configs/common";
 import { COMPANY } from "../configs/global";
 import { loginUser } from "../hooks/hooks";
 import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
+import { tra } from "../configs/common";
 
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
@@ -58,34 +65,39 @@ export const LoginView = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25, justifyContent: "space-between" }}>
+      <View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>
-            <Text style={styles.text}>Ingresa tu correo</Text>
-            <CustomTextInput value={email} onChangeText={handleEmailChange} />
+            <Text style={styles.text}>{tra("login", "correo")}</Text>
+            <CustomTextInput
+              value={email}
+              onChangeText={handleEmailChange}
+              keyboardType={"email-address"}
+            />
 
             <Text
-              style={[styles.info, { paddingTop: 20, paddingHorizontal: 10 }]}
+              style={[styles.info, { paddingTop: 5, paddingHorizontal: 10 }]}
             >
-              Hemos detectado que ya estás registrado.
+              {tra("login", "hemos")}
             </Text>
             <Text style={[styles.info, { paddingHorizontal: 10 }]}>
-              Por favor ingresa tu contraseña
+              {tra("login", "porfavor")}
             </Text>
 
             <Text style={[styles.text, { paddingTop: 20 }]}>
-              Ingresa tu contraseña
+              {tra("login", "contra1")}
             </Text>
 
             <CustomSecureTextInput
               value={password}
               onChangeText={handlePasswordChange}
+              keyboardType={"default"}
             />
 
             <View style={{ paddingVertical: 20 }}>
               <CustomButton
-                text={"Siguiente"}
+                text={tra("login", "siguiente")}
                 type={"primary"}
                 fontsize={18}
                 padding={10}
@@ -97,15 +109,17 @@ export const LoginView = ({ route, navigation }) => {
           </HoldingBlock>
         </View>
       </View>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: Platform.OS == "android" ? 40 : 20,
-        }}
-      >
-        <DhemaxText></DhemaxText>
-      </View>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : "padding"}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginBottom: Platform.OS == "android" ? 40 : 20,
+          }}
+        >
+          <DhemaxText></DhemaxText>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

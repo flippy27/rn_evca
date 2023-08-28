@@ -32,6 +32,7 @@ export const CustomSecureTextInput = ({ value, onChangeText, ...props }) => {
           placeholder=""
           value={value}
           onChangeText={onChangeText}
+          keyboardType={props.keyboardType}
         />
         <TouchableOpacity
           style={{ paddingHorizontal: 10 }}

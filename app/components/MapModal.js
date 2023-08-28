@@ -21,26 +21,25 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
             <View
               style={{
                 paddingTop: 15,
-                paddingBottom: 10,
+                paddingBottom: 30,
                 minWidth: 200,
                 alignItems: "flex-end",
               }}
+            ></View>
+            <Pressable
+              onPress={() => setIsModalVisible(!isModalVisible)}
+              style={[styles.closeButton]}
             >
-              <Pressable
-                onPress={() => setIsModalVisible(!isModalVisible)}
-                style={{ width: 30, height: 30 }}
+              <Text
+                style={{
+                  fontFamily: "Montserrat-Bold",
+                  fontSize: 24,
+                  color: Colors.APP.DARK_GRAY,
+                }}
               >
-                <Text
-                  style={{
-                    fontFamily: "Montserrat-Bold",
-                    fontSize: 24,
-                    color: Colors.APP.DARK_GRAY,
-                  }}
-                >
-                  X
-                </Text>
-              </Pressable>
-            </View>
+                X
+              </Text>
+            </Pressable>
             <Text style={styles.modalText}>Estados</Text>
 
             <View style={{ flexDirection: "column" }}>
@@ -173,5 +172,15 @@ const styles = StyleSheet.create({
   pinTextContainer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  closeButton: {
+    position: "absolute", // Make the button's position absolute
+    top: 10, // Adjust the top value as per your needs
+    right: 10, // Adjust the right value as per your needs, this will bring the X close to the right
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    
   },
 });

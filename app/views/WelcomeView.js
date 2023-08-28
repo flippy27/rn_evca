@@ -1,5 +1,11 @@
-import { useState } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { CustomButton } from "../components/CustomButton";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { DhemaxText } from "../components/DhemaxText";
@@ -10,10 +16,14 @@ import { checkUser, usePool } from "../hooks/hooks";
 import { is_valid_email } from "../utils/LoginUtils";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../configs/common";
+import { tra } from "../configs/common";
+import { SplashScreen } from "./SplashScreen";
 
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const handleEmailCheck = async () => {
     console.log("handling email check");
     if (is_valid_email({ email })) {
@@ -47,23 +57,38 @@ export const WelcomeView = ({ navigation }) => {
     setEmail(text);
   };
 
+  useEffect(() => {
+    const initApp = async () => {
+      // Simulate a delay - in a real-world scenario, this could be where you check user authentication, etc.
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      setIsLoading(false);
+    };
+
+    initApp();
+  }, []);
+  if (isLoading) {
+    return <SplashScreen />;
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 25 }}>
+      <View style={{ flex: 1, padding: 15 }}>
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>
-            <Text style={styles.text}>Ingresa tu correo</Text>
+            <Text style={styles.text}>{tra("welcome", "correo")}</Text>
             <View style={{ width: "100%", paddingBottom: 20 }}>
               <CustomTextInput
-                placeholder={"hola@dhemax.com"}
+                placeholder={tra("welcome", "placeholder")}
                 value={email}
                 onChangeText={handleInputChange}
+                keyboardType={"email-address"}
               />
             </View>
             <View style={{ alignItems: "center", gap: 20, paddingBottom: 30 }}>
               <CustomButton
-                text={"Siguiente"}
+                text={tra("welcome", "siguiente")}
                 type={"primary"}
                 fontsize={18}
                 padding={10}
@@ -72,7 +97,7 @@ export const WelcomeView = ({ navigation }) => {
                 disabled={buttonDisabled}
               />
               <CustomButton
-                text={"Saltar inicio de sesión"}
+                text={tra("welcome", "saltar")}
                 type={"link"}
                 fontsize={18}
                 padding={0}
@@ -83,15 +108,17 @@ export const WelcomeView = ({ navigation }) => {
           </HoldingBlock>
         </View>
       </View>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: Platform.OS == "android" ? 40 : 20,
-        }}
-      >
-        <DhemaxText></DhemaxText>
-      </View>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : ""}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginBottom: Platform.OS == "android" ? 40 : 20,
+          }}
+        >
+          <DhemaxText></DhemaxText>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
