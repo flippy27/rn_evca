@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, KeyboardAvoidingView,Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomSecureTextInput } from "../components/CustomSecureTextInput";
 import { CustomText } from "../components/CustomText";
@@ -13,6 +19,7 @@ import { COMPANY } from "../configs/global";
 import { registerUser } from "../hooks/hooks";
 import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
 import { CustomButton } from "../components/CustomButton";
+import { tra } from "../configs/common";
 
 export const RegisterView = ({ route, navigation }) => {
   const { w_email } = route.params;
@@ -76,12 +83,8 @@ export const RegisterView = ({ route, navigation }) => {
     if (password != password2) {
       return;
     }
-    console.log("data send", email, password, password2);
     if (is_valid_email({ email }) && is_valid_password({ password })) {
-      console.log("llegue al registro");
-
       const response = await registerUser(COMPANY, email, password);
-      console.log("res", response);
 
       if (response.message == "User Created") {
         navigation.navigate("Login", { w_email: email });
@@ -97,7 +100,7 @@ export const RegisterView = ({ route, navigation }) => {
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock style={{ padding: 20 }}>
-            <Text style={styles.text}>Ingresa tu correo</Text>
+            <Text style={styles.text}>{tra("signin", "correo")}</Text>
             <CustomTextInput
               value={email}
               onChangeText={handleEmailChange}
@@ -105,7 +108,7 @@ export const RegisterView = ({ route, navigation }) => {
             />
 
             <Text style={[styles.text, { paddingTop: 20 }]}>
-              Ingresa tu contraseña
+            {tra("signin", "contra1")}
             </Text>
             <CustomSecureTextInput
               value={password}
@@ -113,7 +116,7 @@ export const RegisterView = ({ route, navigation }) => {
               keyboardType={"default"}
             />
             <Text style={[styles.text, { paddingTop: 20 }]}>
-              Confirma tu contraseña
+            {tra("signin", "contra2")}
             </Text>
             <CustomSecureTextInput
               value={password2}
@@ -134,13 +137,13 @@ export const RegisterView = ({ route, navigation }) => {
                 toggle={toggle}
               />
               <Text style={styles.terms}>
-                Acepto los{" "}
-                <Text style={styles.terms_link}>términos y condiciones</Text>
+              {tra("signin", "acepto1")}{" "}
+                <Text style={styles.terms_link}>{tra("signin", "acepto2")}</Text>
               </Text>
             </View>
             <View style={{ paddingBottom: 20 }}>
               <CustomButton
-                text={"Siguiente"}
+                text={tra("signin", "siguiente")}
                 type={"primary"}
                 fontsize={18}
                 padding={10}

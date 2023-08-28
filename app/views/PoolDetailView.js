@@ -14,6 +14,7 @@ import { CustomButton } from "../components/CustomButton";
 import { DottedLine } from "../components/DottedLine";
 import { Colors, Connector } from "../configs/common";
 import { fetchConnectorsStatus } from "../hooks/hooks";
+import { tra } from "../configs/common";
 
 export const PoolDetailView = ({ route, userCoords }) => {
   const navigation = useNavigation();
@@ -96,9 +97,9 @@ export const PoolDetailView = ({ route, userCoords }) => {
         <View style={{ alignItems: "flex-end" }}>
           <CustomButton
             type={"primary"}
-            text={"Cómo llegar"}
+            text={tra('pool_det','llegar')}
             padding={7}
-            width={120}
+            width={140}
             onPress={() =>
               openMapsAppWithDirections(pool.pool_latitude, pool.pool_longitude)
             }
@@ -222,20 +223,20 @@ const ConnectorStatusItem = ({ status }) => {
     status == "SuspendedEVSE"
   ) {
     pin_color = Colors.PIN.ALL_AVAILABLE;
-    text = "Disponible";
+    text = tra("pool_det", "disponible");
   } else if (status == "Charging" || status == "Preparing") {
     pin_color = Colors.PIN.NONE_AVAILABLE;
-    text = "Ocupado";
+    text = tra("pool_det", "ocupado");
   } else if (
     status == "Offline" ||
     status == "Faulted" ||
     status == "Unavailable"
   ) {
     pin_color = Colors.PIN.UNAVAILABLE;
-    text = "No disponible";
+    text = tra("pool_det", "nodisponible");
   } else {
     pin_color = "black";
-    text = "No disponible";
+    text = tra("pool_det", "nodisponible");
   }
 
   return (

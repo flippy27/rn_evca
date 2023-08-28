@@ -8,6 +8,7 @@ import { HoldingBlock } from "../components/HoldingBlock";
 import { StopChargeModal } from "../components/StopChargeModal";
 import { Colors, Connector } from "../configs/common";
 import { fetchPoolCurrent, startCharge, stopCharge } from "../hooks/hooks";
+import { tra } from "../configs/common";
 
 export const StartStopChargeView = ({ route }) => {
   const [isCharging, setIsCharging] = useState(false);
@@ -55,7 +56,6 @@ export const StartStopChargeView = ({ route }) => {
   };
 
   const handleStopCharge = () => {
-    console.log("stopping charge");
     stopCharge(station.station_name, connector.connector_number);
     setIsCharging(false);
     setIsChageFinalized(true);
@@ -69,7 +69,7 @@ export const StartStopChargeView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingHorizontal: 30 }}>
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 15 }}>
       <View style={{ flex: 1 }}>
         <BackBar text1={pool.pool_name} text2={pool.pool_address} />
 
@@ -103,7 +103,7 @@ export const StartStopChargeView = ({ route }) => {
           >
             <CustomButton
               type={"primary"}
-              text={"Iniciar carga"}
+              text={tra('startcharge','iniciar')}
               onPress={handleStartCharge}
               padding={10}
               width={190}
@@ -114,22 +114,22 @@ export const StartStopChargeView = ({ route }) => {
         {isCharging && !isChargeFinalized && (
           <View style={{ width: "100%" }}>
             <HoldingBlock>
-              <View style={{ paddingVertical: 20 }}>
-                <Text style={styles.currentChargeTxt}>Carga en curso</Text>
+              <View style={{ paddingVertical: 20,justifyContent:'center', alignItems:'center' }}>
+                <Text style={styles.currentChargeTxt}>{tra('startcharge','cargacurso')}</Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
                   {status?.kwh} kWh
                 </Text>
-                <Text style={styles.currentChargeType}>Tiempo cargando</Text>
+                <Text style={styles.currentChargeType}>{tra('startcharge','tiempocargando')}</Text>
                 <Text style={styles.currentChargeData}>
-                  {status?.seconds} min
+                  {status?.seconds} {tra('startcharge','min')}
                 </Text>
               </View>
             </HoldingBlock>
             <View style={{ alignItems: "center" }}>
               <CustomButton
                 type={"secondary"}
-                text={"Detener carga"}
+                text={tra('startcharge','detener')}
                 onPress={() => setIsModalVisible(true)}
                 padding={10}
                 width={190}
@@ -140,11 +140,11 @@ export const StartStopChargeView = ({ route }) => {
         {isChargeFinalized && !isCharging && (
           <View style={{ width: "100%" }}>
             <HoldingBlock>
-              <View style={{ paddingVertical: 20 }}>
-                <Text style={styles.currentChargeTxt}>Carga finalizada!</Text>
-                <Text style={styles.currentChargeType}>Tiempo de carga</Text>
+              <View style={{ paddingVertical: 20 ,justifyContent:'center', alignItems:'center' }}>
+                <Text style={styles.currentChargeTxt}>{tra('startcharge','finalizada')}</Text>
+                <Text style={styles.currentChargeType}>{tra('startcharge','tiempocarga')}</Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                {status?.seconds} min
+                  {status?.seconds} {tra('startcharge','min')}
                 </Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
                 <Text style={styles.currentChargeData}>{status?.kwh} kWh</Text>
@@ -153,7 +153,7 @@ export const StartStopChargeView = ({ route }) => {
             <View style={{ alignItems: "center" }}>
               <CustomButton
                 type={"primary"}
-                text={"Cerrar comporbante"}
+                text={tra('startcharge','comprobante')}
                 onPress={() => handleCloseVoucher()}
                 padding={10}
                 width={190}

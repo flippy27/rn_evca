@@ -4,6 +4,7 @@ import { CustomText } from "./CustomText";
 import { MapPin } from "./MapPin";
 import { Colors } from "../configs/common";
 import { CustomButton } from "./CustomButton";
+import { tra } from "../configs/common";
 
 export const StopChargeModal = ({
   isModalVisible,
@@ -29,7 +30,7 @@ export const StopChargeModal = ({
           <View style={styles.modalView}>
             <View style={{ justifyContent: "flex-end" }}>
               <Text style={styles.textStyle}>
-                Estás seguro de detener la carga?
+                {tra("startcharge", "seguro")}
               </Text>
               <View
                 style={{
@@ -40,14 +41,14 @@ export const StopChargeModal = ({
               >
                 <CustomButton
                   type={"secondary"}
-                  text={"Si"}
+                  text={tra("startcharge", "si")}
                   onPress={() => handleYes()}
                   padding={10}
                   width={80}
                 />
                 <CustomButton
                   type={"primary"}
-                  text={"No"}
+                  text={tra("startcharge", "no")}
                   onPress={() => setIsModalVisible(!isModalVisible)}
                   padding={10}
                   width={80}

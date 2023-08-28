@@ -17,6 +17,7 @@ import { Colors } from "../configs/common";
 import { COMPANY } from "../configs/global";
 import { loginUser } from "../hooks/hooks";
 import { is_valid_email, is_valid_password } from "../utils/LoginUtils";
+import { tra } from "../configs/common";
 
 export const LoginView = ({ route, navigation }) => {
   const { w_email } = route.params;
@@ -68,7 +69,7 @@ export const LoginView = ({ route, navigation }) => {
         <View>
           <TextAndLogo></TextAndLogo>
           <HoldingBlock>
-            <Text style={styles.text}>Ingresa tu correo</Text>
+            <Text style={styles.text}>{tra("login", "correo")}</Text>
             <CustomTextInput
               value={email}
               onChangeText={handleEmailChange}
@@ -76,16 +77,16 @@ export const LoginView = ({ route, navigation }) => {
             />
 
             <Text
-              style={[styles.info, { paddingTop: 20, paddingHorizontal: 10 }]}
+              style={[styles.info, { paddingTop: 5, paddingHorizontal: 10 }]}
             >
-              Hemos detectado que ya estás registrado.
+              {tra("login", "hemos")}
             </Text>
             <Text style={[styles.info, { paddingHorizontal: 10 }]}>
-              Por favor ingresa tu contraseña
+              {tra("login", "porfavor")}
             </Text>
 
             <Text style={[styles.text, { paddingTop: 20 }]}>
-              Ingresa tu contraseña
+              {tra("login", "contra1")}
             </Text>
 
             <CustomSecureTextInput
@@ -96,7 +97,7 @@ export const LoginView = ({ route, navigation }) => {
 
             <View style={{ paddingVertical: 20 }}>
               <CustomButton
-                text={"Siguiente"}
+                text={tra("login", "siguiente")}
                 type={"primary"}
                 fontsize={18}
                 padding={10}
