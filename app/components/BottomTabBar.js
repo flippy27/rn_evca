@@ -6,12 +6,15 @@ import { v4 as uuidv4 } from "uuid";
 import { Colors, tra } from "../configs/common";
 import AddNewCardView from "../views/AddNewCardView";
 import { ChargeHistoryView } from "../views/ChargeHistoryView";
+import { ConfigurationView } from "../views/ConfigurationView";
+import { PaymentMethodView } from "../views/PaymentMethodView";
 import { PoolDetailView } from "../views/PoolDetailView";
 import { PoolMapView } from "../views/PoolMapView";
 import { StartStopChargeView } from "../views/StartStopChargeView";
 import ConfigIcon from "./icons/config_icon";
 import HistorialIcon from "./icons/historial_icon";
 import MapIcon from "./icons/map_icon";
+
 const Tab = createBottomTabNavigator();
 const MapStack = createNativeStackNavigator();
 
@@ -42,6 +45,34 @@ function PoolMapStack() {
     </MapStack.Navigator>
   );
 }
+function ConfigStack() {
+  return (
+    <MapStack.Navigator initialRouteName="Config">
+      <MapStack.Screen
+        name="Config"
+        component={ConfigurationView}
+        options={{ headerShown: false }}
+      />
+      <MapStack.Screen
+        name="PaymentMethod"
+        component={PaymentMethodView}
+        options={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "white" },
+        }}
+      />
+      <MapStack.Screen
+        name="AddPayment"
+        component={AddNewCardView}
+        options={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "white" },
+        }}
+      />
+    </MapStack.Navigator>
+  );
+}
+
 
 // Sample views
 function View1() {
@@ -53,7 +84,7 @@ function View2() {
 }
 
 function View3() {
-  return <AddNewCardView></AddNewCardView>;
+  return <ConfigurationView></ConfigurationView>;
 }
 
 export const BottomTabBar = () => {
@@ -80,7 +111,7 @@ export const BottomTabBar = () => {
       />
       <Tab.Screen
         name={tra("bottomtab", "config")}
-        component={View3}
+        component={ConfigStack}
         options={{
           contentStyle: { backgroundColor: "white" },
           headerShown: false,

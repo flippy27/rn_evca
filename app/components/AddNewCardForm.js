@@ -5,6 +5,8 @@ import { CustomTextInput } from "./CustomTextInput";
 import { HoldingBlock } from "./HoldingBlock";
 import { Colors } from "../configs/common";
 import moment from "moment";
+import { v4 as uuidv4 } from "uuid";
+
 
 export const NewCardForm = ({ onSave }) => {
   const [fullName, setFullName] = useState("");
@@ -54,6 +56,7 @@ export const NewCardForm = ({ onSave }) => {
       cardNumber,
       expiringDate,
       CVV,
+      id: uuidv4()
     };
     onSave(formData);
     setFullName("");

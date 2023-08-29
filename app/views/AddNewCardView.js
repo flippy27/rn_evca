@@ -4,6 +4,8 @@ import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NewCardForm } from "../components/AddNewCardForm"; // Adjust the path based on your project structure
 import { BackBar } from "../components/BackBar";
+
+
 const AddNewCardView = () => {
   const [formData, setFormData] = useState(null);
 

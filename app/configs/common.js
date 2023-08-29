@@ -61,6 +61,7 @@ export const Colors = {
   APP: {
     LIGHT_GRAY: "#F5F5F5",
     DARK_GRAY: "#393737",
+    CARD_GRAY: "#C7C7C7",
     PLACEHOLDER_LIGHT_GRAY: "#BFBFBF",
     INPUT_BACKGROUND: "#E5E5E5",
   },
