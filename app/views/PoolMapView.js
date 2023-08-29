@@ -17,16 +17,19 @@ import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 import { tra } from "../configs/common";
 import { remove } from "../utils/saveLoadData";
 
+import { SafeAreaView } from "react-native-safe-area-context";
+
 function haversineDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371.0; // Radius of the Earth in kilometers
+  console.log(lat2, lon2);
+
+  const R = 6371.0;
   const dLat = degreesToRadians(lat2 - lat1);
   const dLon = degreesToRadians(lon2 - lon1);
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLat / 2) ** 2 +
     Math.cos(degreesToRadians(lat1)) *
       Math.cos(degreesToRadians(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+      Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
@@ -65,10 +68,23 @@ const getClosest = (user_location, pools) => {
     return user_location;
   }
   const sorted_pools = pools?.sort((a, b) => {
-    const distanceA = haversineDistance(user_location, a);
-    const distanceB = haversineDistance(user_location, b);
+    const distanceA = haversineDistance(
+      user_location.coords.latitude,
+      user_location.coords.longitude,
+      a.pool.pool_latitude,
+      a.pool.pool_longitude
+    );
+
+    const distanceB = haversineDistance(
+      user_location.coords.latitude,
+      user_location.coords.longitude,
+      b.pool.pool_latitude,
+      b.pool.pool_longitude
+    );
+
     return distanceA - distanceB;
   });
+
   let closest = [];
   if (sorted_pools?.length == 1) {
     closest.push({
@@ -87,10 +103,21 @@ const getClosest = (user_location, pools) => {
       }
     );
   }
+  console.log(
+    "closest",
+    closest.map((x) => {
+      return { lat: x.latitude, lon: x.longitude };
+    })
+  );
   closest.push({
     latitude: user_location.coords.latitude,
     longitude: user_location.coords.longitude,
   });
+  console.log("userloc", {
+    user_lat: user_location.coords.latitude,
+    user_lon: user_location.coords.longitude,
+  });
+
   return closest;
 };
 export const CenterButton = ({ onCenter }) => {
@@ -195,11 +222,6 @@ export const PoolMapView = () => {
 
       if (close?.length > 0) {
         const boundingRegion = getBoundingRegion(close);
-        // const latslons = markersData.map((x) => {
-        //   return { la: x.pool.pool_latitude, lo: x.pool.pool_longitude };
-        // });
-
-        // Animate the map to the calculated region
         mapRef.current.animateToRegion(boundingRegion);
       }
     }
@@ -213,10 +235,9 @@ export const PoolMapView = () => {
       markersData.length > 0
     ) {
       centerMapIncludingUserAndPools();
-      setFilteredMarkers(markersData); // This line ensures that the filteredMarkers are updated every time markersData changes.
-      setIsMapInitialized(true); // Mark map as initialized
+      setFilteredMarkers(markersData);
+      setIsMapInitialized(true);
     } else if (isMapInitialized && markersData) {
-      // Ensure that once the map is initialized, markers are still updated.
       setFilteredMarkers(markersData);
     }
   }, [location, markersData, isMapInitialized]);
