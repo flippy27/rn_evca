@@ -68,43 +68,6 @@ export const fetchConnectorsStatus = (connectorIds) => {
   });
 };
 
-export const useMobileChargeHistory = (id) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchMobileChargeHistory = useCallback(() => {
-    setLoading(true);
-
-    fetch(`${API_URL}pools/history/${id}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.status > 499) {
-          throw new Error("Server error en historial");
-        }
-        return response.json();
-      })
-      .then((responseJson) => {
-        setData(responseJson);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
-  }, [id]);
-
-  useEffect(() => {
-    fetchMobileChargeHistory();
-  }, [fetchMobileChargeHistory]);
-  return { data, loading, error };
-};
-
 export const checkUser = (companyId, email) => {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}auth/exists/${companyId}/${email}`, {
@@ -133,7 +96,7 @@ export const usePool = (company) => {
     setLoading(true);
 
     // Form the endpoint URL with company parameter
-    fetch(`${API_URL}pools/?company=${company}`)
+    fetch(`${QA_URL}pools/?company=${company}`)
       .then((response) => {
         if (response.status > 499) {
           throw new Error("Server error");
@@ -303,6 +266,32 @@ export const fetchPoolCompany = ({ company }) => {
       .then((response) => {
         if (response.status > 499) {
           throw new Error("Server error en pool company");
+        }
+        return response.json();
+      })
+      .then((responseJson) => {
+        resolve(responseJson);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const fetchMobileChargeHistory = (id) => {
+  return new Promise((resolve, reject) => {
+    console.log("calling mobile charge history");
+
+    fetch(`${API_URL}pools/history/${id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.status > 499) {
+          throw new Error("Server error en historial");
         }
         return response.json();
       })

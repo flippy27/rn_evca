@@ -1,15 +1,13 @@
+import { useFocusEffect } from "@react-navigation/native";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { v4 as uuidv4 } from "uuid";
 import { DottedLine } from "../components/DottedLine";
-import CCS1 from "../components/icons/CCS1";
-import { Colors } from "../configs/common";
+import { Colors, Connector, tra } from "../configs/common";
 import { CHARGE_USER_ID } from "../configs/global";
-import { useMobileChargeHistory } from "../hooks/hooks";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { tra } from "../configs/common";
-import { Connector } from "../configs/common";
+import { fetchMobileChargeHistory } from "../hooks/hooks";
 
 const ChargeHistoryItem = ({ item }) => {
   return (
@@ -26,7 +24,7 @@ const ChargeHistoryItem = ({ item }) => {
           {moment(item.date_init).format(tra("historial", "fecha"))}
         </Text>
         <Text style={styles.text}>
-          {moment(item.date_init).format("HH:MM")}
+          {moment(item.date_init).format("HH:mm")}
         </Text>
       </View>
 
@@ -37,9 +35,7 @@ const ChargeHistoryItem = ({ item }) => {
           <Text style={styles.text}>{item.connector_alias}</Text>
           <Text style={styles.textLight}>
             {tra("historial", "tiempocarga")}:{" "}
-            <Text style={styles.text}>
-              {item.minutes.split('.')[0]} min
-            </Text>{" "}
+            <Text style={styles.text}>{item.minutes.split(".")[0]} min</Text>{" "}
           </Text>
         </View>
       </View>
@@ -49,11 +45,22 @@ const ChargeHistoryItem = ({ item }) => {
   );
 };
 export const ChargeHistoryView = () => {
-  const { data } = useMobileChargeHistory(CHARGE_USER_ID);
-
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchMobileChargeHistory(CHARGE_USER_ID)
+        .then((responseData) => {
+          setData(responseData);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+    }, [CHARGE_USER_ID])
+  );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={{paddingVertical:20}}>
+      <View style={{ paddingVertical: 20 }}>
         <Text
           style={{
             color: Colors.COMPANY.PRIMARY_DARK,

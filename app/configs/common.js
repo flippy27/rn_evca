@@ -168,7 +168,7 @@ export const tra = (view, text_id) => {
           view: "historial",
           data: [
             { text_id: "historial", text: "Record" },
-            { text_id: "fecha", text: "mm/DD/YY" },
+            { text_id: "fecha", text: "MM/DD/YY" },
             { text_id: "tiempocarga", text: "Charge time" },
           ],
         },
@@ -265,7 +265,7 @@ export const tra = (view, text_id) => {
           view: "historial",
           data: [
             { text_id: "historial", text: "Historial" },
-            { text_id: "fecha", text: "DD/mm/YY" },
+            { text_id: "fecha", text: "DD/MM/YY" },
             { text_id: "tiempocarga", text: "Tiempo de carga" },
           ],
         },

@@ -283,7 +283,7 @@ export const PoolMapView = () => {
         setFiltered={setIsFiltered}
         setFilteredMarkers={setFilteredMarkers}
       />
-      <CenterButton onCenter={removeToken} />
+      <CenterButton onCenter={centerMapOnUser} />
 
       <HelpDialogButton setModal={setIsModalVisible} />
       <MapModal
