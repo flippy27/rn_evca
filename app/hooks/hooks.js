@@ -254,7 +254,7 @@ export const fetchPoolCurrent = ({ connector_id }) => {
 };
 export const fetchPoolCompany = ({ company }) => {
   return new Promise((resolve, reject) => {
-    fetch(`${QA_URL}pools/?company=${company}`, {
+    fetch(`${API_URL}pools/?company=${company}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Although typically unnecessary for GET, added for consistency
@@ -280,7 +280,6 @@ export const fetchPoolCompany = ({ company }) => {
 
 export const fetchMobileChargeHistory = (id) => {
   return new Promise((resolve, reject) => {
-    console.log("calling mobile charge history");
 
     fetch(`${API_URL}pools/history/${id}`, {
       method: "GET",
