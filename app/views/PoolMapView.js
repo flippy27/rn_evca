@@ -181,7 +181,9 @@ export const PoolMapView = () => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-      let currentLocation = await Location.getCurrentPositionAsync({});
+      let currentLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.BestForNavigation,
+      });
       setLocation(currentLocation);
       setUsingDefaultLocation(false);
     })();
