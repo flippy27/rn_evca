@@ -68,13 +68,13 @@ export const StartStopChargeView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <BackBar text1={pool.pool_name} text2={pool.pool_address} />
 
         {/* START CHARGER DATA */}
-        <View style={{ paddingHorizontal: 25 }}>
-          <View style={{ paddingBottom: 30 }}>
+        <View style={{ paddingHorizontal: 35 }}>
+          <View style={{ paddingBottom: 20 }}>
             <Text style={styles.stationName}>{station.station_name}</Text>
           </View>
           <View
@@ -111,7 +111,9 @@ export const StartStopChargeView = ({ route }) => {
         )}
 
         {isCharging && !isChargeFinalized && (
-          <View style={{ width: "100%" }}>
+          <View
+            style={{ width: "100%", paddingHorizontal: 10, paddingTop: 10 }}
+          >
             <HoldingBlock>
               <View
                 style={{
@@ -138,7 +140,7 @@ export const StartStopChargeView = ({ route }) => {
                 </Text>
               </View>
             </HoldingBlock>
-            <View style={{ alignItems: "center" }}>
+            <View style={{ alignItems: "center", paddingTop: 10 }}>
               <CustomButton
                 type={"secondary"}
                 text={tra("startcharge", "detener")}
@@ -150,11 +152,14 @@ export const StartStopChargeView = ({ route }) => {
           </View>
         )}
         {isChargeFinalized && !isCharging && (
-          <View style={{ width: "100%" }}>
+          <View
+            style={{ width: "100%", paddingHorizontal: 10, paddingTop: 10 }}
+          >
             <HoldingBlock>
               <View
                 style={{
                   paddingVertical: 20,
+
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -177,7 +182,7 @@ export const StartStopChargeView = ({ route }) => {
                 </Text>
               </View>
             </HoldingBlock>
-            <View style={{ alignItems: "center" }}>
+            <View style={{ alignItems: "center", paddingTop: 10 }}>
               <CustomButton
                 type={"primary"}
                 text={tra("startcharge", "comprobante")}
