@@ -5,10 +5,12 @@ import OpenedDoor from "../components/icons/OpenedDoor";
 import { Colors } from "../configs/common";
 import AddNewCardView from "./AddNewCardView";
 import { useNavigation } from "@react-navigation/native";
+import { remove } from "../utils/saveLoadData";
 
 
 
 export const ConfigurationView = () => {
+  
    
   const options = [{ icon: <CreditCard></CreditCard>, text: "Método de pago", route:'PaymentMethod', id:1},{ icon: <OpenedDoor></OpenedDoor>, text: "Cerrar sesión" , route: 'LogOut', id:2}];
   return (
@@ -37,17 +39,31 @@ export const ConfigurationView = () => {
 
 export const ConfigurationItem= ({item})=>{
     const navigation = useNavigation();
-    function handleNavigate(){
-      if (item.route=='LogOut') {
-        return
+    async function handleNavigate(){
+      if (item.route == 'LogOut') {
+          await remove({ what: 'token' });
+  
+          // Reset the MainNavigator to show the Welcome screen inside the AuthNavigator
+          navigation.reset({
+              index: 0,
+              routes: [
+                  { 
+                      name: 'Auth', 
+                      state: { 
+                          routes: [{ name: 'Welcome' }] 
+                      } 
+                  }
+              ]
+          });
+          return;
       }
-    navigation.navigate(item.route)
-    }
+      navigation.navigate(item.route);
+  }
     return (
-        <Pressable style={{paddingLeft:50,paddingTop:20, flexDirection:"row", justifyContent: "flex-start", alignItems: "center"}} onPress={handleNavigate}>
+        <Pressable style={{paddingLeft:50,paddingTop:20, flexDirection:"row", justifyContent: "flex-start", alignItems: "center", gap:20}} onPress={handleNavigate}>
             
             {item.icon} 
-            <Text> {item.text}</Text>
+            <Text style={{fontSize:16, fontFamily:'Montserrat-Semi', color:Colors.COMPANY.PRIMARY_DARK}}> {item.text}</Text>
         </Pressable>
     )
 }
