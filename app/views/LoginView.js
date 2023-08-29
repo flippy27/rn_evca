@@ -46,9 +46,11 @@ export const LoginView = ({ route, navigation }) => {
 
   const handleLogin = async () => {
     if (is_valid_email({ email }) && is_valid_password({ password })) {
+      setButtonDisabled(true);
       const response = await loginUser(COMPANY, email, password);
       if (response.message == "Credentials are not valid") {
         setCredencialesIncorrectas(true);
+        setButtonDisabled(false);
         setTimeout(() => {
           setCredencialesIncorrectas(false);
         }, 2000);
@@ -101,7 +103,7 @@ export const LoginView = ({ route, navigation }) => {
               onChangeText={handlePasswordChange}
               keyboardType={"default"}
             />
-            {credencialesIncorrectas && 
+            {credencialesIncorrectas && (
               <View
                 style={{
                   justifyContent: "flex-start",
@@ -111,7 +113,7 @@ export const LoginView = ({ route, navigation }) => {
               >
                 <Text style={styles.incorrectas}>Credenciales incorrectas</Text>
               </View>
-            }
+            )}
 
             <View style={{ paddingVertical: 20 }}>
               <CustomButton
