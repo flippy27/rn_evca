@@ -186,9 +186,6 @@ export const startCharge = (equipo, pistola, corrienteMaxima, user_id) => {
       },
     })
       .then((response) => {
-        if (response.status > 499) {
-          throw new Error("Server error en start charge");
-        }
         return response.json();
       })
       .then((responseJson) => {

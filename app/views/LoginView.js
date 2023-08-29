@@ -74,62 +74,68 @@ export const LoginView = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
-        <View>
-          <TextAndLogo></TextAndLogo>
-          <HoldingBlock>
-            <Text style={styles.text}>{tra("login", "correo")}</Text>
-            <CustomTextInput
-              value={email}
-              onChangeText={handleEmailChange}
-              keyboardType={"email-address"}
-            />
-
-            <Text
-              style={[styles.info, { paddingTop: 5, paddingHorizontal: 10 }]}
-            >
-              {tra("login", "hemos")}
-            </Text>
-            <Text style={[styles.info, { paddingHorizontal: 10 }]}>
-              {tra("login", "porfavor")}
-            </Text>
-
-            <Text style={[styles.text, { paddingTop: 20 }]}>
-              {tra("login", "contra1")}
-            </Text>
-
-            <CustomSecureTextInput
-              value={password}
-              onChangeText={handlePasswordChange}
-              keyboardType={"default"}
-            />
-            {credencialesIncorrectas && (
-              <View
-                style={{
-                  justifyContent: "flex-start",
-                  width: "100%",
-                  paddingHorizontal: 15,
-                }}
-              >
-                <Text style={styles.incorrectas}>Credenciales incorrectas</Text>
-              </View>
-            )}
-
-            <View style={{ paddingVertical: 20 }}>
-              <CustomButton
-                text={tra("login", "siguiente")}
-                type={"primary"}
-                fontsize={18}
-                padding={10}
-                width={180}
-                onPress={handleLogin}
-                disabled={buttonDisabled}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "android" ? "height" : ""}
+        keyboardVerticalOffset={Platform.OS === "android" ? -200 : 0}
+      >
+        <View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
+          <View>
+            <TextAndLogo></TextAndLogo>
+            <HoldingBlock>
+              <Text style={styles.text}>{tra("login", "correo")}</Text>
+              <CustomTextInput
+                value={email}
+                onChangeText={handleEmailChange}
+                keyboardType={"email-address"}
               />
-            </View>
-          </HoldingBlock>
+
+              <Text
+                style={[styles.info, { paddingTop: 5, paddingHorizontal: 10 }]}
+              >
+                {tra("login", "hemos")}
+              </Text>
+              <Text style={[styles.info, { paddingHorizontal: 10 }]}>
+                {tra("login", "porfavor")}
+              </Text>
+
+              <Text style={[styles.text, { paddingTop: 20 }]}>
+                {tra("login", "contra1")}
+              </Text>
+
+              <CustomSecureTextInput
+                value={password}
+                onChangeText={handlePasswordChange}
+                keyboardType={"default"}
+              />
+              {credencialesIncorrectas && (
+                <View
+                  style={{
+                    justifyContent: "flex-start",
+                    width: "100%",
+                    paddingHorizontal: 15,
+                  }}
+                >
+                  <Text style={styles.incorrectas}>
+                    Credenciales incorrectas
+                  </Text>
+                </View>
+              )}
+
+              <View style={{ paddingVertical: 20 }}>
+                <CustomButton
+                  text={tra("login", "siguiente")}
+                  type={"primary"}
+                  fontsize={18}
+                  padding={10}
+                  width={180}
+                  onPress={handleLogin}
+                  disabled={buttonDisabled}
+                />
+              </View>
+            </HoldingBlock>
+          </View>
         </View>
-      </View>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : "padding"}>
         <View
           style={{
             alignItems: "center",

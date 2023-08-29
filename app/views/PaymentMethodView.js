@@ -13,6 +13,7 @@ import CardEllipse from "../components/icons/CardEllipse";
 import { useNavigation } from "@react-navigation/native";
 import { navigate } from "../utils/customNavigate";
 
+
 export const PaymentMethodView = () => {
   const [cards, setCards] = useState([]);
   useEffect(() => {
@@ -46,7 +47,7 @@ export const PaymentMethodView = () => {
     <SafeAreaView>
       <BackBar text1={"Método de pago"}></BackBar>
 
-      <View style={{ paddingHorizontal: 40, paddingTop: 30 }}>
+      <View style={{ paddingHorizontal: 20, paddingTop: 30 }}>
         <View style={{ paddingBottom: 42, gap: 10 }}>
           <FlatList
             data={cards}

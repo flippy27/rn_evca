@@ -103,68 +103,73 @@ export const RegisterView = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 15 }}>
-        <View>
-          <TextAndLogo></TextAndLogo>
-          <HoldingBlock style={{ padding: 20 }}>
-            <Text style={styles.text}>{tra("signin", "correo")}</Text>
-            <CustomTextInput
-              value={email}
-              onChangeText={handleEmailChange}
-              keyboardType={"email-address"}
-            />
-
-            <Text style={[styles.text, { paddingTop: 20 }]}>
-              {tra("signin", "contra1")}
-            </Text>
-            <CustomSecureTextInput
-              value={password}
-              onChangeText={handlePass1Change}
-              keyboardType={"default"}
-            />
-            <Text style={[styles.text, { paddingTop: 20 }]}>
-              {tra("signin", "contra2")}
-            </Text>
-            <CustomSecureTextInput
-              value={password2}
-              onChangeText={handlePass2Change}
-              keyboardType={"default"}
-            />
-
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                paddingVertical: 20,
-              }}
-            >
-              <CustomToggle
-                onToggleChange={handleToggleChange}
-                toggle={toggle}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "android" ? "height" : ""}
+        keyboardVerticalOffset={Platform.OS === "android" ? -200 : 0}
+      >
+        <View style={{ flex: 1, padding: 15 }}>
+          <View>
+            <TextAndLogo></TextAndLogo>
+            <HoldingBlock style={{ padding: 20 }}>
+              <Text style={styles.text}>{tra("signin", "correo")}</Text>
+              <CustomTextInput
+                value={email}
+                onChangeText={handleEmailChange}
+                keyboardType={"email-address"}
               />
-              <Text style={styles.terms}>
-                {tra("signin", "acepto1")}{" "}
-                <Text style={styles.terms_link}>
-                  {tra("signin", "acepto2")}
-                </Text>
+
+              <Text style={[styles.text, { paddingTop: 20 }]}>
+                {tra("signin", "contra1")}
               </Text>
-            </View>
-            <View style={{ paddingBottom: 20 }}>
-              <CustomButton
-                text={tra("signin", "siguiente")}
-                type={"primary"}
-                fontsize={18}
-                padding={10}
-                width={180}
-                onPress={handleUserRegister}
-                disabled={buttonDisabled}
+              <CustomSecureTextInput
+                value={password}
+                onChangeText={handlePass1Change}
+                keyboardType={"default"}
               />
-            </View>
-          </HoldingBlock>
+              <Text style={[styles.text, { paddingTop: 20 }]}>
+                {tra("signin", "contra2")}
+              </Text>
+              <CustomSecureTextInput
+                value={password2}
+                onChangeText={handlePass2Change}
+                keyboardType={"default"}
+              />
+
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingVertical: 20,
+                }}
+              >
+                <CustomToggle
+                  onToggleChange={handleToggleChange}
+                  toggle={toggle}
+                />
+                <Text style={styles.terms}>
+                  {tra("signin", "acepto1")}{" "}
+                  <Text style={styles.terms_link}>
+                    {tra("signin", "acepto2")}
+                  </Text>
+                </Text>
+              </View>
+              <View style={{ paddingBottom: 20 }}>
+                <CustomButton
+                  text={tra("signin", "siguiente")}
+                  type={"primary"}
+                  fontsize={18}
+                  padding={10}
+                  width={180}
+                  onPress={handleUserRegister}
+                  disabled={buttonDisabled}
+                />
+              </View>
+            </HoldingBlock>
+          </View>
         </View>
-      </View>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : "padding"}>
+
         <View
           style={{
             alignItems: "center",

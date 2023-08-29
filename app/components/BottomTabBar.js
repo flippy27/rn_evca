@@ -14,6 +14,7 @@ import { StartStopChargeView } from "../views/StartStopChargeView";
 import ConfigIcon from "./icons/config_icon";
 import HistorialIcon from "./icons/historial_icon";
 import MapIcon from "./icons/map_icon";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const MapStack = createNativeStackNavigator();
@@ -73,7 +74,6 @@ function ConfigStack() {
   );
 }
 
-
 // Sample views
 function View1() {
   return <ChargeHistoryView />;
@@ -89,35 +89,41 @@ function View3() {
 
 export const BottomTabBar = () => {
   return (
-    <Tab.Navigator
-      tabBar={(props) => <MyTabBar {...props} />}
-      initialRouteName={tra("bottomtab", "mapa")}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "android" ? "height" : ""}
+      keyboardVerticalOffset={Platform.OS === "android" ? -200 : 0}
     >
-      <Tab.Screen
-        name={tra("bottomtab", "historial")}
-        component={View1}
-        options={{
-          contentStyle: { backgroundColor: "white" },
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name={tra("bottomtab", "mapa")}
-        component={PoolMapStack}
-        options={{
-          contentStyle: { backgroundColor: "white" },
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name={tra("bottomtab", "config")}
-        component={ConfigStack}
-        options={{
-          contentStyle: { backgroundColor: "white" },
-          headerShown: false,
-        }}
-      />
-    </Tab.Navigator>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBar {...props} />}
+        initialRouteName={tra("bottomtab", "mapa")}
+      >
+        <Tab.Screen
+          name={tra("bottomtab", "historial")}
+          component={View1}
+          options={{
+            contentStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name={tra("bottomtab", "mapa")}
+          component={PoolMapStack}
+          options={{
+            contentStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name={tra("bottomtab", "config")}
+          component={ConfigStack}
+          options={{
+            contentStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+      </Tab.Navigator>
+    </KeyboardAvoidingView>
   );
 };
 function MyTabBar({ state, descriptors, navigation }) {

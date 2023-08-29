@@ -9,11 +9,15 @@ import { StopChargeModal } from "../components/StopChargeModal";
 import { Colors, Connector } from "../configs/common";
 import { fetchPoolCurrent, startCharge, stopCharge } from "../hooks/hooks";
 import { tra } from "../configs/common";
+import { InfoModal } from "../components/InfoModal";
 
 export const StartStopChargeView = ({ route }) => {
   const [isCharging, setIsCharging] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [isChargeFinalized, setIsChageFinalized] = useState(false);
+  const [startChargeButtonDisabled, setStartChargeButtonDisabled] =
+    useState(false);
   const navigation = useNavigation();
   const { connector, pool, station } = route.params;
 
@@ -49,9 +53,20 @@ export const StartStopChargeView = ({ route }) => {
     };
   }, [isCharging]);
 
-  const handleStartCharge = () => {
-    startCharge(station.station_name, connector.connector_number, 200, 99999);
-    setIsCharging(true);
+  const handleStartCharge = async () => {
+    setStartChargeButtonDisabled(true);
+    const start_response = await startCharge(
+      station.station_name,
+      connector.connector_number,
+      200,
+      99999
+    );
+    if (start_response.message == "Rejected") {
+      setStartChargeButtonDisabled(false);
+      setInfoModalVisible(true);
+    } else {
+      setIsCharging(true);
+    }
   };
 
   const handleStopCharge = () => {
@@ -92,7 +107,7 @@ export const StartStopChargeView = ({ route }) => {
           </View>
         </View>
         {/* STOP CHARGER DATA */}
-        {!isCharging && !isChargeFinalized && (
+        {!infoModalVisible && !isCharging && !isChargeFinalized && (
           <View
             style={{
               alignItems: "center",
@@ -106,6 +121,7 @@ export const StartStopChargeView = ({ route }) => {
               onPress={handleStartCharge}
               padding={10}
               width={190}
+              disabled={startChargeButtonDisabled}
             />
           </View>
         )}
@@ -198,6 +214,13 @@ export const StartStopChargeView = ({ route }) => {
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
             stopCharge={handleStopCharge}
+          />
+        )}
+        {infoModalVisible && (
+          <InfoModal
+            text={"Hubo un error intentando iniciar carga"}
+            isModalVisible={infoModalVisible}
+            setIsModalVisible={setInfoModalVisible}
           />
         )}
       </View>

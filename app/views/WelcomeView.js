@@ -68,49 +68,57 @@ export const WelcomeView = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 15 }}>
-        <View>
-          <TextAndLogo></TextAndLogo>
-          <HoldingBlock>
-            <Text style={styles.text}>{tra("welcome", "correo")}</Text>
-            <View style={{ width: "100%", paddingBottom: 20 }}>
-              <CustomTextInput
-                placeholder={tra("welcome", "placeholder")}
-                value={email}
-                onChangeText={handleInputChange}
-                keyboardType={"email-address"}
-              />
-            </View>
-            <View style={{ alignItems: "center", gap: 20, paddingBottom: 30 }}>
-              <CustomButton
-                text={tra("welcome", "siguiente")}
-                type={"primary"}
-                fontsize={18}
-                padding={10}
-                width={180}
-                onPress={handleEmailCheck}
-                disabled={buttonDisabled}
-              />
-              <CustomButton
-                text={tra("welcome", "saltar")}
-                type={"link"}
-                fontsize={18}
-                padding={0}
-                width={230}
-                onPress={handleSkipLogin}
-              />
-            </View>
-          </HoldingBlock>
-        </View>
-      </View>
-      <View
-        style={{
-          position: "relative",
-          bottom: 0,
-        }}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "android" ? "height" : ""}
+        keyboardVerticalOffset={Platform.OS === "android" ? -200 : 0}
       >
-        <DhemaxText></DhemaxText>
-      </View>
+        <View style={{ flex: 1, padding: 15 }}>
+          <View>
+            <TextAndLogo></TextAndLogo>
+            <HoldingBlock>
+              <Text style={styles.text}>{tra("welcome", "correo")}</Text>
+              <View style={{ width: "100%", paddingBottom: 20 }}>
+                <CustomTextInput
+                  placeholder={tra("welcome", "placeholder")}
+                  value={email}
+                  onChangeText={handleInputChange}
+                  keyboardType={"email-address"}
+                />
+              </View>
+              <View
+                style={{ alignItems: "center", gap: 20, paddingBottom: 30 }}
+              >
+                <CustomButton
+                  text={tra("welcome", "siguiente")}
+                  type={"primary"}
+                  fontsize={18}
+                  padding={10}
+                  width={180}
+                  onPress={handleEmailCheck}
+                  disabled={buttonDisabled}
+                />
+                <CustomButton
+                  text={tra("welcome", "saltar")}
+                  type={"link"}
+                  fontsize={18}
+                  padding={0}
+                  width={230}
+                  onPress={handleSkipLogin}
+                />
+              </View>
+            </HoldingBlock>
+          </View>
+        </View>
+        <View
+          style={{
+            position: "relative",
+            bottom: 0,
+          }}
+        >
+          <DhemaxText></DhemaxText>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

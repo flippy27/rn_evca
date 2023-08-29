@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { NewCardForm } from "../components/AddNewCardForm"; // Adjust the path based on your project structure
 import { BackBar } from "../components/BackBar";
 
-
 const AddNewCardView = () => {
   const [formData, setFormData] = useState(null);
 
@@ -64,7 +63,7 @@ const AddNewCardView = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <BackBar text1={"Agregar tarjeta nueva"}/>
+      <BackBar text1={"Agregar tarjeta nueva"} />
       <View style={{ padingHorizontal: 10 }}>
         <NewCardForm onSave={saveNewCardToLocalStorage} />
       </View>
