@@ -95,6 +95,7 @@ export const Connector = ({ name }) => {
 };
 
 export const tra = (view, text_id) => {
+  console.log(view, text_id);
   const ln = LANGUAGE;
   const return_item = [
     {

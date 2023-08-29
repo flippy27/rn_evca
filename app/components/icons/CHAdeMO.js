@@ -1,6 +1,5 @@
 import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
-import { Colors } from "../../configs/common";
 
 function CHAdeMO(props) {
   return (
@@ -8,7 +7,7 @@ function CHAdeMO(props) {
       width={44}
       height={44}
       viewBox="0 0 44 44"
-      fill={Colors.APP.DARK_GRAY}
+      fill="#393737"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
