@@ -3,9 +3,11 @@ import { StyleSheet, Text, View, Keyboard } from "react-native";
 import { CustomButton } from "./CustomButton";
 import { CustomTextInput } from "./CustomTextInput";
 import { HoldingBlock } from "./HoldingBlock";
+import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../configs/common";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export const NewCardForm = ({ onSave }) => {
@@ -17,6 +19,7 @@ export const NewCardForm = ({ onSave }) => {
   const cvvPlaceHolder = isAmex ? "0000" : "000";
   const [errorMessage, setErrorMessage] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const navigation= useNavigation()
 
   const isExpiryDateValid = (expDate) => {
     if (expDate.length >= 4) {
@@ -63,6 +66,7 @@ export const NewCardForm = ({ onSave }) => {
     setCardNumber("");
     setCVV("");
     setExpiringDate("");
+    navigation.goBack()
   };
 
   const formatCardNumber = (input) => {
@@ -134,7 +138,7 @@ export const NewCardForm = ({ onSave }) => {
                   Keyboard.dismiss();
                 }
               }}
-              keyboardType={"numeric"}
+              keyboardType={"number-pad"}
             />
           </View>
           <View
@@ -161,7 +165,7 @@ export const NewCardForm = ({ onSave }) => {
                     Keyboard.dismiss();
                   }
                 }}
-                keyboardType={"numeric"}
+                keyboardType={"number-pad"}
               />
             </View>
             <View style={{ paddingBottom: 20 }}>
@@ -186,7 +190,7 @@ export const NewCardForm = ({ onSave }) => {
                     Keyboard.dismiss();
                   }
                 }}
-                keyboardType={"numeric"}
+                keyboardType={"number-pad"}
               />
             </View>
           </View>

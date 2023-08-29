@@ -23,12 +23,9 @@ const AddNewCardView = () => {
         : [];
 
       // Create the card object format you want
-      const cardObject = {
-        [`card${existingCards.length + 1}`]: cardData,
-      };
 
       // Add the new card to the array
-      existingCards.push(cardObject);
+      existingCards.push(cardData);
 
       // Store the updated array in AsyncStorage
       await AsyncStorage.setItem("cards", JSON.stringify(existingCards));
