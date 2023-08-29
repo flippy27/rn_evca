@@ -1,23 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
-  Platform,
   KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../components/CustomButton";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { DhemaxText } from "../components/DhemaxText";
 import { HoldingBlock } from "../components/HoldingBlock";
 import { TextAndLogo } from "../components/TextAndLogo";
+import { Colors, tra } from "../configs/common";
 import { COMPANY } from "../configs/global";
-import { checkUser, usePool } from "../hooks/hooks";
+import { checkUser } from "../hooks/hooks";
 import { is_valid_email } from "../utils/LoginUtils";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "../configs/common";
-import { tra } from "../configs/common";
-import { SplashScreen } from "./SplashScreen";
 
 export const WelcomeView = ({ navigation }) => {
   const [email, setEmail] = useState("hola@dhemax.com");
@@ -105,17 +103,14 @@ export const WelcomeView = ({ navigation }) => {
           </HoldingBlock>
         </View>
       </View>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "" : ""}>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "flex-end",
-            marginBottom: Platform.OS == "android" ? 40 : 20,
-          }}
-        >
-          <DhemaxText></DhemaxText>
-        </View>
-      </KeyboardAvoidingView>
+      <View
+        style={{
+          position: "relative",
+          bottom: 0,
+        }}
+      >
+        <DhemaxText></DhemaxText>
+      </View>
     </SafeAreaView>
   );
 };

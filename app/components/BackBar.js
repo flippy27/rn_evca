@@ -74,11 +74,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 30,
     paddingBottom: 20,
     paddingTop: 20,
     gap: 20,
+    
   },
   textBlueBold: {
     fontFamily: "Montserrat-Bold",

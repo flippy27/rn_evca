@@ -68,12 +68,12 @@ export const StartStopChargeView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingHorizontal: 15 }}>
+    <SafeAreaView style={{ flex: 1}}>
       <View style={{ flex: 1 }}>
         <BackBar text1={pool.pool_name} text2={pool.pool_address} />
 
         {/* START CHARGER DATA */}
-        <View style={{ paddingHorizontal: 10 }}>
+        <View style={{ paddingHorizontal: 25 }}>
           <View style={{ paddingBottom: 30 }}>
             <Text style={styles.stationName}>{station.station_name}</Text>
           </View>
