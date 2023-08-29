@@ -17,8 +17,6 @@ import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 import { tra } from "../configs/common";
 import { remove } from "../utils/saveLoadData";
 
-import { SafeAreaView } from "react-native-safe-area-context";
-
 function haversineDistance(lat1, lon1, lat2, lon2) {
   console.log(lat2, lon2);
 
@@ -103,19 +101,10 @@ const getClosest = (user_location, pools) => {
       }
     );
   }
-  console.log(
-    "closest",
-    closest.map((x) => {
-      return { lat: x.latitude, lon: x.longitude };
-    })
-  );
+
   closest.push({
     latitude: user_location.coords.latitude,
     longitude: user_location.coords.longitude,
-  });
-  console.log("userloc", {
-    user_lat: user_location.coords.latitude,
-    user_lon: user_location.coords.longitude,
   });
 
   return closest;
@@ -169,6 +158,10 @@ export const FilterButton = ({
       ></CustomButton>
     </View>
   );
+};
+
+const filterPools = (poolsData) => {
+  return poolsData.filter((x) => parseInt(x.text.split("/")[0]) > 0);
 };
 
 export const HelpDialogButton = ({ setModal }) => {
@@ -235,12 +228,14 @@ export const PoolMapView = () => {
       markersData.length > 0
     ) {
       centerMapIncludingUserAndPools();
-      setFilteredMarkers(markersData);
+      const dataToSet = isFiltered ? filterPools(markersData) : markersData;
+      setFilteredMarkers(dataToSet);
       setIsMapInitialized(true);
     } else if (isMapInitialized && markersData) {
-      setFilteredMarkers(markersData);
+      const dataToSet = isFiltered ? filterPools(markersData) : markersData;
+      setFilteredMarkers(dataToSet);
     }
-  }, [location, markersData, isMapInitialized]);
+  }, [location, markersData, isMapInitialized, isFiltered]);
 
   const centerMapOnUser = () => {
     mapRef.current.animateToRegion({
