@@ -14,7 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { usePinMaker } from "../components/PinMaker";
 import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
-import { tra } from "../configs/common";
+import { Colors, tra } from "../configs/common";
 import { remove } from "../utils/saveLoadData";
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
@@ -109,18 +109,28 @@ const getClosest = (user_location, pools) => {
 
   return closest;
 };
-export const CenterButton = ({ onCenter }) => {
+export const CenterButton = ({ onCenter, isFollowing }) => {
   const insets = useSafeAreaInsets();
 
   return (
     <View
-      style={[styles.centerButtonContainer, { top: 40 + insets.top, left: 20 }]}
+      style={[
+        styles.centerButtonContainer,
+        {
+          top: 40 + insets.top,
+          left: 20,
+          backgroundColor: isFollowing ? Colors.COMPANY.PRIMARY_DARK : "#FFF",
+        },
+      ]}
     >
       <Pressable
         onPress={onCenter}
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        <CenterMapIcon />
+        <CenterMapIcon
+          fill={isFollowing ? "#FFF" : Colors.COMPANY.PRIMARY_DARK}
+          circleFillColor={isFollowing ? Colors.COMPANY.PRIMARY_DARK : "#FFF"}
+        />
       </Pressable>
     </View>
   );
@@ -164,18 +174,27 @@ const filterPools = (poolsData) => {
   return poolsData.filter((x) => parseInt(x.text.split("/")[0]) > 0);
 };
 
-export const HelpDialogButton = ({ setModal }) => {
+export const HelpDialogButton = ({ setModal, isModalOpen }) => {
   const insets = useSafeAreaInsets();
 
   return (
     <View
-      style={[styles.helpButtonContainer, { top: 110 + insets.top, left: 20 }]}
+      style={[
+        styles.helpButtonContainer,
+        {
+          top: 110 + insets.top,
+          left: 20,
+          backgroundColor: isModalOpen ? Colors.COMPANY.PRIMARY_DARK : "#FFF",
+        },
+      ]}
     >
       <Pressable
         onPress={() => setModal(true)}
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        <QuestionMarkIcon />
+        <QuestionMarkIcon
+          fill={isModalOpen ? "#FFF" : Colors.COMPANY.PRIMARY_DARK}
+        />
       </Pressable>
       {/* Adjust the Button styling as needed */}
     </View>
@@ -190,6 +209,7 @@ export const PoolMapView = () => {
   const [filteredMarkers, setFilteredMarkers] = useState(markersData);
   const [isMapInitialized, setIsMapInitialized] = useState(false);
   const [usingDefaultLocation, setUsingDefaultLocation] = useState(true);
+  const [isFollowingUserLocation, setIsFollowingUserLocation] = useState(false);
 
   const mapRef = useRef(null);
   const navigation = useNavigation();
@@ -241,9 +261,10 @@ export const PoolMapView = () => {
     mapRef.current.animateToRegion({
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
     });
+    setIsFollowingUserLocation(!isFollowingUserLocation);
   };
 
   if (errorMsg) {
@@ -269,6 +290,7 @@ export const PoolMapView = () => {
         showsCompass={false}
         showsMyLocationButton={false}
         userInterfaceStyle={"light"}
+        followsUserLocation={isFollowingUserLocation}
       >
         {filteredMarkers.map((marker) => (
           <Marker
@@ -301,9 +323,15 @@ export const PoolMapView = () => {
         setFiltered={setIsFiltered}
         setFilteredMarkers={setFilteredMarkers}
       />
-      <CenterButton onCenter={centerMapOnUser} />
+      <CenterButton
+        onCenter={centerMapOnUser}
+        isFollowing={isFollowingUserLocation}
+      />
 
-      <HelpDialogButton setModal={setIsModalVisible} />
+      <HelpDialogButton
+        setModal={setIsModalVisible}
+        isModalOpen={isModalVisible}
+      />
       <MapModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
@@ -324,7 +352,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 10,
     alignSelf: "center",
-    backgroundColor: "#FFF",
+
     width: 54,
     height: 54,
     borderRadius: 999,

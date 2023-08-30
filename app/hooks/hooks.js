@@ -8,10 +8,10 @@ if (DEPLOY_TYPE == "DEV") {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc";
 } else if (DEPLOY_TYPE == "QA") {
   API_URL = "https://evca.qa.dhemax.link/api/v1/";
+  TOKEN =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MzM1NjU3OSwiZXhwIjoxNjk1OTQ4NTc5fQ.20sOV9q1fJ6pG1xYfikzUSngdEATes_VhqbkVT61NSw";
 } else if (DEPLOY_TYPE == "PROD") {
 }
-// const API_URL = "https://evca.dev.dhemax.link/api/v1/";
-// const QA_URL = "https://evca.qa.dhemax.link/api/v1/";
 
 export const registerUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {

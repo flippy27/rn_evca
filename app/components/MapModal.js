@@ -55,12 +55,12 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               >
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} color={Colors.PIN.ALL_AVAILABLE} />
-                  <Text style={styles.pinText}>{tra('ayuda','todos')}</Text>
+                  <Text style={[styles.pinText,{paddingTop:5}]}>{tra('ayuda','todos')}</Text>
                   <Text style={styles.pinText}>{tra('ayuda','disponibles')}</Text>
                 </View>
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} color={Colors.PIN.SOME_AVAILABLE} />
-                  <Text style={styles.pinText}>{tra('ayuda','algunos')}</Text>
+                  <Text style={[styles.pinText,{paddingTop:5}]}>{tra('ayuda','algunos')}</Text>
                   <Text style={styles.pinText}>{tra('ayuda','disponibles')}</Text>
                 </View>
               </View>
@@ -74,18 +74,18 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               >
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} color={Colors.PIN.NONE_AVAILABLE} />
-                  <Text style={styles.pinText}>{tra('ayuda','ninguno')}</Text>
+                  <Text style={[styles.pinText,{paddingTop:5}]}>{tra('ayuda','ninguno')}</Text>
                   <Text style={styles.pinText}>{tra('ayuda','disponibles')}</Text>
                 </View>
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} />
-                  <Text style={styles.pinText}>{tra('ayuda','fuera')}</Text>
+                  <Text style={[styles.pinText,{paddingTop:5}]}>{tra('ayuda','fuera')}</Text>
                   <Text style={styles.pinText}>{tra('ayuda','servicio')}</Text>
                 </View>
               </View>
             </View>
 
-            <Text style={[styles.modalText, { paddingTop: 20 }]}>
+            <Text style={[styles.modalText, { paddingVertical: 20 }]}>
             {tra('ayuda','disponibilidad')}
             </Text>
             <View
@@ -108,7 +108,7 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               />
               <View style={styles.pinTextContainer}>
                 <Text style={styles.pinTextBottom}>{tra('ayuda','conectores')}</Text>
-                <Text style={styles.pinTextBottom}>{tra('ayuda','estacion')}</Text>
+                <Text style={styles.pinTextBottom}>{tra('ayuda','disponibles')}</Text>
               </View>
             </View>
           </View>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 1,
     textAlign: "center",
     fontFamily: "Montserrat-Bold",
     fontSize: 13,
