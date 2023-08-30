@@ -5,6 +5,7 @@ import { CustomTextInput } from "./CustomTextInput";
 import { HoldingBlock } from "./HoldingBlock";
 import { Colors, tra } from "../configs/common";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 import { v4 as uuidv4 } from "uuid";
 
 export const NewCardForm = ({ onSave }) => {
@@ -16,6 +17,7 @@ export const NewCardForm = ({ onSave }) => {
   const cvvPlaceHolder = isAmex ? "0000" : "000";
   const [errorMessage, setErrorMessage] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const navigation = useNavigation();
 
   const isExpiryDateValid = (expDate) => {
     if (expDate.length >= 4) {
@@ -64,7 +66,7 @@ export const NewCardForm = ({ onSave }) => {
     setCardNumber("");
     setCVV("");
     setExpiringDate("");
-    navigator.n;
+    navigation.goBack();
   };
 
   const formatCardNumber = (input) => {
@@ -72,19 +74,17 @@ export const NewCardForm = ({ onSave }) => {
       .replace(/\D/g, "")
       .replace(/(\d{4})(?=\d)/g, "$1 ");
 
-    return formattedInput.substring(0, 19); // 16 digits + 3 spaces
+    return formattedInput.substring(0, 19);
   };
 
   useEffect(() => {
-    console.log(isExpiryDateValid(expiringDate));
     const isValid =
       fullName.length > 4 &&
       cardNumber.length === 19 &&
       isExpiryDateValid(expiringDate) &&
       CVV.length >= 3;
 
-    console.log(isExpiryDateValid(expiringDate) ? true : false, "thin");
-    console.log(isValid, "isvalid");
+    
 
     setButtonDisabled(!isValid);
   }, [fullName, cardNumber, expiringDate, CVV]);

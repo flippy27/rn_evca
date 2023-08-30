@@ -114,6 +114,7 @@ export const WelcomeView = ({ navigation }) => {
           style={{
             position: "relative",
             bottom: 0,
+            paddingBottom:Platform.OS == "android"?40:0
           }}
         >
           <DhemaxText></DhemaxText>

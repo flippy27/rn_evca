@@ -1,42 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { Text, View, FlatList, Pressable } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { v4 as uuidv4 } from "uuid";
 import { BackBar } from "../components/BackBar";
-import CreditCard from "../components/icons/CreditCard";
 import { CustomButton } from "../components/CustomButton";
-import { load } from "../utils/saveLoadData";
+import CardEllipse from "../components/icons/CardEllipse";
+import CreditCard from "../components/icons/CreditCard";
 import Plus from "../components/icons/Plus";
 import { Colors, tra } from "../configs/common";
-import CardEllipse from "../components/icons/CardEllipse";
-import { useNavigation } from "@react-navigation/native";
-import { navigate } from "../utils/customNavigate";
-
+import { load } from "../utils/saveLoadData";
 
 export const PaymentMethodView = () => {
   const [cards, setCards] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await load({ what: "cards" });
-      if (data == "no data") {
-        return;
-      }
+  const fetchData = useCallback(async () => {
+    const data = await load({ what: "cards" });
+    if (data !== "no data") {
       setCards(data);
-    };
-    fetchData();
+    }
   }, []);
-  useFocusEffect(() => {
-    console.log("called");
-    const fetchData = async () => {
-      const data = await load({ what: "cards" });
-      if (data == "no data") {
-        return;
-      }
-      setCards(data);
-    };
+
+  useEffect(() => {
     fetchData();
-  });
+  }, [fetchData]);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('entre foco');
+      fetchData();
+    }, [fetchData])
+  );
 
   const navigation = useNavigation();
   function handleNavigateToPayment() {
@@ -45,7 +37,7 @@ export const PaymentMethodView = () => {
 
   return (
     <SafeAreaView>
-      <BackBar text1={tra('metodopago','titulo')}></BackBar>
+      <BackBar text1={tra("metodopago", "titulo")}></BackBar>
 
       <View style={{ paddingHorizontal: 20, paddingTop: 30 }}>
         <View style={{ paddingBottom: 42, gap: 10 }}>
@@ -54,7 +46,7 @@ export const PaymentMethodView = () => {
             renderItem={({ item }) => (
               <PaymentMethodSaved item={item}></PaymentMethodSaved>
             )}
-            keyExtractor={(item) => Math.random()}
+            keyExtractor={(item) => item.id}
           />
         </View>
         <Pressable
@@ -69,7 +61,7 @@ export const PaymentMethodView = () => {
               fontFamily: "Montserrat-Bold",
             }}
           >
-            {tra('metodopago','agregar')}
+            {tra("metodopago", "agregar")}
           </Text>
         </Pressable>
       </View>
@@ -77,25 +69,24 @@ export const PaymentMethodView = () => {
   );
 };
 
+const parseCard = (number) => {
+  const subs = number.substring(0, 1);
+  const amex = number.substring(0, 2);
+  if (subs == 4) {
+    return "VISA";
+  } else if (subs == 5) {
+    return "MasterCard";
+  } else if (subs == 6) {
+    return "Discover";
+  } else if (subs == 8) {
+    return "Dhemax";
+  } else if (amex == 34 || amex == 37) {
+    return "AMEX";
+  } else {
+    return "Unknown";
+  }
+};
 export const PaymentMethodSaved = ({ item }) => {
-  const parseCard = (number) => {
-    const subs = number.substring(0, 1);
-    const amex = number.substring(0, 2);
-    if (subs == 4) {
-      return "VISA";
-    } else if (subs == 5) {
-      return "MasterCard";
-    } else if (subs == 6) {
-      return "Discover";
-    } else if (subs == 8) {
-      return "Dhemax";
-    } else if (amex == 34 || amex == 37) {
-      return "AMEX";
-    } else {
-      return "Unknown";
-    }
-  };
-  console.log("item", item);
   return (
     <View
       style={{
@@ -138,7 +129,7 @@ export const PaymentMethodSaved = ({ item }) => {
       >
         <CustomButton
           type={"link"}
-          text={tra('metodopago','cambiar')}
+          text={tra("metodopago", "cambiar")}
           underline={"underline"}
         ></CustomButton>
       </View>

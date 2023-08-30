@@ -81,6 +81,18 @@ export const StartStopChargeView = ({ route }) => {
       routes: [{ name: "App" }],
     });
   };
+  const parseKWH = (kwh) => {
+    if (!kwh) {
+      return "--";
+    }
+    if (kwh.toString().length == 1) {
+      return kwh;
+    }
+    if (kwh.toString().length > 4) {
+      return kwh.toString().slice(0, 4);
+    }
+    return kwh;
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -143,7 +155,7 @@ export const StartStopChargeView = ({ route }) => {
                 </Text>
                 <Text style={styles.currentChargeType}>kWh</Text>
                 <Text style={[styles.currentChargeData, { paddingBottom: 20 }]}>
-                  {status?.kwh ? status?.kwh.toString().slice(0, 4) : "--"} kWh
+                  {parseKWH(status?.kwh)} kWh
                 </Text>
                 <Text style={styles.currentChargeType}>
                   {tra("startcharge", "tiempocargando")}
@@ -218,7 +230,7 @@ export const StartStopChargeView = ({ route }) => {
         )}
         {infoModalVisible && (
           <InfoModal
-            text={tra('startcharge','infobox')}
+            text={tra("startcharge", "infobox")}
             isModalVisible={infoModalVisible}
             setIsModalVisible={setInfoModalVisible}
           />

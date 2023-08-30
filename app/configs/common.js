@@ -161,7 +161,7 @@ export const tra = (view, text_id) => {
           data: [
             { text_id: "llegar", text: "How to get there" },
             { text_id: "disponible", text: "Available" },
-            { text_id: "ocupado", text: "Occupied" },
+            { text_id: "ocupado", text: "Busy" },
             { text_id: "nodisponible", text: "Unavailable" },
           ],
         },

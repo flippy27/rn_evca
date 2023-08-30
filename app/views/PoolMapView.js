@@ -290,7 +290,7 @@ export const PoolMapView = () => {
         showsCompass={false}
         showsMyLocationButton={false}
         userInterfaceStyle={"light"}
-        followsUserLocation={isFollowingUserLocation}
+        // followsUserLocation={isFollowingUserLocation}
       >
         {filteredMarkers.map((marker) => (
           <Marker
