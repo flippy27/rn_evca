@@ -8,7 +8,7 @@ import CreditCard from "../components/icons/CreditCard";
 import { CustomButton } from "../components/CustomButton";
 import { load } from "../utils/saveLoadData";
 import Plus from "../components/icons/Plus";
-import { Colors } from "../configs/common";
+import { Colors, tra } from "../configs/common";
 import CardEllipse from "../components/icons/CardEllipse";
 import { useNavigation } from "@react-navigation/native";
 import { navigate } from "../utils/customNavigate";
@@ -45,7 +45,7 @@ export const PaymentMethodView = () => {
 
   return (
     <SafeAreaView>
-      <BackBar text1={"Método de pago"}></BackBar>
+      <BackBar text1={tra('metodopago','titulo')}></BackBar>
 
       <View style={{ paddingHorizontal: 20, paddingTop: 30 }}>
         <View style={{ paddingBottom: 42, gap: 10 }}>
@@ -69,7 +69,7 @@ export const PaymentMethodView = () => {
               fontFamily: "Montserrat-Bold",
             }}
           >
-            Agregar de tarjeta
+            {tra('metodopago','agregar')}
           </Text>
         </Pressable>
       </View>
@@ -138,7 +138,7 @@ export const PaymentMethodSaved = ({ item }) => {
       >
         <CustomButton
           type={"link"}
-          text={"Cambiar"}
+          text={tra('metodopago','cambiar')}
           underline={"underline"}
         ></CustomButton>
       </View>

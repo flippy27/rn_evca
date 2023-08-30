@@ -3,10 +3,9 @@ import { StyleSheet, Text, View, Keyboard } from "react-native";
 import { CustomButton } from "./CustomButton";
 import { CustomTextInput } from "./CustomTextInput";
 import { HoldingBlock } from "./HoldingBlock";
-import { Colors } from "../configs/common";
+import { Colors, tra } from "../configs/common";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
-
 
 export const NewCardForm = ({ onSave }) => {
   const [fullName, setFullName] = useState("");
@@ -21,25 +20,27 @@ export const NewCardForm = ({ onSave }) => {
   const isExpiryDateValid = (expDate) => {
     if (expDate.length >= 4) {
       const expiryMoment = moment(expDate, "MM/YY");
-  
-      return expiryMoment.isValid() && moment().isBefore(expiryMoment.endOf('month'));
+
+      return (
+        expiryMoment.isValid() && moment().isBefore(expiryMoment.endOf("month"))
+      );
     } else {
       return false;
     }
   };
   const formatExpiryDate = (input) => {
     const numericInput = input.replace(/\D/g, "");
-  
+
     let month = numericInput.substring(0, 2);
     if (parseInt(month) > 12) {
       month = "12";
     }
     let year = numericInput.substring(2, 4);
-    const currentYear = moment().format('YY');
-    const maxAllowableYear = (parseInt(currentYear) + 20).toString().slice(-2); 
-  
+    const currentYear = moment().format("YY");
+    const maxAllowableYear = (parseInt(currentYear) + 20).toString().slice(-2);
+
     if (parseInt(year) < parseInt(currentYear)) {
-      year = numericInput.substring(2,3);
+      year = numericInput.substring(2, 3);
     }
     if (parseInt(year) > parseInt(maxAllowableYear)) {
       year = maxAllowableYear;
@@ -48,7 +49,7 @@ export const NewCardForm = ({ onSave }) => {
       return `${month}/${year}`;
     }
     return month;
-};
+  };
 
   const handleSave = () => {
     const formData = {
@@ -56,14 +57,14 @@ export const NewCardForm = ({ onSave }) => {
       cardNumber,
       expiringDate,
       CVV,
-      id: uuidv4()
+      id: uuidv4(),
     };
     onSave(formData);
     setFullName("");
     setCardNumber("");
     setCVV("");
     setExpiringDate("");
-    navigator.n
+    navigator.n;
   };
 
   const formatCardNumber = (input) => {
@@ -82,8 +83,8 @@ export const NewCardForm = ({ onSave }) => {
       isExpiryDateValid(expiringDate) &&
       CVV.length >= 3;
 
-      console.log( isExpiryDateValid(expiringDate)? true:false, 'thin');
-      console.log(isValid, 'isvalid');
+    console.log(isExpiryDateValid(expiringDate) ? true : false, "thin");
+    console.log(isValid, "isvalid");
 
     setButtonDisabled(!isValid);
   }, [fullName, cardNumber, expiringDate, CVV]);
@@ -102,7 +103,7 @@ export const NewCardForm = ({ onSave }) => {
               }}
             >
               {" "}
-              Nombre Completo
+              {tra("agregartarjeta", "nombre")}
             </Text>
             <CustomTextInput
               placeholder="PlaceHolder"
@@ -124,7 +125,7 @@ export const NewCardForm = ({ onSave }) => {
               }}
             >
               {" "}
-              Número de tarjeta
+              {tra("agregartarjeta", "numero")}
             </Text>
             <CustomTextInput
               placeholder="0000 0000 0000 0000"
@@ -151,7 +152,7 @@ export const NewCardForm = ({ onSave }) => {
                 }}
               >
                 {" "}
-                Fecha vencimiento
+                {tra("agregartarjeta", "fecha")}
               </Text>
               <CustomTextInput
                 placeholder="00/00"
@@ -176,7 +177,7 @@ export const NewCardForm = ({ onSave }) => {
                 }}
               >
                 {" "}
-                Código de seguridad
+                {tra("agregartarjeta", "codigo")}
               </Text>
               <CustomTextInput
                 placeholder={cvvPlaceHolder}
@@ -208,7 +209,7 @@ export const NewCardForm = ({ onSave }) => {
       </HoldingBlock>
       <View style={{ paddingTop: 25, padding: 90 }}>
         <CustomButton
-          text={"Agregar tarjeta"}
+          text={tra("agregartarjeta", "boton")}
           type={"primary"}
           padding={10}
           onPress={handleSave}

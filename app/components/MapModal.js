@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { Colors } from "../configs/common";
+import { Colors, tra } from "../configs/common";
 import { CustomText } from "./CustomText";
 import { MapPin } from "./MapPin";
 
@@ -40,7 +40,7 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
                 X
               </Text>
             </Pressable>
-            <Text style={styles.modalText}>Estados</Text>
+            <Text style={styles.modalText}>{tra('ayuda','titulo')}</Text>
 
             <View style={{ flexDirection: "column" }}>
               {/* First Row */}
@@ -55,13 +55,13 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               >
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} color={Colors.PIN.ALL_AVAILABLE} />
-                  <Text style={styles.pinText}>Todos</Text>
-                  <Text style={styles.pinText}>disponibles</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','todos')}</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','disponibles')}</Text>
                 </View>
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} color={Colors.PIN.SOME_AVAILABLE} />
-                  <Text style={styles.pinText}>Algunos</Text>
-                  <Text style={styles.pinText}>disponibles</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','algunos')}</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','disponibles')}</Text>
                 </View>
               </View>
 
@@ -74,19 +74,19 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               >
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} color={Colors.PIN.NONE_AVAILABLE} />
-                  <Text style={styles.pinText}>Ninguno</Text>
-                  <Text style={styles.pinText}>disponibles</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','ninguno')}</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','disponibles')}</Text>
                 </View>
                 <View style={{ alignItems: "center", minWidth: 70 }}>
                   <MapPin onPress={""} />
-                  <Text style={styles.pinText}>Fuera de</Text>
-                  <Text style={styles.pinText}>servicio</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','fuera')}</Text>
+                  <Text style={styles.pinText}>{tra('ayuda','servicio')}</Text>
                 </View>
               </View>
             </View>
 
             <Text style={[styles.modalText, { paddingTop: 20 }]}>
-              Disponibilidad
+            {tra('ayuda','disponibilidad')}
             </Text>
             <View
               style={{
@@ -97,8 +97,8 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               }}
             >
               <View style={styles.pinTextContainer}>
-                <Text style={styles.pinTextBottom}>Conectores</Text>
-                <Text style={styles.pinTextBottom}>disponibles</Text>
+                <Text style={styles.pinTextBottom}>{tra('ayuda','conectores')}</Text>
+                <Text style={styles.pinTextBottom}>{tra('ayuda','disponibles')}</Text>
               </View>
               <MapPin
                 onPress={""}
@@ -107,8 +107,8 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
                 textColor={Colors.APP.DARK_GRAY}
               />
               <View style={styles.pinTextContainer}>
-                <Text style={styles.pinTextBottom}>Conectores</Text>
-                <Text style={styles.pinTextBottom}>en la estación</Text>
+                <Text style={styles.pinTextBottom}>{tra('ayuda','conectores')}</Text>
+                <Text style={styles.pinTextBottom}>{tra('ayuda','estacion')}</Text>
               </View>
             </View>
           </View>

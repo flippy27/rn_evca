@@ -51,6 +51,7 @@ export const ChargeHistoryView = () => {
     React.useCallback(() => {
       fetchMobileChargeHistory(CHARGE_USER_ID)
         .then((responseData) => {
+          console.log(responseData);
           setData(responseData);
         })
         .catch((err) => {
@@ -73,7 +74,7 @@ export const ChargeHistoryView = () => {
         </Text>
         <FlatList
           contentContainerStyle={{ paddingBottom: 40 }}
-          data={data?.slice(0, 15)}
+          data={Array.isArray(data) ? data.slice(0, 15) : []}
           renderItem={({ item }) => <ChargeHistoryItem item={item} />}
           keyExtractor={(item) => item.id || uuidv4()}
         />

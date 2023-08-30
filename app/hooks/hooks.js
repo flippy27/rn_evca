@@ -1,8 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
-const API_URL = "https://evca.dev.dhemax.link/api/v1/";
-const QA_URL = "https://evca.qa.dhemax.link/api/v1/";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc";
+import { DEPLOY_TYPE } from "../configs/global";
+let API_URL;
+let TOKEN;
+if (DEPLOY_TYPE == "DEV") {
+  API_URL = "https://evca.dev.dhemax.link/api/v1/";
+  TOKEN =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3ZjhjMWY2LWVkNGQtNGIzMC04YjFhLWM0YTYzZjZmZmI4YSIsImVtYWlsIjoibWFyaWEuc2FhdmVkcmFAZGhlbWF4LmNvbSIsImlhdCI6MTY5MjkyMzgxNCwiZXhwIjoxNjk1NTE1ODE0fQ.9XLDS6wC_H-MHN8fMUKF1mVqSlJYVrmqj3ju_SIOvfc";
+} else if (DEPLOY_TYPE == "QA") {
+  API_URL = "https://evca.qa.dhemax.link/api/v1/";
+} else if (DEPLOY_TYPE == "PROD") {
+}
+// const API_URL = "https://evca.dev.dhemax.link/api/v1/";
+// const QA_URL = "https://evca.qa.dhemax.link/api/v1/";
 
 export const registerUser = (companyId, email, password) => {
   return new Promise((resolve, reject) => {
@@ -182,7 +191,7 @@ export const startCharge = (equipo, pistola, corrienteMaxima, user_id) => {
       body: JSON.stringify(dataToSend), // Convert object to JSON string
       headers: {
         "Content-Type": "application/json", // Use JSON content type
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => {
@@ -208,7 +217,7 @@ export const stopCharge = (equipo, pistola) => {
       body: JSON.stringify(dataToSend), // Convert object to JSON string
       headers: {
         "Content-Type": "application/json", // Use JSON content type
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => {
@@ -232,7 +241,7 @@ export const fetchPoolCurrent = ({ connector_id }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Although typically unnecessary for GET, added for consistency
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => {
@@ -257,7 +266,7 @@ export const fetchPoolCompany = ({ company }) => {
         "Content-Type": "application/json", // Although typically unnecessary for GET, added for consistency
         // Assuming you might need an Authorization header as in the previous example.
         // Make sure to have 'token' defined or received as a parameter
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => {
@@ -277,12 +286,11 @@ export const fetchPoolCompany = ({ company }) => {
 
 export const fetchMobileChargeHistory = (id) => {
   return new Promise((resolve, reject) => {
-
     fetch(`${API_URL}pools/history/${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => {

@@ -218,7 +218,7 @@ export const StartStopChargeView = ({ route }) => {
         )}
         {infoModalVisible && (
           <InfoModal
-            text={"Hubo un error intentando iniciar carga"}
+            text={tra('startcharge','infobox')}
             isModalVisible={infoModalVisible}
             setIsModalVisible={setInfoModalVisible}
           />
