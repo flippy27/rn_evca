@@ -325,7 +325,7 @@ export const PoolMapView = () => {
       />
       <CenterButton
         onCenter={centerMapOnUser}
-        isFollowing={isFollowingUserLocation}
+        
       />
 
       <HelpDialogButton
