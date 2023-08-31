@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { LogoSVG } from "./Logo";
+import { Colors } from "../configs/common";
 
 export const TextAndLogo = () => {
   return (
@@ -16,7 +17,7 @@ export const TextAndLogo = () => {
           paddingTop: 15,
         }}
       >
-        Hola
+        {Colors.COMPANY.COMPANY_WELCOME_MESSAGE}
       </Text>
     </View>
   );

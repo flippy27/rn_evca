@@ -27,7 +27,7 @@ export const PaymentMethodView = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchData()
+      fetchData();
     }, [cards])
   );
   const navigation = useNavigation();
@@ -97,13 +97,13 @@ export const PaymentMethodSaved = ({ item }) => {
         paddingBottom: 21,
       }}
     >
-      <CreditCard></CreditCard>
+      <CreditCard fill={Colors.COMPANY.PRIMARY_DARK} />
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <View style={{ flexDirection: "row", gap: 10 }}>
-          <CardEllipse />
-          <CardEllipse />
-          <CardEllipse />
-          <CardEllipse />
+          <CardEllipse fill={Colors.COMPANY.PRIMARY_DARK} />
+          <CardEllipse fill={Colors.COMPANY.PRIMARY_DARK} />
+          <CardEllipse fill={Colors.COMPANY.PRIMARY_DARK} />
+          <CardEllipse fill={Colors.COMPANY.PRIMARY_DARK} />
         </View>
         <Text
           style={{

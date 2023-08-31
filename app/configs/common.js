@@ -23,6 +23,7 @@ const COMPANY_COLORS = () => {
       PRIMARY_DISABLED: "#1C355E10",
 
       COMPANY_LOGO: "dhemax",
+      COMPANY_WELCOME_MESSAGE: "Hola",
     };
   } else if (COMPANY == "23ad7a11-0e23-40bc-be90-11ee80019d88") {
     com_col = {
@@ -37,6 +38,7 @@ const COMPANY_COLORS = () => {
       PRIMARY_DISABLED: "#FF355E10",
 
       COMPANY_LOGO: "copec",
+      COMPANY_WELCOME_MESSAGE: "Bienvenido",
     };
   } else if (COMPANY == "6dae7536-27c3-4c10-9a49-ff303e7d925f") {
     com_col = {
@@ -51,6 +53,7 @@ const COMPANY_COLORS = () => {
       PRIMARY_DISABLED: "#00355E10",
 
       COMPANY_LOGO: "copec",
+      COMPANY_WELCOME_MESSAGE: "¿Qué tal?",
     };
   }
   return com_col;

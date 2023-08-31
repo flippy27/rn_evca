@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { Circle } from "react-native-svg"
+import * as React from "react";
+import Svg, { Circle } from "react-native-svg";
 
 function CardEllipse(props) {
   return (
@@ -11,9 +11,9 @@ function CardEllipse(props) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <Circle cx={2.5} cy={2.5} r={2.5} fill="#1C355E" />
+      <Circle cx={2.5} cy={2.5} r={2.5} fill={props.fill} />
     </Svg>
-  )
+  );
 }
 
-export default CardEllipse
+export default CardEllipse;
