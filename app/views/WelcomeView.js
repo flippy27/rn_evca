@@ -16,8 +16,11 @@ import { Colors, tra } from "../configs/common";
 import { COMPANY } from "../configs/global";
 import { checkUser } from "../hooks/hooks";
 import { is_valid_email } from "../utils/LoginUtils";
+import { useNavigation } from "@react-navigation/native";
 
 export const WelcomeView = ({ navigation }) => {
+  const nav = useNavigation();
+
   const [email, setEmail] = useState("hola@dhemax.com");
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,15 +33,15 @@ export const WelcomeView = ({ navigation }) => {
 
       if (response.code == 404) {
         //email doenst exists, go to register
-        navigation.navigate("Register", { w_email: email });
+        nav.navigate("Register", { w_email: email });
       } else {
         //email does exist, go to login
-        navigation.navigate("Login", { w_email: email });
+        nav.navigate("Login", { w_email: email });
       }
     }
   };
   const handleSkipLogin = () => {
-    navigation.reset({
+    nav.reset({
       index: 0,
       routes: [{ name: "App" }],
     });
