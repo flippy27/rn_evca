@@ -51,7 +51,7 @@ export const ChargeHistoryView = () => {
     React.useCallback(() => {
       fetchMobileChargeHistory(CHARGE_USER_ID)
         .then((responseData) => {
-          console.log(responseData);
+
           setData(responseData);
         })
         .catch((err) => {

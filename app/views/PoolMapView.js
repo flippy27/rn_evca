@@ -18,7 +18,7 @@ import { Colors, tra } from "../configs/common";
 import { remove } from "../utils/saveLoadData";
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
-  console.log(lat2, lon2);
+  
 
   const R = 6371.0;
   const dLat = degreesToRadians(lat2 - lat1);

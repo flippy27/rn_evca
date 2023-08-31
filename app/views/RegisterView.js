@@ -86,7 +86,7 @@ export const RegisterView = ({ route, navigation }) => {
     if (is_valid_email({ email }) && is_valid_password({ password })) {
       setButtonDisabled(true);
       const response = await registerUser(COMPANY, email, password);
-      console.log(response);
+      
       if (response.message.includes("exists with that company")) {
         setButtonDisabled(false);
         return;

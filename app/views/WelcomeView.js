@@ -27,7 +27,7 @@ export const WelcomeView = ({ navigation }) => {
     if (is_valid_email({ email: email_check })) {
       const response = await checkUser(COMPANY, email_check);
 
-      console.log(response);
+
       if (response.code == 404) {
         //email doenst exists, go to register
         navigation.navigate("Register", { w_email: email });
