@@ -52,9 +52,8 @@ const AddNewCardView = () => {
       // If there's data stored in 'cards' item
       if (cardsData) {
         const cardsArray = JSON.parse(cardsData);
-        console.log(cardsArray);
       } else {
-        console.log("No cards found in local storage.");
+        console.error("No cards found in local storage.");
       }
     } catch (error) {
       console.error("Error fetching and parsing cards data:", error);
