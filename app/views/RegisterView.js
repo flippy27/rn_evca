@@ -95,7 +95,14 @@ export const RegisterView = ({ route, navigation }) => {
         if (response.token == null) {
           navigation.navigate("Login", { w_email: email });
         } else {
-          navigation.navigate("App", { screen: "BottomTabBar" });
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: "App",
+              },
+            ],
+          });
         }
       }
     }

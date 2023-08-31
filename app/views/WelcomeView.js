@@ -23,10 +23,12 @@ export const WelcomeView = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleEmailCheck = async () => {
-    if (is_valid_email({ email })) {
-      const response = await checkUser(COMPANY, email);
+    const email_check = email.toLowerCase();
+    if (is_valid_email({ email: email_check })) {
+      const response = await checkUser(COMPANY, email_check);
 
-      if (response.code > 399) {
+      console.log(response);
+      if (response.code == 404) {
         //email doenst exists, go to register
         navigation.navigate("Register", { w_email: email });
       } else {
@@ -114,7 +116,7 @@ export const WelcomeView = ({ navigation }) => {
           style={{
             position: "relative",
             bottom: 0,
-            paddingBottom:Platform.OS == "android"?40:0
+            paddingBottom: Platform.OS == "android" ? 40 : 0,
           }}
         >
           <DhemaxText></DhemaxText>
