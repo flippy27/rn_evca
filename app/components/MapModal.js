@@ -108,7 +108,7 @@ export const MapModal = ({ isModalVisible, setIsModalVisible }) => {
               />
               <View style={styles.pinTextContainer}>
                 <Text style={styles.pinTextBottom}>{tra('ayuda','conectores')}</Text>
-                <Text style={styles.pinTextBottom}>{tra('ayuda','disponibles')}</Text>
+                <Text style={styles.pinTextBottom}>{tra('ayuda','estacion')}</Text>
               </View>
             </View>
           </View>

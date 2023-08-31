@@ -9,4 +9,4 @@ export const COMPANY =
 
 export const CHARGE_USER_ID = 99999;
 
-export const LANGUAGE = "es";
+export const LANGUAGE = "en";

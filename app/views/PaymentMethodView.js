@@ -23,7 +23,6 @@ export const PaymentMethodView = () => {
   }, []);
   useEffect(() => {
     fetchData();
-
   }, [fetchData]);
 
   useFocusEffect(
