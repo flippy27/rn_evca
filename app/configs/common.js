@@ -187,7 +187,7 @@ export const tra = (view, text_id) => {
             },
             { text_id: "si", text: "Yes" },
             { text_id: "no", text: "No" },
-            { text_id: "finalizada", text: "¡Charge finalized!" },
+            { text_id: "finalizada", text: "Charge finalized!" },
             { text_id: "tiempocarga", text: "Charge time" },
             { text_id: "comprobante", text: "Close voucher" },
             {

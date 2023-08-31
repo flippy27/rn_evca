@@ -7,6 +7,7 @@ import { Colors, tra } from "../configs/common";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import { v4 as uuidv4 } from "uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const NewCardForm = ({ onSave }) => {
   const [fullName, setFullName] = useState("");
@@ -92,7 +93,7 @@ export const NewCardForm = ({ onSave }) => {
   return (
     <View style={{ paddingHorizontal: 10 }}>
       <HoldingBlock>
-        <View>
+        <View style={{width:300}}>
           <View style={{ paddingBottom: 20, paddingTop: 10 }}>
             <Text
               style={{
@@ -140,9 +141,9 @@ export const NewCardForm = ({ onSave }) => {
             />
           </View>
           <View
-            style={{ flexDirection: "row", alignItems: "flex-start", gap: 20 }}
+            style={{ flexDirection: "row", alignItems: "flex-start", gap: 20, justifyContent:"space-between"}}
           >
-            <View>
+            <View style={{width:145}}>
               <Text
                 style={{
                   fontSize: 12,
@@ -167,7 +168,7 @@ export const NewCardForm = ({ onSave }) => {
                 keyboardType={"number-pad"}
               />
             </View>
-            <View style={{ paddingBottom: 20 }}>
+            <View style={{ paddingBottom: 20, width:145}}>
               <Text
                 style={{
                   fontSize: 12,
@@ -200,7 +201,6 @@ export const NewCardForm = ({ onSave }) => {
             padding: 20,
             fontFamily: "Montserrat-Regular",
             color: "#00000044",
-            paddingBottom: 20,
           }}
         >
           Para tu seguridad Lorem ipsum dolor sit amet, consectetur adipiscing

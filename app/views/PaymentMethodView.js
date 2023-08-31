@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
@@ -16,20 +17,20 @@ export const PaymentMethodView = () => {
     const data = await load({ what: "cards" });
     if (data !== "no data") {
       setCards(data);
+    } else {
+      setCards([]); // Asegúrate de actualizar a un array vacío si no hay datos
     }
   }, []);
-
   useEffect(() => {
     fetchData();
+    console.log('printcards',cards);
   }, [fetchData]);
 
   useFocusEffect(
-    useCallback(() => {
-      console.log('entre foco');
-      fetchData();
-    }, [fetchData])
+    React.useCallback(() => {
+      fetchData()
+    }, [cards])
   );
-
   const navigation = useNavigation();
   function handleNavigateToPayment() {
     navigation.navigate("AddPayment");
@@ -47,6 +48,7 @@ export const PaymentMethodView = () => {
               <PaymentMethodSaved item={item}></PaymentMethodSaved>
             )}
             keyExtractor={(item) => item.id}
+            extraData={cards}
           />
         </View>
         <Pressable
