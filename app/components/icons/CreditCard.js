@@ -11,7 +11,7 @@ function CreditCard(props) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <G fill="#1C355E">
+      <G fill={props.fill}>
         <Path d="M0 8.5a4.25 4.25 0 014.25-4.25h25.5A4.25 4.25 0 0134 8.5v2.125H0V8.5z" />
         <Path
           fillRule="evenodd"

@@ -10,13 +10,13 @@ import { remove } from "../utils/saveLoadData";
 export const ConfigurationView = () => {
   const options = [
     {
-      icon: <CreditCard></CreditCard>,
+      icon: <CreditCard fill={Colors.COMPANY.PRIMARY_DARK} />,
       text: tra("config", "metodo"),
       route: "PaymentMethod",
       id: 1,
     },
     {
-      icon: <OpenedDoor></OpenedDoor>,
+      icon: <OpenedDoor fill={Colors.COMPANY.PRIMARY_DARK} />,
       text: tra("config", "cerrar"),
       route: "LogOut",
       id: 2,
