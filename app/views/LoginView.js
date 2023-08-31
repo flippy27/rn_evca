@@ -45,9 +45,13 @@ export const LoginView = ({ route, navigation }) => {
   };
 
   const handleLogin = async () => {
-    if (is_valid_email({ email }) && is_valid_password({ password })) {
+    const email_check = email.toLowerCase();
+    if (
+      is_valid_email({ email: email_check }) &&
+      is_valid_password({ password })
+    ) {
       setButtonDisabled(true);
-      const response = await loginUser(COMPANY, email, password);
+      const response = await loginUser(COMPANY, email_check, password);
       if (response.message == "Credentials are not valid") {
         setCredencialesIncorrectas(true);
         setButtonDisabled(false);

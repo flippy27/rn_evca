@@ -83,10 +83,14 @@ export const RegisterView = ({ route, navigation }) => {
     if (password != password2) {
       return;
     }
-    if (is_valid_email({ email }) && is_valid_password({ password })) {
+    const email_check = email.toLowerCase();
+    if (
+      is_valid_email({ email: email_check }) &&
+      is_valid_password({ password })
+    ) {
       setButtonDisabled(true);
-      const response = await registerUser(COMPANY, email, password);
-      
+      const response = await registerUser(COMPANY, email_check, password);
+
       if (response.message.includes("exists with that company")) {
         setButtonDisabled(false);
         return;
