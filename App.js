@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
-import { StyleSheet, View, LogBox } from "react-native";
+import { StyleSheet, View, LogBox, Keyboard } from "react-native";
 import { BottomTabBar } from "./app/components/BottomTabBar";
 import { LoginView } from "./app/views/LoginView";
 import { PoolDetailView } from "./app/views/PoolDetailView";

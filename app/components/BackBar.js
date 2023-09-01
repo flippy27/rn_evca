@@ -1,4 +1,4 @@
-import { View, Pressable, Text, StyleSheet } from "react-native";
+import { View, Pressable, Text, StyleSheet, Keyboard } from "react-native";
 import { Colors } from "../configs/common";
 import { useNavigation } from "@react-navigation/native";
 import ArrowIcon from "../components/icons/ArrowIcon";
@@ -14,6 +14,9 @@ export const BackBar = ({
 }) => {
   const navigation = useNavigation();
   const handleBackButton = () => {
+    if(Keyboard.isVisible){
+      Keyboard.dismiss()
+    }
     navigation.goBack();
   };
   return (
@@ -32,11 +35,11 @@ export const BackBar = ({
           {text2 && <Text style={styles.textBlue}>, {text2}</Text>}{" "}
           {text3 && userCoords && poolCoords && (
             <Text style={styles.textBlueBold}>
-              {tra('backbar','a')}{" "}
+              {tra("backbar", "a")}{" "}
               {getPoolDistanceFromUser(userCoords, poolCoords)
                 .toFixed(1)
                 .replace(".", ",")}
-              Km {tra('backbar','ubicacion')}
+              Km {tra("backbar", "ubicacion")}
             </Text>
           )}
         </Text>
@@ -79,7 +82,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 20,
     gap: 20,
-    
   },
   textBlueBold: {
     fontFamily: "Montserrat-Bold",
