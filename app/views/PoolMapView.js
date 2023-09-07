@@ -16,6 +16,7 @@ import CenterMapIcon from "../components/icons/CenterMapIcon";
 import QuestionMarkIcon from "../components/icons/QuestionMarkIcon";
 import { Colors, tra } from "../configs/common";
 import { remove } from "../utils/saveLoadData";
+import  { PROVIDER_GOOGLE } from 'react-native-maps'
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
   
@@ -279,6 +280,7 @@ export const PoolMapView = () => {
       <MapView
         ref={mapRef}
         style={styles.map}
+        provider={PROVIDER_GOOGLE}
         region={{
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
