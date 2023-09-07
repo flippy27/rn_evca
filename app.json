@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -19,11 +21,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kanade33.rn_evca"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-    
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4fd8e0db-ee9c-471c-a3ab-2405425cd368"
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
