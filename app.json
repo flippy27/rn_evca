@@ -20,14 +20,14 @@
     "android": {
       "config": {
         "googleMaps": {
-          "apiKey": "IzaSyBdpWjPukXUrWAmgW_7BBHeYPfmOY1-iQY"
+          "apiKey": "AIzaSyAk775EvVkqLcz9W4if6Hi6PL3O_uWihDM"
         }
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.kanade33.rn_evca"
+      "package": "com.dhemax.evca"
     },
     "web": {
       "favicon": "./assets/favicon.png"
