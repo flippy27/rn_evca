@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import ArrowIcon from "../components/icons/ArrowIcon";
 import { tra } from "../configs/common";
 
+
 /// text 2 and 3 are for pool
 export const BackBar = ({
   text1,
